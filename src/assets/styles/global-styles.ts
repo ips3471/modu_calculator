@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
     }
     h1 {
-        padding: 0.8em;
+        padding: 0;
         margin: 0;
     }
     button {
