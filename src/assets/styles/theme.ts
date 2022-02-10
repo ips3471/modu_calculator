@@ -5,8 +5,9 @@ const theme: DefaultTheme = {
 	side_padding: '1.5rem',
 
 	color: {
-		main: '#1c1f25',
-		sub: '#fff',
+		main: '#dde1ed',
+		sub: '#1f4ca6',
+		background: '#000000',
 	},
 };
 
@@ -17,6 +18,7 @@ const nextTheme: DefaultTheme = {
 	color: {
 		main: '#1c1f25',
 		sub: '#fff',
+		background: '#000000',
 	},
 };
 

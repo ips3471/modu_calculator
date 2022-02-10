@@ -4,8 +4,10 @@ import styled from 'styled-components';
 import { AscendingArr } from '../utill/utill';
 
 const Container = styled.ul`
-	padding: 0;
-	margin: 1rem 0;
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	gap: 10px;
+	grid-auto-rows: 5rem;
 `;
 
 export type Card = {
@@ -80,7 +82,7 @@ type CostForVacationSpot = {
 type HabitsProps = {};
 
 function Cards({}: HabitsProps) {
-	const BASE_SRC = './src/assets/imgs/cards/';
+	const BASE_SRC = `/imgs/cards/`;
 	const [cards, setCards] = useState<Card[]>([
 		{
 			id: 1,

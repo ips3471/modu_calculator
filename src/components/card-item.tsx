@@ -3,19 +3,20 @@ import styled from 'styled-components';
 import { Card } from './cards';
 
 const Container = styled.li`
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 0.6rem;
-	font-size: 1.8em;
-	padding: 0.3rem 0;
+	display: contents;
+	text-align: center;
 `;
-const Control = styled.div`
-	display: flex;
-	align-items: center;
+
+const CardSection = styled.section`
+	background: url(${props => props.defaultValue}) center/cover no-repeat;
 `;
-const Title = styled.span`
+const Title = styled.h2`
+	color: ${props => props.theme.color.main};
+	margin: 0;
+	padding: 3px;
+	background-color: #00000050;
 	font-weight: 600;
+	font-size: 0.6em;
 `;
 
 type CardItemProps = {
@@ -23,12 +24,14 @@ type CardItemProps = {
 };
 
 function CardItem({ card }: CardItemProps) {
-	const { name } = card;
+	const { name, src } = card;
+	console.log(src);
 
 	return (
 		<Container>
-			<Title>{name}</Title>
-			<Control></Control>
+			<CardSection defaultValue={src}>
+				<Title>{name}</Title>
+			</CardSection>
 		</Container>
 	);
 }
