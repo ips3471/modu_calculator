@@ -8,6 +8,7 @@ const Container = styled.ul`
 	grid-template-columns: repeat(6, 1fr);
 	gap: 10px;
 	grid-auto-rows: 5rem;
+	margin: 1rem 0;
 `;
 
 export type Card = {

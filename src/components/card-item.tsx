@@ -7,11 +7,14 @@ const Container = styled.li`
 	text-align: center;
 `;
 
-const CardSection = styled.section`
+const CardSection = styled.button`
 	background: url(${props => props.defaultValue}) center/cover no-repeat;
+	display: flex;
+	padding: 0;
 `;
 const Title = styled.h2`
 	color: ${props => props.theme.color.main};
+	flex-grow: 1;
 	margin: 0;
 	padding: 3px;
 	background-color: #00000050;
@@ -25,11 +28,19 @@ type CardItemProps = {
 
 function CardItem({ card }: CardItemProps) {
 	const { name, src } = card;
-	console.log(src);
+
+	const onCardClick = () => {
+		console.log('onCardClick');
+	};
 
 	return (
 		<Container>
-			<CardSection defaultValue={src}>
+			<CardSection
+				onClick={() => {
+					onCardClick();
+				}}
+				defaultValue={src}
+			>
 				<Title>{name}</Title>
 			</CardSection>
 		</Container>
