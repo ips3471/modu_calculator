@@ -8,6 +8,7 @@ const Button = styled.button`
 	gap: 2px;
 	flex: 1 0 4rem;
 	background-color: transparent;
+	color: ${props => props.theme.color.main};
 `;
 const Icon = styled.span`
 	font-size: 1.5em;

@@ -6,20 +6,21 @@ const Container = styled.header`
 	align-items: center;
 	justify-content: space-between;
 	font-size: 1em;
-	background-color: #00000030;
+	background-color: #ffffff20;
 	padding: ${props => props.theme.side_padding};
 	gap: 0.6rem;
 `;
 const Title = styled.h1`
 	display: inline-block;
+	color: ${props => props.theme.color.main};
 `;
-const Count = styled.span`
+const Hint = styled.span`
 	display: inline-block;
 	width: 2em;
 	height: 2em;
 	line-height: 2em;
 	text-align: center;
-	color: #fff;
+	color: ${props => props.theme.color.main};
 	background-color: #000;
 	border-radius: 50%;
 	font-size: 1.2em;
@@ -32,9 +33,9 @@ function Header({}: HeaderProps) {
 	return (
 		<Container>
 			<Title>Modu Calculator</Title>
-			<Count>
+			<Hint>
 				<i className='fas fa-question'></i>
-			</Count>
+			</Hint>
 		</Container>
 	);
 }
