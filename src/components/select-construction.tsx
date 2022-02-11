@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { createFalse } from 'typescript';
+import { ConstructionStates, GeneralCost } from '../app';
 import ButtonComponent from './button';
 import { Card } from './cards';
 
@@ -37,9 +37,14 @@ const Container = styled.ul`
 
 type ConstructionProps = {
 	city: Card | null;
+	updateConstructionStates: (constructionName: keyof GeneralCost) => void;
+	constructionStates: ConstructionStates<GeneralCost>;
 };
 
-function Construction({ city }: ConstructionProps) {
+function SelectConstruction({
+	city,
+	updateConstructionStates,
+}: ConstructionProps) {
 	function sortVacationSpot(city: Card | null): boolean {
 		if (!city || city.isVacationSpot === false) {
 			return false;
@@ -48,6 +53,7 @@ function Construction({ city }: ConstructionProps) {
 		}
 	}
 	const isVacationSpot = sortVacationSpot(city);
+
 	return (
 		<Container>
 			{isVacationSpot ? (
@@ -57,25 +63,25 @@ function Construction({ city }: ConstructionProps) {
 						icon={<i className='fas fa-flag'></i>}
 						name='땅'
 						callback={() => {
-							console.log('buttonClick');
+							updateConstructionStates('flag');
 						}}
-					></ButtonComponent>
+					/>
 					<ButtonComponent
 						className={'parasol'}
 						icon={<i className='fas fa-archway'></i>}
 						name='파라솔'
 						callback={() => {
-							console.log('buttonClick');
+							updateConstructionStates('parasol');
 						}}
-					></ButtonComponent>
+					/>
 					<ButtonComponent
 						className={'bangalore'}
 						icon={<i className='fas fa-landmark'></i>}
 						name='방갈로'
 						callback={() => {
-							console.log('buttonClick');
+							updateConstructionStates('bangalore');
 						}}
-					></ButtonComponent>
+					/>
 				</>
 			) : (
 				<>
@@ -84,45 +90,45 @@ function Construction({ city }: ConstructionProps) {
 						icon={<i className='fas fa-flag'></i>}
 						name='땅'
 						callback={() => {
-							console.log('buttonClick');
+							updateConstructionStates('land');
 						}}
-					></ButtonComponent>
+					/>
 					<ButtonComponent
 						className={'villa'}
 						icon={<i className='fas fa-store'></i>}
 						name='별장'
 						callback={() => {
-							console.log('buttonClick');
+							updateConstructionStates('villa');
 						}}
-					></ButtonComponent>
+					/>
 					<ButtonComponent
 						className={'building'}
 						icon={<i className='fas fa-building'></i>}
 						name='빌딩'
 						callback={() => {
-							console.log('buttonClick');
+							updateConstructionStates('building');
 						}}
-					></ButtonComponent>
+					/>
 					<ButtonComponent
 						className={'hotel'}
 						icon={<i className='fas fa-hotel'></i>}
 						name='호텔'
 						callback={() => {
-							console.log('buttonClick');
+							updateConstructionStates('hotel');
 						}}
-					></ButtonComponent>
+					/>
 					<ButtonComponent
 						className={'landmark'}
 						icon={<i className='fas fa-mosque'></i>}
 						name='랜드마크'
 						callback={() => {
-							console.log('buttonClick');
+							updateConstructionStates('landmark');
 						}}
-					></ButtonComponent>
+					/>
 				</>
 			)}
 		</Container>
 	);
 }
 
-export default Construction;
+export default SelectConstruction;

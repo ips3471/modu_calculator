@@ -10,6 +10,52 @@ const Container = styled.ul`
 	grid-auto-rows: 4.5rem;
 `;
 
+export type GeneralCostForNormalCity = {
+	land: number;
+	villa: number;
+	building: number;
+	hotel: number;
+	landmark: number;
+};
+export type GeneralCostForVacationSpot = {
+	flag: number;
+	parasol: number;
+	bangalore: number;
+};
+type NotMergableForNormalCity = Omit<GeneralCostForNormalCity, 'landmark'>;
+type GettableForVacationSpot = Omit<
+	GeneralCostForVacationSpot,
+	'parasol' | 'bangalore'
+>;
+
+const SPECIAL_COST: CostForVacationSpot = {
+	// 모든 VacationSpot은 공통된 cost를 적용
+	buy: {
+		flag: 10,
+	},
+	pay: {
+		flag: 8,
+		parasol: 16,
+		bangalore: 32,
+	},
+	sell: {
+		flag: 5,
+		parasol: 5,
+		bangalore: 5,
+	},
+};
+export type CostForNormalCity = {
+	buy: GeneralCostForNormalCity;
+	pay: GeneralCostForNormalCity;
+	takeOver: NotMergableForNormalCity;
+	sell: GeneralCostForNormalCity;
+};
+export type CostForVacationSpot = {
+	buy: GettableForVacationSpot;
+	pay: GeneralCostForVacationSpot;
+	sell: GeneralCostForVacationSpot;
+};
+
 export type Card = {
 	id: number;
 	name: string;
@@ -17,66 +63,6 @@ export type Card = {
 	isVacationSpot: boolean;
 	src: string;
 	cost: CostForNormalCity | CostForVacationSpot;
-};
-const SPECIAL_COST: CostForVacationSpot = {
-	// 모든 VacationSpot은 공통된 cost를 적용
-	buy: {
-		land: 10,
-	},
-	pay: {
-		land: 8,
-		parasol: 16,
-		bangalore: 32,
-	},
-	sell: {
-		land: 5,
-		parasol: 5,
-		bangalore: 5,
-	},
-};
-type CostForNormalCity = {
-	buy: {
-		land: number;
-		villa: number;
-		building: number;
-		hotel: number;
-		landmark: number;
-	};
-	pay: {
-		land: number;
-		villa: number;
-		building: number;
-		hotel: number;
-		landmark: number;
-	};
-	takeOver: {
-		land: number;
-		villa: number;
-		building: number;
-		hotel: number;
-	};
-	sell: {
-		land: number;
-		villa: number;
-		building: number;
-		hotel: number;
-		landmark: number;
-	};
-};
-type CostForVacationSpot = {
-	buy: {
-		land: number;
-	};
-	pay: {
-		land: number;
-		parasol: number;
-		bangalore: number;
-	};
-	sell: {
-		land: number;
-		parasol: number;
-		bangalore: number;
-	};
 };
 
 type HabitsProps = {
