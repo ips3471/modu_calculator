@@ -15,29 +15,36 @@ function Construction({}: ConstructionProps) {
 	return (
 		<Container>
 			<ButtonComponent
-				icon={<i className='fas fa-circle-play'></i>}
-				name='구매'
+				icon={<i className='fas fa-flag'></i>}
+				name='땅'
 				callback={() => {
 					console.log('buttonClick');
 				}}
 			></ButtonComponent>
 			<ButtonComponent
-				icon={<i className='fas fa-circle-pause'></i>}
-				name='지불'
+				icon={<i className='fas fa-store'></i>}
+				name='별장'
 				callback={() => {
 					console.log('buttonClick');
 				}}
 			></ButtonComponent>
 			<ButtonComponent
-				icon={<i className='fas fa-circle-dot'></i>}
-				name='인수'
+				icon={<i className='fas fa-building'></i>}
+				name='빌딩'
 				callback={() => {
 					console.log('buttonClick');
 				}}
 			></ButtonComponent>
 			<ButtonComponent
-				icon={<i className='fas fa-circle-stop'></i>}
-				name='매각'
+				icon={<i className='fas fa-hotel'></i>}
+				name='호텔'
+				callback={() => {
+					console.log('buttonClick');
+				}}
+			></ButtonComponent>
+			<ButtonComponent
+				icon={<i className='fas fa-mosque'></i>}
+				name='랜드마크'
 				callback={() => {
 					console.log('buttonClick');
 				}}
