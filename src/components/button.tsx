@@ -22,11 +22,12 @@ type ButtonProps = {
 	icon: any;
 	name: string;
 	callback: (param?: any) => any;
+	className?: string;
 };
 
-function ButtonComponent({ icon, name, callback }: ButtonProps) {
+function ButtonComponent({ icon, name, callback, className }: ButtonProps) {
 	return (
-		<Button onClick={() => callback()}>
+		<Button className={className} onClick={() => callback()}>
 			<Icon>{icon}</Icon>
 			<Name>{name}</Name>
 		</Button>

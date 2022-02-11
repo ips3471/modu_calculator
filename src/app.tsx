@@ -18,6 +18,17 @@ const Main = styled.main`
 
 function App() {
 	const [city, setCity] = useState<Card | null>(null);
+	// construction과 acation을 가져와서 city의 cost와 mapping
+
+	const construction = [
+		{ land: false },
+		{ villa: false },
+		{ building: false },
+		{ hotel: false },
+		{ landmark: false },
+		{ parasol: false },
+		{ bangalore: false },
+	];
 
 	const updateCity = (city: Card) => {
 		setCity(city);
@@ -33,7 +44,7 @@ function App() {
 			<Header />
 			<Main>
 				<Cards updateCity={updateCity} />
-				<Construction />
+				<Construction city={city} />
 				<Action />
 				<Result value='0'></Result>
 			</Main>
