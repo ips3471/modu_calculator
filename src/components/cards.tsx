@@ -6,7 +6,7 @@ import { AscendingArr } from '../utill/utill';
 const Container = styled.ul`
 	display: grid;
 	grid-template-columns: repeat(6, 1fr);
-	gap: 1px;
+	gap: 2px;
 	grid-auto-rows: 4.5rem;
 `;
 
