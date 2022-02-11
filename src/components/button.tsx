@@ -6,7 +6,7 @@ const Button = styled.button`
 	flex-direction: column;
 	align-items: center;
 	gap: 2px;
-	flex: 1 0 4rem;
+	flex: 1 0 1rem;
 	background-color: transparent;
 	color: ${props => props.theme.color.main};
 `;
@@ -14,7 +14,8 @@ const Icon = styled.span`
 	font-size: 1.5em;
 `;
 const Name = styled.span`
-	font-size: 0.7em;
+	font-size: 0.5em;
+	white-space: nowrap;
 `;
 
 type ButtonProps = {

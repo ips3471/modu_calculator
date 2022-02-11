@@ -16,10 +16,9 @@ const Title = styled.h2`
 	color: ${props => props.theme.color.main};
 	flex-grow: 1;
 	margin: 0;
-	padding: 3px;
 	background-color: #00000050;
-	font-weight: 600;
-	font-size: 0.6em;
+	font-weight: 500;
+	font-size: 0.4em;
 `;
 
 type CardItemProps = {

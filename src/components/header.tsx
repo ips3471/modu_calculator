@@ -5,13 +5,12 @@ const Container = styled.header`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	font-size: 1em;
+	font-size: 0.6em;
 	background-color: #ffffff20;
-	padding: ${props => props.theme.side_padding};
 	gap: 0.6rem;
+	flex-grow: 1;
 `;
 const Title = styled.h1`
-	display: inline-block;
 	color: ${props => props.theme.color.main};
 `;
 const Hint = styled.span`

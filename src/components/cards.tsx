@@ -6,9 +6,8 @@ import { AscendingArr } from '../utill/utill';
 const Container = styled.ul`
 	display: grid;
 	grid-template-columns: repeat(6, 1fr);
-	gap: 10px;
-	grid-auto-rows: 5rem;
-	margin: 1rem 0;
+	gap: 1px;
+	grid-auto-rows: 4.5rem;
 `;
 
 export type Card = {

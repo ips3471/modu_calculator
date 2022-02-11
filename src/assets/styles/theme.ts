@@ -2,7 +2,7 @@ import { DefaultTheme } from 'styled-components';
 
 const theme: DefaultTheme = {
 	basicWidth: '320px',
-	side_padding: '1.5rem',
+	side_padding: '4px',
 
 	color: {
 		main: '#dde1ed',

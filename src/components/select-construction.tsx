@@ -6,7 +6,6 @@ const Container = styled.ul`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	height: 5rem;
 `;
 
 type ConstructionProps = {};
