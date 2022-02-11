@@ -79,9 +79,11 @@ type CostForVacationSpot = {
 	};
 };
 
-type HabitsProps = {};
+type HabitsProps = {
+	updateCity: (city: Card) => void;
+};
 
-function Cards({}: HabitsProps) {
+function Cards({ updateCity }: HabitsProps) {
 	const BASE_SRC = `/imgs/cards/`;
 	const [cards, setCards] = useState<Card[]>([
 		{
@@ -777,7 +779,7 @@ function Cards({}: HabitsProps) {
 	return (
 		<Container>
 			{cards.sort(AscendingArr).map(card => (
-				<CardItem key={card.id} card={card} />
+				<CardItem updateCity={updateCity} key={card.id} card={card} />
 			))}
 		</Container>
 	);

@@ -1,5 +1,5 @@
-import React from 'react';
-import Cards from './components/cards';
+import React, { useEffect } from 'react';
+import Cards, { Card } from './components/cards';
 import Header from './components/header';
 import styled from 'styled-components';
 import { useState } from 'react';
@@ -17,13 +17,22 @@ const Main = styled.main`
 `;
 
 function App() {
-	const [city, setCity] = useState(null);
+	const [city, setCity] = useState<Card | null>(null);
+
+	const updateCity = (city: Card) => {
+		setCity(city);
+	};
+
+	useEffect(() => {
+		// inform developer the City state when that is changed
+		console.log(city);
+	}, [city]);
 
 	return (
 		<>
 			<Header />
 			<Main>
-				<Cards />
+				<Cards updateCity={updateCity} />
 				<Construction />
 				<Action />
 				<Result value='0'></Result>

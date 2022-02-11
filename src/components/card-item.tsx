@@ -23,20 +23,21 @@ const Title = styled.h2`
 
 type CardItemProps = {
 	card: Card;
+	updateCity: (city: Card) => void;
 };
 
-function CardItem({ card }: CardItemProps) {
+function CardItem({ card, updateCity }: CardItemProps) {
 	const { name, src } = card;
 
-	const onCardClick = () => {
-		console.log('onCardClick');
-	};
+	// const onCardClick = () => {
+	// 	console.log('onCardClick');
+	// };
 
 	return (
 		<Container>
 			<CardSection
 				onClick={() => {
-					onCardClick();
+					updateCity(card);
 				}}
 				defaultValue={src}
 			>
