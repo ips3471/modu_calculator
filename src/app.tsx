@@ -41,6 +41,9 @@ function App() {
 		parasol: false,
 		bangalore: false,
 	});
+	const [selectedAction, setSelectedAction] = useState<
+		keyof ActionForNormalCity | keyof ActionForVacationSpot | null
+	>(null);
 	const [actionType, setActionType] = useState<
 		keyof ActionForNormalCity | keyof ActionForVacationSpot | null
 	>('buy'); //static
@@ -54,6 +57,11 @@ function App() {
 			return states;
 		});
 	};
+	const updateSelectedAction = (
+		action: keyof ActionForNormalCity | keyof ActionForVacationSpot,
+	) => {
+		setSelectedAction(action);
+	};
 	useEffect(() => {
 		console.log(selectedConstructions);
 	}, [selectedConstructions]);
@@ -64,6 +72,10 @@ function App() {
 		// inform developer the City state when that is changed
 		console.log('selected', city);
 	}, [city]);
+	useEffect(() => {
+		// inform developer the City state when that is changed
+		console.log('selected', selectedAction);
+	}, [selectedAction]);
 
 	return (
 		<>
@@ -75,7 +87,10 @@ function App() {
 					constructionStates={selectedConstructions}
 					updateConstructionStates={updateConstructionStates}
 				/>
-				<Action />
+				<Action
+					selectedAction={selectedAction}
+					updateSelectedAction={updateSelectedAction}
+				/>
 				<Result></Result>
 			</Main>
 		</>
