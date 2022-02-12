@@ -1,8 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ConstructionStates, GeneralCost } from '../app';
+import { ConstructionStates } from '../app';
 import ButtonComponent from './button';
-import { Card } from './cards';
+import {
+	Card,
+	GeneralCostForNormalCity,
+	GeneralCostForVacationSpot,
+} from './cards';
 
 const Container = styled.ul`
 	display: flex;
@@ -18,8 +22,13 @@ const Container = styled.ul`
 
 type ConstructionProps = {
 	city: Card | null;
-	updateConstructionStates: (constructionName: keyof GeneralCost) => void;
-	constructionStates: ConstructionStates<GeneralCost>;
+	updateConstructionStates: (
+		constructionName: keyof (GeneralCostForNormalCity &
+			GeneralCostForVacationSpot),
+	) => void;
+	constructionStates: ConstructionStates<
+		GeneralCostForNormalCity & GeneralCostForVacationSpot
+	>;
 };
 
 function SelectConstruction({
@@ -35,7 +44,6 @@ function SelectConstruction({
 		}
 	}
 	const isVacationSpot = sortVacationSpot(city);
-	console.log(constructionStates['flag']);
 
 	return (
 		<Container>

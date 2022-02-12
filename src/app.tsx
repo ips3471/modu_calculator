@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import Cards, {
+	ActionForNormalCity,
+	ActionForVacationSpot,
 	Card,
 	GeneralCostForNormalCity,
 	GeneralCostForVacationSpot,
@@ -20,17 +22,15 @@ const Main = styled.main`
 	justify-content: space-between;
 `;
 
-export type GeneralCost = GeneralCostForNormalCity & GeneralCostForVacationSpot;
-
 export type ConstructionStates<T> = {
 	[key in keyof T]: boolean;
 };
-
 function App() {
 	const [city, setCity] = useState<Card | null>(null);
-	// construction과 acation을 가져와서 city의 cost와 mapping
-	const [constructionStates, setConstructionStates] = useState<
-		ConstructionStates<GeneralCost>
+	const [selectedConstructions, setSelectedConstructions] = useState<
+		ConstructionStates<
+			GeneralCostForNormalCity & GeneralCostForVacationSpot
+		>
 	>({
 		land: false,
 		villa: false,
@@ -41,25 +41,28 @@ function App() {
 		parasol: false,
 		bangalore: false,
 	});
-
+	const [actionType, setActionType] = useState<
+		keyof ActionForNormalCity | keyof ActionForVacationSpot | null
+	>('buy'); //static
 	const updateConstructionStates = (
-		name: keyof ConstructionStates<GeneralCost>,
+		constructionName: keyof (GeneralCostForNormalCity &
+			GeneralCostForVacationSpot),
 	) => {
-		setConstructionStates(constructionStates => {
-			const states = { ...constructionStates };
-			states[name] = !constructionStates[name];
+		setSelectedConstructions(selectedConstructions => {
+			const states = { ...selectedConstructions };
+			states[constructionName] = !selectedConstructions[constructionName];
 			return states;
 		});
-		console.log(constructionStates[name]);
 	};
-
+	useEffect(() => {
+		console.log(selectedConstructions);
+	}, [selectedConstructions]);
 	const updateCity = (city: Card) => {
 		setCity(city);
 	};
-
 	useEffect(() => {
 		// inform developer the City state when that is changed
-		console.log(city);
+		console.log('selected', city);
 	}, [city]);
 
 	return (
@@ -69,11 +72,11 @@ function App() {
 				<Cards updateCity={updateCity} />
 				<SelectConstruction
 					city={city}
-					constructionStates={constructionStates}
+					constructionStates={selectedConstructions}
 					updateConstructionStates={updateConstructionStates}
 				/>
 				<Action />
-				{/* <Result value='0'></Result> */}
+				<Result></Result>
 			</Main>
 		</>
 	);

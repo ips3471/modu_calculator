@@ -28,7 +28,7 @@ type GettableForVacationSpot = Omit<
 	'parasol' | 'bangalore'
 >;
 
-const SPECIAL_COST: CostForVacationSpot = {
+const SPECIAL_COST: ActionForVacationSpot = {
 	// 모든 VacationSpot은 공통된 cost를 적용
 	buy: {
 		flag: 10,
@@ -44,13 +44,13 @@ const SPECIAL_COST: CostForVacationSpot = {
 		bangalore: 5,
 	},
 };
-export type CostForNormalCity = {
+export type ActionForNormalCity = {
 	buy: GeneralCostForNormalCity;
 	pay: GeneralCostForNormalCity;
 	takeOver: NotMergableForNormalCity;
 	sell: GeneralCostForNormalCity;
 };
-export type CostForVacationSpot = {
+export type ActionForVacationSpot = {
 	buy: GettableForVacationSpot;
 	pay: GeneralCostForVacationSpot;
 	sell: GeneralCostForVacationSpot;
@@ -62,7 +62,7 @@ export type Card = {
 	line: number;
 	isVacationSpot: boolean;
 	src: string;
-	cost: CostForNormalCity | CostForVacationSpot;
+	cost: ActionForNormalCity | ActionForVacationSpot;
 };
 
 type HabitsProps = {
