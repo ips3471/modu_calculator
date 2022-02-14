@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {
+	ActionTypes,
 	IsExecutingStates,
 	UpdateSelectedActions,
 } from '../assets/interfaces/interfaces';
@@ -24,16 +25,12 @@ type ActionProps = {
 };
 
 function SelectAction({ updateSelectedActions, actions }: ActionProps) {
-	const obj = {
-		buy: false,
-		pay: false,
-		takeOver: false,
-		sell: false,
-	};
+	function actionDisabler(...actionTypes: ActionTypes[]): void {
+		actionTypes.forEach(actionType => {
+			actions[actionType] && updateSelectedActions(actionType);
+		});
+	}
 
-	// 버튼 눌렀을 때
-	// action이 true이면, action => false
-	// action이 false이면, action => true
 	return (
 		<Container>
 			{actions['buy'] ? (
@@ -51,6 +48,7 @@ function SelectAction({ updateSelectedActions, actions }: ActionProps) {
 					icon={<i className='fas fa-circle-play'></i>}
 					name='구매'
 					callback={() => {
+						actionDisabler('pay', 'sell', 'takeOver');
 						updateSelectedActions('buy');
 					}}
 				></ButtonComponent>
@@ -71,6 +69,7 @@ function SelectAction({ updateSelectedActions, actions }: ActionProps) {
 					icon={<i className='fas fa-circle-pause'></i>}
 					name='지불'
 					callback={() => {
+						actionDisabler('buy', 'sell');
 						updateSelectedActions('pay');
 					}}
 				></ButtonComponent>
@@ -91,6 +90,7 @@ function SelectAction({ updateSelectedActions, actions }: ActionProps) {
 					icon={<i className='fas fa-circle-dot'></i>}
 					name='인수'
 					callback={() => {
+						actionDisabler('buy', 'sell');
 						updateSelectedActions('takeOver');
 					}}
 				></ButtonComponent>
@@ -111,6 +111,7 @@ function SelectAction({ updateSelectedActions, actions }: ActionProps) {
 					icon={<i className='fas fa-circle-stop'></i>}
 					name='매각'
 					callback={() => {
+						actionDisabler('pay', 'buy', 'takeOver');
 						updateSelectedActions('sell');
 					}}
 				></ButtonComponent>
