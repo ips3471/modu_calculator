@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {
 	ActionTypes,
+	IsConstructingStates,
 	IsExecutingStates,
 	UpdateSelectedActions,
 } from '../assets/interfaces/interfaces';
@@ -17,14 +18,22 @@ const Container = styled.ul`
 	.off {
 		opacity: 0.6;
 	}
+	.hide {
+		visibility: hidden;
+	}
 `;
 
 type ActionProps = {
 	actions: IsExecutingStates;
+	constructions: IsConstructingStates;
 	updateSelectedActions: UpdateSelectedActions;
 };
 
-function SelectAction({ updateSelectedActions, actions }: ActionProps) {
+function SelectAction({
+	updateSelectedActions,
+	actions,
+	constructions,
+}: ActionProps) {
 	function actionDisabler(...actionTypes: ActionTypes[]): void {
 		actionTypes.forEach(actionType => {
 			actions[actionType] && updateSelectedActions(actionType);
@@ -75,25 +84,36 @@ function SelectAction({ updateSelectedActions, actions }: ActionProps) {
 				></ButtonComponent>
 			)}
 
-			{actions['takeOver'] ? (
+			{constructions['landmark'] ? (
 				<ButtonComponent
-					className={'on'}
+					className={'hide'}
 					icon={<i className='fas fa-circle-dot'></i>}
 					name='인수'
-					callback={() => {
-						updateSelectedActions('takeOver');
-					}}
+					callback={() => {}}
 				></ButtonComponent>
 			) : (
-				<ButtonComponent
-					className={'off'}
-					icon={<i className='fas fa-circle-dot'></i>}
-					name='인수'
-					callback={() => {
-						actionDisabler('buy', 'sell');
-						updateSelectedActions('takeOver');
-					}}
-				></ButtonComponent>
+				<>
+					{actions['takeOver'] ? (
+						<ButtonComponent
+							className={'on'}
+							icon={<i className='fas fa-circle-dot'></i>}
+							name='인수'
+							callback={() => {
+								updateSelectedActions('takeOver');
+							}}
+						></ButtonComponent>
+					) : (
+						<ButtonComponent
+							className={'off'}
+							icon={<i className='fas fa-circle-dot'></i>}
+							name='인수'
+							callback={() => {
+								actionDisabler('buy', 'sell');
+								updateSelectedActions('takeOver');
+							}}
+						></ButtonComponent>
+					)}
+				</>
 			)}
 
 			{actions['sell'] ? (

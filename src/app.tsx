@@ -81,11 +81,14 @@ function App() {
 				<CardsSection updateCard={updateSelectedCard} />
 				<SelectConstruction
 					card={selectedCard}
+					actions={selectedActions}
 					constructions={selectedConstructions}
 					updateConstructions={updateSelectedConstructions}
+					updateActions={updateSelectedActions}
 				/>
 				<SelectAction
 					actions={selectedActions}
+					constructions={selectedConstructions}
 					updateSelectedActions={updateSelectedActions}
 				/>
 				<Result></Result>

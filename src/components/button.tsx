@@ -22,7 +22,7 @@ type ButtonProps = {
 	icon: any;
 	name: string;
 	callback: (param?: any) => any;
-	className?: 'on' | 'off';
+	className?: 'on' | 'off' | 'hide';
 };
 
 function ButtonComponent({ icon, name, callback, className }: ButtonProps) {

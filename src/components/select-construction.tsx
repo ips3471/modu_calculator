@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import {
 	Card,
 	IsConstructingStates,
+	IsExecutingStates,
+	UpdateSelectedActions,
 	UpdateSelectedConstructions,
 } from '../assets/interfaces/interfaces';
 import { sortVacationSpot } from '../utill/utill';
@@ -24,12 +26,16 @@ type ConstructionProps = {
 	card: Card | null;
 	constructions: IsConstructingStates;
 	updateConstructions: UpdateSelectedConstructions;
+	updateActions: UpdateSelectedActions;
+	actions: IsExecutingStates;
 };
 
 function SelectConstruction({
 	card,
 	updateConstructions,
+	updateActions,
 	constructions,
+	actions,
 }: ConstructionProps) {
 	const isVacationSpot = sortVacationSpot(card);
 
@@ -188,6 +194,9 @@ function SelectConstruction({
 							icon={<i className='fas fa-mosque'></i>}
 							name='랜드마크'
 							callback={() => {
+								if (actions['takeOver']) {
+									updateActions('takeOver');
+								}
 								updateConstructions('landmark');
 							}}
 						/>
