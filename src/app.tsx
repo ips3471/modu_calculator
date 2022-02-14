@@ -8,12 +8,18 @@ import {
 	ActionTypes,
 	Card,
 	ConstructionTypes,
+	CostTable,
 	IsConstructingStates,
 	IsExecutingStates,
+	NormalCityLevel,
+	VacationSpotLevel,
 } from './assets/interfaces/interfaces';
 import CardsSection from './components/cards';
 
-const Result = styled.input``;
+const Result = styled.span`
+	color: ${props => props.theme.color.main};
+	text-align: center;
+`;
 
 const Main = styled.main`
 	margin: ${props => props.theme.side_padding};
@@ -24,6 +30,8 @@ const Main = styled.main`
 `;
 
 function App() {
+	const [result, setResult] = useState(0);
+
 	const [selectedCard, setSelectedCard] = useState<Card | null>(null);
 
 	const [selectedConstructions, setSelectedConstructions] =
@@ -71,7 +79,79 @@ function App() {
 	};
 
 	useEffect(() => {
-		getResult();
+		console.clear();
+		const card = selectedCard;
+		const actions = selectedActions;
+		const constructions = selectedConstructions;
+
+		// actives in constructions
+		const isConstructing = Object.keys(constructions).filter(
+			construction =>
+				constructions[construction as ConstructionTypes] === true,
+		) as ConstructionTypes[];
+		if (isConstructing.length == 0) {
+			console.log('empty constructions:', isConstructing);
+			return;
+		}
+
+		// actives in actions
+		const isExecuting = Object.keys(actions).filter(
+			action => actions[action as ActionTypes] === true,
+		) as ActionTypes[];
+		if (isExecuting.length == 0) {
+			console.log('empty constructions:', isExecuting);
+			return;
+		}
+		// make result
+		if (selectedCard == null) {
+			alert('카드가 선택되지 않았습니다');
+			return;
+		}
+		let total: number = 0;
+
+		switch (card?.isVacationSpot) {
+			case true:
+				{
+					isExecuting.forEach(action => {
+						isConstructing.forEach(construction => {
+							const costTable =
+								card.cost as CostTable<VacationSpotLevel>;
+							const value =
+								costTable[construction as VacationSpotLevel][
+									action
+								];
+							if (!value) {
+								throw new Error(
+									`value not matchs to cost table ${value}`,
+								);
+							}
+							total += value;
+						});
+					});
+				}
+				break;
+			case false:
+				{
+					isExecuting.forEach(action => {
+						isConstructing.forEach(construction => {
+							const costTable =
+								card.cost as CostTable<NormalCityLevel>;
+							const value =
+								costTable[construction as NormalCityLevel][
+									action
+								];
+							if (!value) {
+								throw new Error(
+									`value not matchs to cost table ${value}`,
+								);
+							}
+							total += value;
+						});
+					});
+				}
+				break;
+		}
+		setResult(total);
 	}, [selectedConstructions, selectedActions]);
 
 	return (
@@ -91,7 +171,7 @@ function App() {
 					constructions={selectedConstructions}
 					updateSelectedActions={updateSelectedActions}
 				/>
-				<Result></Result>
+				<Result>{result}</Result>
 			</Main>
 		</>
 	);
