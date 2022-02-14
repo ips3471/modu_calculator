@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import {
+	IsExecutingStates,
+	UpdateSelectedActions,
+} from '../assets/interfaces/interfaces';
 import ButtonComponent from './button';
-import { ActionForNormalCity, ActionForVacationSpot } from './cards';
 
 const Container = styled.ul`
 	display: flex;
@@ -16,24 +19,31 @@ const Container = styled.ul`
 `;
 
 type ActionProps = {
-	updateSelectedAction: (
-		action: keyof ActionForNormalCity | keyof ActionForVacationSpot,
-	) => void;
-	selectedAction:
-		| keyof ActionForNormalCity
-		| keyof ActionForVacationSpot
-		| null;
+	actions: IsExecutingStates;
+	updateSelectedActions: UpdateSelectedActions;
 };
 
-function Action({ updateSelectedAction, selectedAction }: ActionProps) {
+function SelectAction({ updateSelectedActions, actions }: ActionProps) {
+	const obj = {
+		buy: false,
+		pay: false,
+		takeOver: false,
+		sell: false,
+	};
+
+	// 버튼 눌렀을 때
+	// action이 true이면, action => false
+	// action이 false이면, action => true
 	return (
 		<Container>
-			{selectedAction === 'buy' ? (
+			{actions['buy'] ? (
 				<ButtonComponent
 					className={'on'}
 					icon={<i className='fas fa-circle-play'></i>}
 					name='구매'
-					callback={() => {}}
+					callback={() => {
+						updateSelectedActions('buy');
+					}}
 				></ButtonComponent>
 			) : (
 				<ButtonComponent
@@ -41,17 +51,19 @@ function Action({ updateSelectedAction, selectedAction }: ActionProps) {
 					icon={<i className='fas fa-circle-play'></i>}
 					name='구매'
 					callback={() => {
-						updateSelectedAction('buy');
+						updateSelectedActions('buy');
 					}}
 				></ButtonComponent>
 			)}
 
-			{selectedAction === 'pay' ? (
+			{actions['pay'] ? (
 				<ButtonComponent
 					className={'on'}
 					icon={<i className='fas fa-circle-pause'></i>}
 					name='지불'
-					callback={() => {}}
+					callback={() => {
+						updateSelectedActions('pay');
+					}}
 				></ButtonComponent>
 			) : (
 				<ButtonComponent
@@ -59,17 +71,19 @@ function Action({ updateSelectedAction, selectedAction }: ActionProps) {
 					icon={<i className='fas fa-circle-pause'></i>}
 					name='지불'
 					callback={() => {
-						updateSelectedAction('pay');
+						updateSelectedActions('pay');
 					}}
 				></ButtonComponent>
 			)}
 
-			{selectedAction === 'takeOver' ? (
+			{actions['takeOver'] ? (
 				<ButtonComponent
 					className={'on'}
 					icon={<i className='fas fa-circle-dot'></i>}
 					name='인수'
-					callback={() => {}}
+					callback={() => {
+						updateSelectedActions('takeOver');
+					}}
 				></ButtonComponent>
 			) : (
 				<ButtonComponent
@@ -77,17 +91,19 @@ function Action({ updateSelectedAction, selectedAction }: ActionProps) {
 					icon={<i className='fas fa-circle-dot'></i>}
 					name='인수'
 					callback={() => {
-						updateSelectedAction('takeOver');
+						updateSelectedActions('takeOver');
 					}}
 				></ButtonComponent>
 			)}
 
-			{selectedAction === 'sell' ? (
+			{actions['sell'] ? (
 				<ButtonComponent
 					className={'on'}
 					icon={<i className='fas fa-circle-stop'></i>}
 					name='매각'
-					callback={() => {}}
+					callback={() => {
+						updateSelectedActions('sell');
+					}}
 				></ButtonComponent>
 			) : (
 				<ButtonComponent
@@ -95,7 +111,7 @@ function Action({ updateSelectedAction, selectedAction }: ActionProps) {
 					icon={<i className='fas fa-circle-stop'></i>}
 					name='매각'
 					callback={() => {
-						updateSelectedAction('sell');
+						updateSelectedActions('sell');
 					}}
 				></ButtonComponent>
 			)}
@@ -103,4 +119,4 @@ function Action({ updateSelectedAction, selectedAction }: ActionProps) {
 	);
 }
 
-export default Action;
+export default SelectAction;

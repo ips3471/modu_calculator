@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Card } from './cards';
+import { Card, UpdateSelectedCard } from '../assets/interfaces/interfaces';
 
 const Container = styled.li`
 	display: contents;
@@ -23,10 +23,10 @@ const Title = styled.h2`
 
 type CardItemProps = {
 	card: Card;
-	updateCity: (city: Card) => void;
+	updateCard: UpdateSelectedCard;
 };
 
-function CardItem({ card, updateCity }: CardItemProps) {
+function CardItem({ card, updateCard }: CardItemProps) {
 	const { name, src } = card;
 
 	// const onCardClick = () => {
@@ -37,7 +37,7 @@ function CardItem({ card, updateCity }: CardItemProps) {
 		<Container>
 			<CardSection
 				onClick={() => {
-					updateCity(card);
+					updateCard(card);
 				}}
 				defaultValue={src}
 			>

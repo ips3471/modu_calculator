@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ConstructionStates } from '../app';
-import ButtonComponent from './button';
 import {
 	Card,
-	GeneralCostForNormalCity,
-	GeneralCostForVacationSpot,
-} from './cards';
+	IsConstructingStates,
+	UpdateSelectedConstructions,
+} from '../assets/interfaces/interfaces';
+import { sortVacationSpot } from '../utill/utill';
+import ButtonComponent from './button';
 
 const Container = styled.ul`
 	display: flex;
@@ -21,41 +21,29 @@ const Container = styled.ul`
 `;
 
 type ConstructionProps = {
-	city: Card | null;
-	updateConstructionStates: (
-		constructionName: keyof (GeneralCostForNormalCity &
-			GeneralCostForVacationSpot),
-	) => void;
-	constructionStates: ConstructionStates<
-		GeneralCostForNormalCity & GeneralCostForVacationSpot
-	>;
+	card: Card | null;
+	constructions: IsConstructingStates;
+	updateConstructions: UpdateSelectedConstructions;
 };
 
 function SelectConstruction({
-	city,
-	updateConstructionStates,
-	constructionStates,
+	card,
+	updateConstructions,
+	constructions,
 }: ConstructionProps) {
-	function sortVacationSpot(city: Card | null): boolean {
-		if (!city || city.isVacationSpot === false) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-	const isVacationSpot = sortVacationSpot(city);
+	const isVacationSpot = sortVacationSpot(card);
 
 	return (
 		<Container>
 			{isVacationSpot ? (
 				<>
-					{constructionStates['flag'] ? (
+					{constructions['flag'] ? (
 						<ButtonComponent
 							className={'on'}
 							icon={<i className='fas fa-flag'></i>}
 							name='땅'
 							callback={() => {
-								updateConstructionStates('flag');
+								updateConstructions('flag');
 							}}
 						/>
 					) : (
@@ -64,17 +52,17 @@ function SelectConstruction({
 							icon={<i className='fas fa-flag'></i>}
 							name='땅'
 							callback={() => {
-								updateConstructionStates('flag');
+								updateConstructions('flag');
 							}}
 						/>
 					)}
-					{constructionStates['parasol'] ? (
+					{constructions['parasol'] ? (
 						<ButtonComponent
 							className={'on'}
 							icon={<i className='fas fa-archway'></i>}
 							name='파라솔'
 							callback={() => {
-								updateConstructionStates('parasol');
+								updateConstructions('parasol');
 							}}
 						/>
 					) : (
@@ -83,17 +71,17 @@ function SelectConstruction({
 							icon={<i className='fas fa-archway'></i>}
 							name='파라솔'
 							callback={() => {
-								updateConstructionStates('parasol');
+								updateConstructions('parasol');
 							}}
 						/>
 					)}
-					{constructionStates['bangalore'] ? (
+					{constructions['bangalore'] ? (
 						<ButtonComponent
 							className={'on'}
 							icon={<i className='fas fa-landmark'></i>}
 							name='방갈로'
 							callback={() => {
-								updateConstructionStates('bangalore');
+								updateConstructions('bangalore');
 							}}
 						/>
 					) : (
@@ -102,20 +90,20 @@ function SelectConstruction({
 							icon={<i className='fas fa-landmark'></i>}
 							name='방갈로'
 							callback={() => {
-								updateConstructionStates('bangalore');
+								updateConstructions('bangalore');
 							}}
 						/>
 					)}
 				</>
 			) : (
 				<>
-					{constructionStates['land'] ? (
+					{constructions['land'] ? (
 						<ButtonComponent
 							className={'on'}
 							icon={<i className='fas fa-flag'></i>}
 							name='땅'
 							callback={() => {
-								updateConstructionStates('land');
+								updateConstructions('land');
 							}}
 						/>
 					) : (
@@ -124,17 +112,17 @@ function SelectConstruction({
 							icon={<i className='fas fa-flag'></i>}
 							name='땅'
 							callback={() => {
-								updateConstructionStates('land');
+								updateConstructions('land');
 							}}
 						/>
 					)}
-					{constructionStates['villa'] ? (
+					{constructions['villa'] ? (
 						<ButtonComponent
 							className={'on'}
 							icon={<i className='fas fa-store'></i>}
 							name='별장'
 							callback={() => {
-								updateConstructionStates('villa');
+								updateConstructions('villa');
 							}}
 						/>
 					) : (
@@ -143,17 +131,17 @@ function SelectConstruction({
 							icon={<i className='fas fa-store'></i>}
 							name='별장'
 							callback={() => {
-								updateConstructionStates('villa');
+								updateConstructions('villa');
 							}}
 						/>
 					)}
-					{constructionStates['building'] ? (
+					{constructions['building'] ? (
 						<ButtonComponent
 							className={'on'}
 							icon={<i className='fas fa-building'></i>}
 							name='빌딩'
 							callback={() => {
-								updateConstructionStates('building');
+								updateConstructions('building');
 							}}
 						/>
 					) : (
@@ -162,17 +150,17 @@ function SelectConstruction({
 							icon={<i className='fas fa-building'></i>}
 							name='빌딩'
 							callback={() => {
-								updateConstructionStates('building');
+								updateConstructions('building');
 							}}
 						/>
 					)}
-					{constructionStates['hotel'] ? (
+					{constructions['hotel'] ? (
 						<ButtonComponent
 							className={'on'}
 							icon={<i className='fas fa-hotel'></i>}
 							name='호텔'
 							callback={() => {
-								updateConstructionStates('hotel');
+								updateConstructions('hotel');
 							}}
 						/>
 					) : (
@@ -181,17 +169,17 @@ function SelectConstruction({
 							icon={<i className='fas fa-hotel'></i>}
 							name='호텔'
 							callback={() => {
-								updateConstructionStates('hotel');
+								updateConstructions('hotel');
 							}}
 						/>
 					)}
-					{constructionStates['landmark'] ? (
+					{constructions['landmark'] ? (
 						<ButtonComponent
 							className={'on'}
 							icon={<i className='fas fa-mosque'></i>}
 							name='랜드마크'
 							callback={() => {
-								updateConstructionStates('landmark');
+								updateConstructions('landmark');
 							}}
 						/>
 					) : (
@@ -200,7 +188,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-mosque'></i>}
 							name='랜드마크'
 							callback={() => {
-								updateConstructionStates('landmark');
+								updateConstructions('landmark');
 							}}
 						/>
 					)}
