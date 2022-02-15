@@ -8,22 +8,26 @@ const Container = styled.header`
 	font-size: 0.6em;
 	background-color: #ffffff20;
 	gap: 0.6rem;
-	flex-grow: 1;
-`;
-const Title = styled.h1`
-	color: ${props => props.theme.color.main};
-`;
-const Hint = styled.span`
-	display: inline-block;
-	width: 2em;
-	height: 2em;
-	line-height: 2em;
-	text-align: center;
-	color: ${props => props.theme.color.main};
-	background-color: #000;
-	border-radius: 50%;
-	font-size: 1.2em;
-	font-weight: 600;
+	flex-grow: 0;
+	height: ${props => props.theme.navbar__height};
+	padding-left: ${props => props.theme.side_padding};
+
+	> .title {
+		color: ${props => props.theme.color.main};
+	}
+
+	> .hint {
+		display: inline-block;
+		width: 2em;
+		height: 2em;
+		line-height: 2em;
+		text-align: center;
+		color: ${props => props.theme.color.main};
+		background-color: #000;
+		border-radius: 50%;
+		font-size: 1.2em;
+		font-weight: 600;
+	}
 `;
 
 type HeaderProps = {};
@@ -31,10 +35,10 @@ type HeaderProps = {};
 function Header({}: HeaderProps) {
 	return (
 		<Container>
-			<Title>Modu Calculator</Title>
-			<Hint>
+			<h1 className='title'>Modu Calculator</h1>
+			<span className='hint'>
 				<i className='fas fa-question'></i>
-			</Hint>
+			</span>
 		</Container>
 	);
 }

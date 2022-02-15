@@ -2,23 +2,34 @@ import React from 'react';
 import styled from 'styled-components';
 import { Card, UpdateSelectedCard } from '../assets/interfaces/interfaces';
 
-const Container = styled.li`
-	display: contents;
-	text-align: center;
+// background: url(${props => props.defaultValue}) center/cover no-repeat;
+const CardSection = styled.button.attrs(props => ({
+	title: props.title || 'undefined',
+}))`
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	position: relative;
+
+	&:before {
+		width: 100%;
+		content: '${props => props.title}';
+		display: inline-block;
+		position: absolute;
+		top: 0;
+
+		color: ${props => props.theme.color.main};
+		font-size: 0.8em;
+		padding: 3px 0;
+		background-color: #00000050;
+	}
 `;
 
-const CardSection = styled.button`
-	background: url(${props => props.defaultValue}) center/cover no-repeat;
-	display: flex;
-	padding: 0;
-`;
-const Title = styled.h2`
-	color: ${props => props.theme.color.main};
-	flex-grow: 1;
-	margin: 0;
-	background-color: #00000050;
-	font-weight: 500;
-	font-size: 0.4em;
+const Image = styled.img.attrs(props => ({
+	title: props.title || 'undefined',
+}))`
+	width: 100%;
+	height: 100%;
 `;
 
 type CardItemProps = {
@@ -34,16 +45,14 @@ function CardItem({ card, updateCard }: CardItemProps) {
 	// };
 
 	return (
-		<Container>
-			<CardSection
-				onClick={() => {
-					updateCard(card);
-				}}
-				defaultValue={src}
-			>
-				<Title>{name}</Title>
-			</CardSection>
-		</Container>
+		<CardSection
+			title={name}
+			onClick={() => {
+				updateCard(card);
+			}}
+		>
+			<Image className='image' src={src} alt={name} />
+		</CardSection>
 	);
 }
 

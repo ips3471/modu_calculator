@@ -10,9 +10,11 @@ import { Cards, Card } from '../assets/interfaces/interfaces';
 
 const Container = styled.ul`
 	display: grid;
+	flex: 1 0 30rem;
 	grid-template-columns: repeat(6, 1fr);
-	gap: 2px;
-	grid-auto-rows: 4.5rem;
+	gap: 3px;
+	grid-auto-rows: 8em;
+	padding: 15px 0;
 `;
 
 type CardsProps = {

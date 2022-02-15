@@ -16,17 +16,27 @@ import {
 } from './assets/interfaces/interfaces';
 import CardsSection from './components/cards';
 
-const Result = styled.span`
-	color: ${props => props.theme.color.main};
-	text-align: center;
+const AppWrapper = styled.div`
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
 `;
 
 const Main = styled.main`
 	margin: ${props => props.theme.side_padding};
-	flex-grow: 2;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	flex: 1;
+`;
+
+const Result = styled.div`
+	color: ${props => props.theme.color.main};
+	width: 100%;
+	height: 4rem;
+	font-size: 1.5em;
+	line-height: 4rem;
+	text-align: center;
 `;
 
 function App() {
@@ -155,7 +165,7 @@ function App() {
 	}, [selectedConstructions, selectedActions]);
 
 	return (
-		<>
+		<AppWrapper>
 			<Header />
 			<Main>
 				<CardsSection updateCard={updateSelectedCard} />
@@ -173,7 +183,7 @@ function App() {
 				/>
 				<Result>{result}</Result>
 			</Main>
-		</>
+		</AppWrapper>
 	);
 }
 

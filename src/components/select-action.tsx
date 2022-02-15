@@ -11,6 +11,7 @@ import ButtonComponent from './button';
 const Container = styled.ul`
 	display: flex;
 	align-items: center;
+	flex-grow: 1 0 5rem;
 	justify-content: space-between;
 	.on {
 		opacity: 1;
