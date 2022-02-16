@@ -43,25 +43,38 @@ function SelectAction({
 
 	return (
 		<Container>
-			{actions['buy'] ? (
+			{constructions['landmark'] &&
+			Object.values(constructions).filter(value => value === true)
+				.length > 1 ? (
 				<ButtonComponent
-					className={'on'}
+					className={'hide'}
 					icon={<i className='fas fa-circle-play'></i>}
 					name='구매'
-					callback={() => {
-						updateSelectedActions('buy');
-					}}
+					callback={() => {}}
 				></ButtonComponent>
 			) : (
-				<ButtonComponent
-					className={'off'}
-					icon={<i className='fas fa-circle-play'></i>}
-					name='구매'
-					callback={() => {
-						actionDisabler('pay', 'sell', 'takeOver');
-						updateSelectedActions('buy');
-					}}
-				></ButtonComponent>
+				<>
+					{actions['buy'] ? (
+						<ButtonComponent
+							className={'on'}
+							icon={<i className='fas fa-circle-play'></i>}
+							name='구매'
+							callback={() => {
+								updateSelectedActions('buy');
+							}}
+						></ButtonComponent>
+					) : (
+						<ButtonComponent
+							className={'off'}
+							icon={<i className='fas fa-circle-play'></i>}
+							name='구매'
+							callback={() => {
+								actionDisabler('pay', 'sell', 'takeOver');
+								updateSelectedActions('buy');
+							}}
+						></ButtonComponent>
+					)}
+				</>
 			)}
 
 			{actions['pay'] ? (
