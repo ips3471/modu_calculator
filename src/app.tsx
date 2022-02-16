@@ -83,13 +83,25 @@ function App() {
 		setSelectedCard(card);
 	};
 
-	const getResult = () => {
-		console.log('get result');
-		return 0;
-	};
+	useEffect(() => {
+		setResult(0);
+		setSelectedConstructions(current => {
+			const states = { ...current };
+			Object.keys(states).forEach(item => {
+				states[item as keyof typeof states] = false;
+			});
+			return states;
+		});
+		setSelectedActions(current => {
+			const states = { ...current };
+			Object.keys(states).forEach(item => {
+				states[item as keyof typeof states] = false;
+			});
+			return states;
+		});
+	}, [selectedCard]);
 
 	useEffect(() => {
-		console.clear();
 		const card = selectedCard;
 		const actions = selectedActions;
 		const constructions = selectedConstructions;
