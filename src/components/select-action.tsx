@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {
 	ActionTypes,
+	ConstructionTypes,
 	IsConstructingStates,
 	IsExecutingStates,
 	UpdateSelectedActions,
@@ -40,12 +41,23 @@ function SelectAction({
 			actions[actionType] && updateSelectedActions(actionType);
 		});
 	}
+	function handleHide(): boolean {
+		return prohibitTakeOver() || prohibitBuy('parasol', 'bangalore');
+	}
+	function prohibitTakeOver() {
+		return (
+			constructions['landmark'] &&
+			Object.values(constructions).filter(value => value === true)
+				.length > 1
+		);
+	}
+	function prohibitBuy(...items: ConstructionTypes[]) {
+		return items.some(item => constructions[item] === true);
+	}
 
 	return (
 		<Container>
-			{constructions['landmark'] &&
-			Object.values(constructions).filter(value => value === true)
-				.length > 1 ? (
+			{handleHide() ? (
 				<ButtonComponent
 					className={'hide'}
 					icon={<i className='fas fa-circle-play'></i>}
