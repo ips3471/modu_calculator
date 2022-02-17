@@ -24,14 +24,14 @@ const Container = styled.ul`
 `;
 
 type ActionProps = {
-	statesDisabler: (
+	actionsDisabler: (
 		parent: ExecutingStates<ActionTypes>,
 		setState: React.Dispatch<SetStateAction<ExecutingStates<ActionTypes>>>,
 		...states: ActionTypes[]
 	) => void;
 	constructions: ExecutingStates<WholeConstructionTypes>;
 	actions: ExecutingStates<ActionTypes>;
-	setState: React.Dispatch<SetStateAction<ExecutingStates<ActionTypes>>>;
+	setAction: React.Dispatch<SetStateAction<ExecutingStates<ActionTypes>>>;
 	statesSwitch: (
 		setState: React.Dispatch<SetStateAction<ExecutingStates<ActionTypes>>>,
 		state: ActionTypes,
@@ -39,17 +39,12 @@ type ActionProps = {
 };
 
 function SelectAction({
-	statesDisabler,
+	actionsDisabler,
 	actions,
 	constructions,
-	setState,
+	setAction,
 	statesSwitch,
 }: ActionProps) {
-	// function actionDisabler(...actionTypes: ActionTypes[]): void {
-	// 	actionTypes.forEach(actionType => {
-	// 		actions[actionType] && updateSelectedActions(actionType);
-	// 	});
-	// }
 	function handleHide(): boolean {
 		return prohibitTakeOver() || prohibitBuy('parasol', 'bangalore');
 	}
@@ -81,7 +76,7 @@ function SelectAction({
 							icon={<i className='fas fa-circle-play'></i>}
 							name='구매'
 							callback={() => {
-								statesSwitch(setState, 'buy');
+								statesSwitch(setAction, 'buy');
 							}}
 						></ButtonComponent>
 					) : (
@@ -90,14 +85,14 @@ function SelectAction({
 							icon={<i className='fas fa-circle-play'></i>}
 							name='구매'
 							callback={() => {
-								statesDisabler(
+								actionsDisabler(
 									actions,
-									setState,
+									setAction,
 									'pay',
 									'sell',
 									'takeOver',
 								);
-								statesSwitch(setState, 'buy');
+								statesSwitch(setAction, 'buy');
 							}}
 						></ButtonComponent>
 					)}
@@ -110,7 +105,7 @@ function SelectAction({
 					icon={<i className='fas fa-circle-pause'></i>}
 					name='지불'
 					callback={() => {
-						statesSwitch(setState, 'pay');
+						statesSwitch(setAction, 'pay');
 					}}
 				></ButtonComponent>
 			) : (
@@ -119,8 +114,8 @@ function SelectAction({
 					icon={<i className='fas fa-circle-pause'></i>}
 					name='지불'
 					callback={() => {
-						statesDisabler(actions, setState, 'buy', 'sell');
-						statesSwitch(setState, 'pay');
+						actionsDisabler(actions, setAction, 'buy', 'sell');
+						statesSwitch(setAction, 'pay');
 					}}
 				></ButtonComponent>
 			)}
@@ -140,7 +135,7 @@ function SelectAction({
 							icon={<i className='fas fa-circle-dot'></i>}
 							name='인수'
 							callback={() => {
-								statesSwitch(setState, 'takeOver');
+								statesSwitch(setAction, 'takeOver');
 							}}
 						></ButtonComponent>
 					) : (
@@ -149,13 +144,13 @@ function SelectAction({
 							icon={<i className='fas fa-circle-dot'></i>}
 							name='인수'
 							callback={() => {
-								statesDisabler(
+								actionsDisabler(
 									actions,
-									setState,
+									setAction,
 									'buy',
 									'sell',
 								);
-								statesSwitch(setState, 'takeOver');
+								statesSwitch(setAction, 'takeOver');
 							}}
 						></ButtonComponent>
 					)}
@@ -168,7 +163,7 @@ function SelectAction({
 					icon={<i className='fas fa-circle-stop'></i>}
 					name='매각'
 					callback={() => {
-						statesSwitch(setState, 'sell');
+						statesSwitch(setAction, 'sell');
 					}}
 				></ButtonComponent>
 			) : (
@@ -177,14 +172,14 @@ function SelectAction({
 					icon={<i className='fas fa-circle-stop'></i>}
 					name='매각'
 					callback={() => {
-						statesDisabler(
+						actionsDisabler(
 							actions,
-							setState,
+							setAction,
 							'buy',
 							'takeOver',
 							'pay',
 						);
-						statesSwitch(setState, 'sell');
+						statesSwitch(setAction, 'sell');
 					}}
 				></ButtonComponent>
 			)}

@@ -5,7 +5,6 @@ import {
 	WholeConstructionTypes,
 	ExecutingStates,
 	ActionTypes,
-	UpdatingState,
 } from '../assets/interfaces/interfaces';
 import { sortVacationSpot } from '../utill/utill';
 import ButtonComponent from './button';
@@ -26,26 +25,40 @@ const Container = styled.ul`
 type ConstructionProps = {
 	card: Card | null;
 	constructions: ExecutingStates<WholeConstructionTypes>;
-	updateActions: UpdatingState<ActionTypes>;
 	actions: ExecutingStates<ActionTypes>;
-	setState: React.Dispatch<
+	setConstruction: React.Dispatch<
 		SetStateAction<ExecutingStates<WholeConstructionTypes>>
 	>;
-	statesSwitch: (
+	setAction: React.Dispatch<SetStateAction<ExecutingStates<ActionTypes>>>;
+	stateSwitch: (
 		setState: React.Dispatch<
 			SetStateAction<ExecutingStates<WholeConstructionTypes>>
 		>,
 		state: WholeConstructionTypes,
 	) => void;
+	constructionsDisabler: (
+		parent: ExecutingStates<WholeConstructionTypes>,
+		setState: React.Dispatch<
+			SetStateAction<ExecutingStates<WholeConstructionTypes>>
+		>,
+		...states: WholeConstructionTypes[]
+	) => void;
+	actionsDisabler: (
+		parent: ExecutingStates<ActionTypes>,
+		setState: React.Dispatch<SetStateAction<ExecutingStates<ActionTypes>>>,
+		...states: ActionTypes[]
+	) => void;
 };
 
 function SelectConstruction({
 	card,
-	updateActions,
+	setAction,
 	constructions,
 	actions,
-	setState,
-	statesSwitch,
+	setConstruction,
+	stateSwitch,
+	constructionsDisabler,
+	actionsDisabler,
 }: ConstructionProps) {
 	const isVacationSpot = sortVacationSpot(card);
 
@@ -59,7 +72,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-flag'></i>}
 							name='땅'
 							callback={() => {
-								statesSwitch(setState, 'flag');
+								stateSwitch(setConstruction, 'flag');
 							}}
 						/>
 					) : (
@@ -68,7 +81,13 @@ function SelectConstruction({
 							icon={<i className='fas fa-flag'></i>}
 							name='땅'
 							callback={() => {
-								statesSwitch(setState, 'flag');
+								stateSwitch(setConstruction, 'flag');
+								constructionsDisabler(
+									constructions,
+									setConstruction,
+									'parasol',
+									'bangalore',
+								);
 							}}
 						/>
 					)}
@@ -78,7 +97,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-archway'></i>}
 							name='파라솔'
 							callback={() => {
-								statesSwitch(setState, 'parasol');
+								stateSwitch(setConstruction, 'parasol');
 							}}
 						/>
 					) : (
@@ -87,7 +106,13 @@ function SelectConstruction({
 							icon={<i className='fas fa-archway'></i>}
 							name='파라솔'
 							callback={() => {
-								statesSwitch(setState, 'parasol');
+								stateSwitch(setConstruction, 'parasol');
+								constructionsDisabler(
+									constructions,
+									setConstruction,
+									'flag',
+									'bangalore',
+								);
 							}}
 						/>
 					)}
@@ -97,7 +122,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-landmark'></i>}
 							name='방갈로'
 							callback={() => {
-								statesSwitch(setState, 'bangalore');
+								stateSwitch(setConstruction, 'bangalore');
 							}}
 						/>
 					) : (
@@ -106,7 +131,13 @@ function SelectConstruction({
 							icon={<i className='fas fa-landmark'></i>}
 							name='방갈로'
 							callback={() => {
-								statesSwitch(setState, 'bangalore');
+								stateSwitch(setConstruction, 'bangalore');
+								constructionsDisabler(
+									constructions,
+									setConstruction,
+									'parasol',
+									'flag',
+								);
 							}}
 						/>
 					)}
@@ -119,7 +150,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-flag'></i>}
 							name='땅'
 							callback={() => {
-								statesSwitch(setState, 'land');
+								stateSwitch(setConstruction, 'land');
 							}}
 						/>
 					) : (
@@ -128,7 +159,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-flag'></i>}
 							name='땅'
 							callback={() => {
-								statesSwitch(setState, 'land');
+								stateSwitch(setConstruction, 'land');
 							}}
 						/>
 					)}
@@ -138,7 +169,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-store'></i>}
 							name='별장'
 							callback={() => {
-								statesSwitch(setState, 'villa');
+								stateSwitch(setConstruction, 'villa');
 							}}
 						/>
 					) : (
@@ -147,7 +178,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-store'></i>}
 							name='별장'
 							callback={() => {
-								statesSwitch(setState, 'villa');
+								stateSwitch(setConstruction, 'villa');
 							}}
 						/>
 					)}
@@ -157,7 +188,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-building'></i>}
 							name='빌딩'
 							callback={() => {
-								statesSwitch(setState, 'building');
+								stateSwitch(setConstruction, 'building');
 							}}
 						/>
 					) : (
@@ -166,7 +197,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-building'></i>}
 							name='빌딩'
 							callback={() => {
-								statesSwitch(setState, 'building');
+								stateSwitch(setConstruction, 'building');
 							}}
 						/>
 					)}
@@ -176,7 +207,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-hotel'></i>}
 							name='호텔'
 							callback={() => {
-								statesSwitch(setState, 'hotel');
+								stateSwitch(setConstruction, 'hotel');
 							}}
 						/>
 					) : (
@@ -185,7 +216,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-hotel'></i>}
 							name='호텔'
 							callback={() => {
-								statesSwitch(setState, 'hotel');
+								stateSwitch(setConstruction, 'hotel');
 							}}
 						/>
 					)}
@@ -195,7 +226,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-mosque'></i>}
 							name='랜드마크'
 							callback={() => {
-								statesSwitch(setState, 'landmark');
+								stateSwitch(setConstruction, 'landmark');
 							}}
 						/>
 					) : (
@@ -205,9 +236,13 @@ function SelectConstruction({
 							name='랜드마크'
 							callback={() => {
 								if (actions['takeOver']) {
-									updateActions('takeOver');
+									actionsDisabler(
+										actions,
+										setAction,
+										'takeOver',
+									);
 								}
-								statesSwitch(setState, 'landmark');
+								stateSwitch(setConstruction, 'landmark');
 							}}
 						/>
 					)}

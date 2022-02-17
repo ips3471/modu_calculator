@@ -65,19 +65,20 @@ function App() {
 		sell: false,
 	});
 
-	const updateSelectedConstructions = (type: WholeConstructionTypes) => {
-		setSelectedConstructions(current => {
-			const states = { ...current };
-			states[type] = !current[type];
-			return states;
-		});
-	};
+	// const updateSelectedConstructions = (state: WholeConstructionTypes) => {
+	// 	setSelectedConstructions(current => {
+	// 		const states = { ...current };
+	// 		states[state] = !current[state];
+	// 		return states;
+	// 	});
+	// };
 
-	const updateSelectedActions = (type: ActionTypes) => {
+	const updateSelectedActions = (state: ActionTypes) => {
 		setSelectedActions(current => {
-			const states = { ...current };
-			states[type] = !current[type];
-			return states;
+			return {
+				...current,
+				[state]: !current[state],
+			};
 		});
 	};
 
@@ -88,15 +89,21 @@ function App() {
 	): void {
 		states.forEach(state => {
 			if (parent[state]) {
+				console.log(parent[state]);
 				setState(current => {
 					return {
 						...current,
-						state: !current[state],
+						[state]: !current[state],
 					};
 				});
 			}
 		});
 	}
+	useEffect(() => {
+		console.clear();
+		console.log('constructions', selectedConstructions);
+		console.log('actions', selectedActions);
+	}, [selectedConstructions, selectedActions]);
 
 	function statesSwitch<T extends ActionTypes | WholeConstructionTypes>(
 		setState: React.Dispatch<SetStateAction<ExecutingStates<T>>>, // {} => {}
@@ -231,15 +238,17 @@ function App() {
 					card={selectedCard}
 					actions={selectedActions}
 					constructions={selectedConstructions}
-					updateActions={updateSelectedActions}
-					setState={setSelectedConstructions}
-					statesSwitch={statesSwitch}
+					setConstruction={setSelectedConstructions}
+					setAction={setSelectedActions}
+					stateSwitch={statesSwitch}
+					constructionsDisabler={statesDisabler}
+					actionsDisabler={statesDisabler}
 				/>
 				<SelectAction
 					actions={selectedActions}
 					constructions={selectedConstructions}
-					statesDisabler={statesDisabler}
-					setState={setSelectedActions}
+					actionsDisabler={statesDisabler}
+					setAction={setSelectedActions}
 					statesSwitch={statesSwitch}
 				/>
 				<Result>{result}</Result>
