@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, SetStateAction } from 'react';
 import Header from './components/header';
 import styled from 'styled-components';
 import { useState } from 'react';
@@ -7,7 +7,6 @@ import SelectAction from './components/select-action';
 import {
 	ActionTypes,
 	Card,
-	ConstructionTypes,
 	CostTable,
 	ExecutingStates,
 	NormalCityLevel,
@@ -66,7 +65,7 @@ function App() {
 		sell: false,
 	});
 
-	const updateSelectedConstructions = (type: ConstructionTypes) => {
+	const updateSelectedConstructions = (type: WholeConstructionTypes) => {
 		setSelectedConstructions(current => {
 			const states = { ...current };
 			states[type] = !current[type];
@@ -82,9 +81,41 @@ function App() {
 		});
 	};
 
+	function statesDisabler<T extends ActionTypes | WholeConstructionTypes>(
+		parent: ExecutingStates<T>,
+		setState: React.Dispatch<SetStateAction<ExecutingStates<T>>>,
+		...states: T[]
+	): void {
+		states.forEach(state => {
+			if (parent[state]) {
+				setState(current => {
+					return {
+						...current,
+						state: !current[state],
+					};
+				});
+			}
+		});
+	}
+
+	function statesSwitch<T extends ActionTypes | WholeConstructionTypes>(
+		setState: React.Dispatch<SetStateAction<ExecutingStates<T>>>, // {} => {}
+		state: T, // 'buy'
+	): void {
+		setState(current => {
+			const states = { ...current };
+			states[state] = !current[state];
+			return states;
+		});
+	}
+
 	const updateSelectedCard = (card: Card) => {
 		setSelectedCard(card);
 	};
+
+	useEffect(() => {
+		console.log(selectedCard?.name);
+	}, [selectedCard]);
 
 	useEffect(() => {
 		setResult(0);
@@ -112,8 +143,8 @@ function App() {
 		// actives in constructions
 		const isConstructing = Object.keys(constructions).filter(
 			construction =>
-				constructions[construction as ConstructionTypes] === true,
-		) as ConstructionTypes[];
+				constructions[construction as WholeConstructionTypes] === true,
+		) as WholeConstructionTypes[];
 		if (isConstructing.length == 0) {
 			console.log('empty constructions:', isConstructing);
 			return;
@@ -200,13 +231,16 @@ function App() {
 					card={selectedCard}
 					actions={selectedActions}
 					constructions={selectedConstructions}
-					updateConstructions={updateSelectedConstructions}
 					updateActions={updateSelectedActions}
+					setState={setSelectedConstructions}
+					statesSwitch={statesSwitch}
 				/>
 				<SelectAction
 					actions={selectedActions}
 					constructions={selectedConstructions}
-					updateSelectedActions={updateSelectedActions}
+					statesDisabler={statesDisabler}
+					setState={setSelectedActions}
+					statesSwitch={statesSwitch}
 				/>
 				<Result>{result}</Result>
 			</Main>

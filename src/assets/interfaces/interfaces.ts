@@ -19,15 +19,13 @@ export type Cards = {
 	[key: string]: Card;
 };
 
-export type WholeConstructionTypes = NormalCityLevel | VacationSpotLevel;
-
 export type CostTable<T extends WholeConstructionTypes> = Record<
 	T,
 	CostByAction
 >;
 
 /** Constructing */
-export type ConstructionTypes = NormalCityLevel | VacationSpotLevel;
+export type WholeConstructionTypes = NormalCityLevel | VacationSpotLevel;
 
 /** Action */
 export type CostByAction = Record<ActionTypes, number | undefined>;

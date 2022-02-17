@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SetStateAction } from 'react';
 import styled from 'styled-components';
 import {
 	Card,
@@ -26,17 +26,26 @@ const Container = styled.ul`
 type ConstructionProps = {
 	card: Card | null;
 	constructions: ExecutingStates<WholeConstructionTypes>;
-	updateConstructions: UpdatingState<WholeConstructionTypes>;
 	updateActions: UpdatingState<ActionTypes>;
 	actions: ExecutingStates<ActionTypes>;
+	setState: React.Dispatch<
+		SetStateAction<ExecutingStates<WholeConstructionTypes>>
+	>;
+	statesSwitch: (
+		setState: React.Dispatch<
+			SetStateAction<ExecutingStates<WholeConstructionTypes>>
+		>,
+		state: WholeConstructionTypes,
+	) => void;
 };
 
 function SelectConstruction({
 	card,
-	updateConstructions,
 	updateActions,
 	constructions,
 	actions,
+	setState,
+	statesSwitch,
 }: ConstructionProps) {
 	const isVacationSpot = sortVacationSpot(card);
 
@@ -50,7 +59,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-flag'></i>}
 							name='땅'
 							callback={() => {
-								updateConstructions('flag');
+								statesSwitch(setState, 'flag');
 							}}
 						/>
 					) : (
@@ -59,7 +68,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-flag'></i>}
 							name='땅'
 							callback={() => {
-								updateConstructions('flag');
+								statesSwitch(setState, 'flag');
 							}}
 						/>
 					)}
@@ -69,7 +78,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-archway'></i>}
 							name='파라솔'
 							callback={() => {
-								updateConstructions('parasol');
+								statesSwitch(setState, 'parasol');
 							}}
 						/>
 					) : (
@@ -78,7 +87,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-archway'></i>}
 							name='파라솔'
 							callback={() => {
-								updateConstructions('parasol');
+								statesSwitch(setState, 'parasol');
 							}}
 						/>
 					)}
@@ -88,7 +97,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-landmark'></i>}
 							name='방갈로'
 							callback={() => {
-								updateConstructions('bangalore');
+								statesSwitch(setState, 'bangalore');
 							}}
 						/>
 					) : (
@@ -97,7 +106,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-landmark'></i>}
 							name='방갈로'
 							callback={() => {
-								updateConstructions('bangalore');
+								statesSwitch(setState, 'bangalore');
 							}}
 						/>
 					)}
@@ -110,7 +119,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-flag'></i>}
 							name='땅'
 							callback={() => {
-								updateConstructions('land');
+								statesSwitch(setState, 'land');
 							}}
 						/>
 					) : (
@@ -119,7 +128,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-flag'></i>}
 							name='땅'
 							callback={() => {
-								updateConstructions('land');
+								statesSwitch(setState, 'land');
 							}}
 						/>
 					)}
@@ -129,7 +138,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-store'></i>}
 							name='별장'
 							callback={() => {
-								updateConstructions('villa');
+								statesSwitch(setState, 'villa');
 							}}
 						/>
 					) : (
@@ -138,7 +147,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-store'></i>}
 							name='별장'
 							callback={() => {
-								updateConstructions('villa');
+								statesSwitch(setState, 'villa');
 							}}
 						/>
 					)}
@@ -148,7 +157,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-building'></i>}
 							name='빌딩'
 							callback={() => {
-								updateConstructions('building');
+								statesSwitch(setState, 'building');
 							}}
 						/>
 					) : (
@@ -157,7 +166,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-building'></i>}
 							name='빌딩'
 							callback={() => {
-								updateConstructions('building');
+								statesSwitch(setState, 'building');
 							}}
 						/>
 					)}
@@ -167,7 +176,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-hotel'></i>}
 							name='호텔'
 							callback={() => {
-								updateConstructions('hotel');
+								statesSwitch(setState, 'hotel');
 							}}
 						/>
 					) : (
@@ -176,7 +185,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-hotel'></i>}
 							name='호텔'
 							callback={() => {
-								updateConstructions('hotel');
+								statesSwitch(setState, 'hotel');
 							}}
 						/>
 					)}
@@ -186,7 +195,7 @@ function SelectConstruction({
 							icon={<i className='fas fa-mosque'></i>}
 							name='랜드마크'
 							callback={() => {
-								updateConstructions('landmark');
+								statesSwitch(setState, 'landmark');
 							}}
 						/>
 					) : (
@@ -198,7 +207,7 @@ function SelectConstruction({
 								if (actions['takeOver']) {
 									updateActions('takeOver');
 								}
-								updateConstructions('landmark');
+								statesSwitch(setState, 'landmark');
 							}}
 						/>
 					)}

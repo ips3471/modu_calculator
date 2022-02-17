@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { SetStateAction } from 'react';
 import styled from 'styled-components';
 import {
 	ActionTypes,
-	ConstructionTypes,
 	ExecutingStates,
 	WholeConstructionTypes,
-	UpdatingState,
 } from '../assets/interfaces/interfaces';
 import ButtonComponent from './button';
 
@@ -26,21 +24,32 @@ const Container = styled.ul`
 `;
 
 type ActionProps = {
-	updateSelectedActions: UpdatingState<ActionTypes>;
+	statesDisabler: (
+		parent: ExecutingStates<ActionTypes>,
+		setState: React.Dispatch<SetStateAction<ExecutingStates<ActionTypes>>>,
+		...states: ActionTypes[]
+	) => void;
 	constructions: ExecutingStates<WholeConstructionTypes>;
 	actions: ExecutingStates<ActionTypes>;
+	setState: React.Dispatch<SetStateAction<ExecutingStates<ActionTypes>>>;
+	statesSwitch: (
+		setState: React.Dispatch<SetStateAction<ExecutingStates<ActionTypes>>>,
+		state: ActionTypes,
+	) => void;
 };
 
 function SelectAction({
-	updateSelectedActions,
+	statesDisabler,
 	actions,
 	constructions,
+	setState,
+	statesSwitch,
 }: ActionProps) {
-	function actionDisabler(...actionTypes: ActionTypes[]): void {
-		actionTypes.forEach(actionType => {
-			actions[actionType] && updateSelectedActions(actionType);
-		});
-	}
+	// function actionDisabler(...actionTypes: ActionTypes[]): void {
+	// 	actionTypes.forEach(actionType => {
+	// 		actions[actionType] && updateSelectedActions(actionType);
+	// 	});
+	// }
 	function handleHide(): boolean {
 		return prohibitTakeOver() || prohibitBuy('parasol', 'bangalore');
 	}
@@ -51,7 +60,7 @@ function SelectAction({
 				.length > 1
 		);
 	}
-	function prohibitBuy(...items: ConstructionTypes[]) {
+	function prohibitBuy(...items: WholeConstructionTypes[]) {
 		return items.some(item => constructions[item] === true);
 	}
 
@@ -72,7 +81,7 @@ function SelectAction({
 							icon={<i className='fas fa-circle-play'></i>}
 							name='구매'
 							callback={() => {
-								updateSelectedActions('buy');
+								statesSwitch(setState, 'buy');
 							}}
 						></ButtonComponent>
 					) : (
@@ -81,8 +90,14 @@ function SelectAction({
 							icon={<i className='fas fa-circle-play'></i>}
 							name='구매'
 							callback={() => {
-								actionDisabler('pay', 'sell', 'takeOver');
-								updateSelectedActions('buy');
+								statesDisabler(
+									actions,
+									setState,
+									'pay',
+									'sell',
+									'takeOver',
+								);
+								statesSwitch(setState, 'buy');
 							}}
 						></ButtonComponent>
 					)}
@@ -95,7 +110,7 @@ function SelectAction({
 					icon={<i className='fas fa-circle-pause'></i>}
 					name='지불'
 					callback={() => {
-						updateSelectedActions('pay');
+						statesSwitch(setState, 'pay');
 					}}
 				></ButtonComponent>
 			) : (
@@ -104,8 +119,8 @@ function SelectAction({
 					icon={<i className='fas fa-circle-pause'></i>}
 					name='지불'
 					callback={() => {
-						actionDisabler('buy', 'sell');
-						updateSelectedActions('pay');
+						statesDisabler(actions, setState, 'buy', 'sell');
+						statesSwitch(setState, 'pay');
 					}}
 				></ButtonComponent>
 			)}
@@ -125,7 +140,7 @@ function SelectAction({
 							icon={<i className='fas fa-circle-dot'></i>}
 							name='인수'
 							callback={() => {
-								updateSelectedActions('takeOver');
+								statesSwitch(setState, 'takeOver');
 							}}
 						></ButtonComponent>
 					) : (
@@ -134,8 +149,13 @@ function SelectAction({
 							icon={<i className='fas fa-circle-dot'></i>}
 							name='인수'
 							callback={() => {
-								actionDisabler('buy', 'sell');
-								updateSelectedActions('takeOver');
+								statesDisabler(
+									actions,
+									setState,
+									'buy',
+									'sell',
+								);
+								statesSwitch(setState, 'takeOver');
 							}}
 						></ButtonComponent>
 					)}
@@ -148,7 +168,7 @@ function SelectAction({
 					icon={<i className='fas fa-circle-stop'></i>}
 					name='매각'
 					callback={() => {
-						updateSelectedActions('sell');
+						statesSwitch(setState, 'sell');
 					}}
 				></ButtonComponent>
 			) : (
@@ -157,8 +177,14 @@ function SelectAction({
 					icon={<i className='fas fa-circle-stop'></i>}
 					name='매각'
 					callback={() => {
-						actionDisabler('pay', 'buy', 'takeOver');
-						updateSelectedActions('sell');
+						statesDisabler(
+							actions,
+							setState,
+							'buy',
+							'takeOver',
+							'pay',
+						);
+						statesSwitch(setState, 'sell');
 					}}
 				></ButtonComponent>
 			)}
