@@ -188,11 +188,6 @@ function App() {
 									`value not matchs to cost table ${value}`,
 								);
 								value = 0;
-								setSelectedConstructions(nomalCities => {
-									const states = { ...nomalCities };
-									states[construction] = false;
-									return states;
-								});
 								setSelectedActions(actions => {
 									const states = { ...actions };
 									states[action] = false;
