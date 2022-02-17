@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import {
 	Card,
-	IsConstructingStates,
-	IsExecutingStates,
+	WholeConstructionTypes,
+	ExecutingStates,
+	ActionTypes,
 	UpdateSelectedActions,
 	UpdateSelectedConstructions,
 } from '../assets/interfaces/interfaces';
@@ -25,10 +26,10 @@ const Container = styled.ul`
 
 type ConstructionProps = {
 	card: Card | null;
-	constructions: IsConstructingStates;
+	constructions: ExecutingStates<WholeConstructionTypes>;
 	updateConstructions: UpdateSelectedConstructions;
 	updateActions: UpdateSelectedActions;
-	actions: IsExecutingStates;
+	actions: ExecutingStates<ActionTypes>;
 };
 
 function SelectConstruction({

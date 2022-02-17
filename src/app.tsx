@@ -9,10 +9,10 @@ import {
 	Card,
 	ConstructionTypes,
 	CostTable,
-	IsConstructingStates,
-	IsExecutingStates,
+	ExecutingStates,
 	NormalCityLevel,
 	VacationSpotLevel,
+	WholeConstructionTypes,
 } from './assets/interfaces/interfaces';
 import CardsSection from './components/cards';
 
@@ -44,19 +44,22 @@ function App() {
 
 	const [selectedCard, setSelectedCard] = useState<Card | null>(null);
 
-	const [selectedConstructions, setSelectedConstructions] =
-		useState<IsConstructingStates>({
-			land: false,
-			villa: false,
-			building: false,
-			hotel: false,
-			landmark: false,
-			flag: false,
-			parasol: false,
-			bangalore: false,
-		});
+	const [selectedConstructions, setSelectedConstructions] = useState<
+		ExecutingStates<WholeConstructionTypes>
+	>({
+		land: false,
+		villa: false,
+		building: false,
+		hotel: false,
+		landmark: false,
+		flag: false,
+		parasol: false,
+		bangalore: false,
+	});
 
-	const [selectedActions, setSelectedActions] = useState<IsExecutingStates>({
+	const [selectedActions, setSelectedActions] = useState<
+		ExecutingStates<ActionTypes>
+	>({
 		buy: false,
 		pay: false,
 		takeOver: false,
@@ -138,14 +141,25 @@ function App() {
 						isConstructing.forEach(construction => {
 							const costTable =
 								card.cost as CostTable<VacationSpotLevel>;
-							const value =
+							let value =
 								costTable[construction as VacationSpotLevel][
 									action
 								];
 							if (!value) {
-								throw new Error(
+								console.info(
 									`value not matchs to cost table ${value}`,
 								);
+								value = 0;
+								setSelectedConstructions(nomalCities => {
+									const states = { ...nomalCities };
+									states[construction] = false;
+									return states;
+								});
+								setSelectedActions(actions => {
+									const states = { ...actions };
+									states[action] = false;
+									return states;
+								});
 							}
 							total += value;
 						});
@@ -158,14 +172,15 @@ function App() {
 						isConstructing.forEach(construction => {
 							const costTable =
 								card.cost as CostTable<NormalCityLevel>;
-							const value =
+							let value =
 								costTable[construction as NormalCityLevel][
 									action
 								];
 							if (!value) {
-								throw new Error(
+								console.info(
 									`value not matchs to cost table ${value}`,
 								);
+								value = 0;
 							}
 							total += value;
 						});

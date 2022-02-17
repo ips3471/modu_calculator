@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import {
 	ActionTypes,
 	ConstructionTypes,
-	IsConstructingStates,
-	IsExecutingStates,
+	ExecutingStates,
+	WholeConstructionTypes,
 	UpdateSelectedActions,
 } from '../assets/interfaces/interfaces';
 import ButtonComponent from './button';
@@ -26,9 +26,9 @@ const Container = styled.ul`
 `;
 
 type ActionProps = {
-	actions: IsExecutingStates;
-	constructions: IsConstructingStates;
 	updateSelectedActions: UpdateSelectedActions;
+	constructions: ExecutingStates<WholeConstructionTypes>;
+	actions: ExecutingStates<ActionTypes>;
 };
 
 function SelectAction({

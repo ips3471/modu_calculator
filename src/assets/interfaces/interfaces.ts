@@ -19,23 +19,23 @@ export type Cards = {
 	[key: string]: Card;
 };
 
-export type CostTable<T extends NormalCityLevel | VacationSpotLevel> = Record<
+export type WholeConstructionTypes = NormalCityLevel | VacationSpotLevel;
+
+export type CostTable<T extends WholeConstructionTypes> = Record<
 	T,
 	CostByAction
 >;
 
-export type CostByAction = Record<ActionTypes, number | undefined>;
-
 /** Constructing */
-export type IsConstructingStates = {
-	[construction in NormalCityLevel | VacationSpotLevel]: boolean;
-};
-export type IsExecutingStates = {
-	[Actions in ActionTypes]: boolean;
-};
 export type ConstructionTypes = NormalCityLevel | VacationSpotLevel;
+
+/** Action */
+export type CostByAction = Record<ActionTypes, number | undefined>;
 
 /** App */
 export type UpdateSelectedConstructions = (type: ConstructionTypes) => void;
 export type UpdateSelectedActions = (type: ActionTypes) => void;
 export type UpdateSelectedCard = (card: Card) => void;
+export type ExecutingStates<T extends WholeConstructionTypes | ActionTypes> = {
+	[state in T]: boolean;
+};
