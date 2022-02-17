@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Card, UpdateSelectedCard } from '../assets/interfaces/interfaces';
+import { Card, UpdatingState } from '../assets/interfaces/interfaces';
 
 // background: url(${props => props.defaultValue}) center/cover no-repeat;
 const CardSection = styled.button.attrs(props => ({
@@ -34,15 +34,11 @@ const Image = styled.img.attrs(props => ({
 
 type CardItemProps = {
 	card: Card;
-	updateCard: UpdateSelectedCard;
+	updateCard: UpdatingState<Card>;
 };
 
 function CardItem({ card, updateCard }: CardItemProps) {
 	const { name, src } = card;
-
-	// const onCardClick = () => {
-	// 	console.log('onCardClick');
-	// };
 
 	return (
 		<CardSection
