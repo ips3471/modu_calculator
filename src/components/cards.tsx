@@ -6,7 +6,7 @@ import {
 	printCostTableForNormalCity,
 	SPECIAL_COST,
 } from '../utill/utill';
-import { Cards, Card } from '../assets/interfaces/interfaces';
+import { Cards, Card, UpdatingState } from '../assets/interfaces/interfaces';
 
 const Container = styled.ul`
 	display: grid;
@@ -18,7 +18,7 @@ const Container = styled.ul`
 `;
 
 type CardsProps = {
-	updateCard: (card: Card) => void;
+	updateCard: UpdatingState<Card>;
 };
 
 function CardsSection({ updateCard }: CardsProps) {

@@ -5,8 +5,7 @@ import {
 	WholeConstructionTypes,
 	ExecutingStates,
 	ActionTypes,
-	UpdateSelectedActions,
-	UpdateSelectedConstructions,
+	UpdatingState,
 } from '../assets/interfaces/interfaces';
 import { sortVacationSpot } from '../utill/utill';
 import ButtonComponent from './button';
@@ -27,8 +26,8 @@ const Container = styled.ul`
 type ConstructionProps = {
 	card: Card | null;
 	constructions: ExecutingStates<WholeConstructionTypes>;
-	updateConstructions: UpdateSelectedConstructions;
-	updateActions: UpdateSelectedActions;
+	updateConstructions: UpdatingState<WholeConstructionTypes>;
+	updateActions: UpdatingState<ActionTypes>;
 	actions: ExecutingStates<ActionTypes>;
 };
 

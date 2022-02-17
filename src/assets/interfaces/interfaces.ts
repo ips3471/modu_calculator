@@ -33,9 +33,7 @@ export type ConstructionTypes = NormalCityLevel | VacationSpotLevel;
 export type CostByAction = Record<ActionTypes, number | undefined>;
 
 /** App */
-export type UpdateSelectedConstructions = (type: ConstructionTypes) => void;
-export type UpdateSelectedActions = (type: ActionTypes) => void;
-export type UpdateSelectedCard = (card: Card) => void;
+export type UpdatingState<T> = (state: T) => void;
 export type ExecutingStates<T extends WholeConstructionTypes | ActionTypes> = {
 	[state in T]: boolean;
 };

@@ -5,7 +5,7 @@ import {
 	ConstructionTypes,
 	ExecutingStates,
 	WholeConstructionTypes,
-	UpdateSelectedActions,
+	UpdatingState,
 } from '../assets/interfaces/interfaces';
 import ButtonComponent from './button';
 
@@ -26,7 +26,7 @@ const Container = styled.ul`
 `;
 
 type ActionProps = {
-	updateSelectedActions: UpdateSelectedActions;
+	updateSelectedActions: UpdatingState<ActionTypes>;
 	constructions: ExecutingStates<WholeConstructionTypes>;
 	actions: ExecutingStates<ActionTypes>;
 };
