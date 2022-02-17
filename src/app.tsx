@@ -65,14 +65,6 @@ function App() {
 		sell: false,
 	});
 
-	// const updateSelectedConstructions = (state: WholeConstructionTypes) => {
-	// 	setSelectedConstructions(current => {
-	// 		const states = { ...current };
-	// 		states[state] = !current[state];
-	// 		return states;
-	// 	});
-	// };
-
 	const updateSelectedActions = (state: ActionTypes) => {
 		setSelectedActions(current => {
 			return {
@@ -99,11 +91,6 @@ function App() {
 			}
 		});
 	}
-	useEffect(() => {
-		console.clear();
-		console.log('constructions', selectedConstructions);
-		console.log('actions', selectedActions);
-	}, [selectedConstructions, selectedActions]);
 
 	function statesSwitch<T extends ActionTypes | WholeConstructionTypes>(
 		setState: React.Dispatch<SetStateAction<ExecutingStates<T>>>, // {} => {}
@@ -153,6 +140,7 @@ function App() {
 				constructions[construction as WholeConstructionTypes] === true,
 		) as WholeConstructionTypes[];
 		if (isConstructing.length == 0) {
+			setResult(0);
 			console.log('empty constructions:', isConstructing);
 			return;
 		}
@@ -162,11 +150,13 @@ function App() {
 			action => actions[action as ActionTypes] === true,
 		) as ActionTypes[];
 		if (isExecuting.length == 0) {
+			setResult(0);
 			console.log('empty constructions:', isExecuting);
 			return;
 		}
 		// make result
 		if (selectedCard == null) {
+			setResult(0);
 			alert('카드가 선택되지 않았습니다');
 			return;
 		}
