@@ -45,23 +45,29 @@ function SelectAction({
 	setAction,
 	statesSwitch,
 }: ActionProps) {
-	function handleHide(): boolean {
-		return prohibitTakeOver() || prohibitBuy('parasol', 'bangalore');
+	function prohibitBuy(): boolean {
+		return isActionWithLandmark() || prohibitAction('parasol', 'bangalore');
 	}
-	function prohibitTakeOver() {
+	function prohibitTakeOver(): boolean {
+		return (
+			constructions['landmark'] ||
+			prohibitAction('parasol', 'bangalore', 'flag')
+		);
+	}
+	function isActionWithLandmark() {
 		return (
 			constructions['landmark'] &&
 			Object.values(constructions).filter(value => value === true)
 				.length > 1
 		);
 	}
-	function prohibitBuy(...items: WholeConstructionTypes[]) {
+	function prohibitAction(...items: WholeConstructionTypes[]) {
 		return items.some(item => constructions[item] === true);
 	}
 
 	return (
 		<Container>
-			{handleHide() ? (
+			{prohibitBuy() ? (
 				<ButtonComponent
 					className={'hide'}
 					icon={<i className='fas fa-circle-play'></i>}
@@ -120,7 +126,7 @@ function SelectAction({
 				></ButtonComponent>
 			)}
 
-			{constructions['landmark'] ? (
+			{prohibitTakeOver() ? (
 				<ButtonComponent
 					className={'hide'}
 					icon={<i className='fas fa-circle-dot'></i>}
