@@ -14,7 +14,7 @@ const Container = styled.ul`
 	grid-template-columns: repeat(6, 1fr);
 	gap: 3px;
 	grid-auto-rows: 8em;
-	padding: 15px 0;
+	padding: 0;
 `;
 
 type CardsProps = {
