@@ -1,0 +1,112 @@
+import React, { SetStateAction } from 'react';
+import styled from 'styled-components';
+import {
+	Card,
+	WholeConstructionTypes,
+	ExecutingStates,
+} from '../../assets/interfaces/interfaces';
+import ConstructionsPresenter from '../../presenter/constructions/constructions';
+import ButtonComponent from '../button';
+
+const Container = styled.ul`
+	display: flex;
+	flex: 1 0 5rem;
+	align-items: center;
+	justify-content: space-between;
+	.true {
+		opacity: 1;
+	}
+	.false {
+		opacity: 0.6;
+	}
+`;
+
+type ConstructionProps = {
+	card: Card | null;
+	constructions: ExecutingStates<WholeConstructionTypes>;
+	setConstruction: React.Dispatch<
+		SetStateAction<ExecutingStates<WholeConstructionTypes>>
+	>;
+	constructionsPresenter: ConstructionsPresenter;
+};
+
+type ConstructionIcon =
+	| 'flag'
+	| 'archway'
+	| 'landmark'
+	| 'store'
+	| 'building'
+	| 'hotel'
+	| 'mosque';
+type ConstructionName =
+	| '땅'
+	| '파라솔'
+	| '방갈로'
+	| '별장'
+	| '빌딩'
+	| '호텔'
+	| '랜드마크';
+function SelectConstructions({
+	card,
+	constructions,
+	setConstruction,
+	constructionsPresenter,
+}: ConstructionProps) {
+	function renderButtonComponent(
+		iconId: ConstructionIcon,
+		dataName: WholeConstructionTypes,
+		displayName: ConstructionName,
+	) {
+		const isSelectedToString = constructions[dataName].toString() as
+			| 'true'
+			| 'false';
+
+		function callbackSelector() {
+			if (
+				(!constructions[dataName] && dataName === 'flag') ||
+				dataName === 'parasol' ||
+				dataName === 'bangalore'
+			) {
+				return constructionsPresenter.disableStatesExcept(
+					dataName,
+					setConstruction,
+				);
+			} else {
+				return constructionsPresenter.toggleState(
+					dataName,
+					setConstruction,
+				);
+			}
+		}
+		return (
+			<ButtonComponent
+				className={isSelectedToString}
+				icon={<i className={'fas fa-' + iconId}></i>}
+				name={displayName}
+				callback={() => callbackSelector()}
+			/>
+		);
+	}
+
+	return (
+		<Container>
+			{card?.isVacationSpot ? (
+				<>
+					{renderButtonComponent('flag', 'flag', '땅')}
+					{renderButtonComponent('archway', 'parasol', '파라솔')}
+					{renderButtonComponent('landmark', 'bangalore', '방갈로')}
+				</>
+			) : (
+				<>
+					{renderButtonComponent('flag', 'land', '땅')}
+					{renderButtonComponent('store', 'villa', '별장')}
+					{renderButtonComponent('building', 'building', '빌딩')}
+					{renderButtonComponent('hotel', 'hotel', '호텔')}
+					{renderButtonComponent('mosque', 'landmark', '랜드마크')}
+				</>
+			)}
+		</Container>
+	);
+}
+
+export default SelectConstructions;

@@ -110,11 +110,3 @@ export function printCard(
 		cost,
 	};
 }
-
-export function sortVacationSpot(card: Card | null): boolean {
-	if (!card || card.isVacationSpot === false) {
-		return false;
-	} else {
-		return true;
-	}
-}

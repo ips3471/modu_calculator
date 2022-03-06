@@ -2,7 +2,7 @@ import React, { useEffect, SetStateAction } from 'react';
 import Header from './components/header';
 import styled from 'styled-components';
 import { useState } from 'react';
-import SelectConstruction from './components/select-construction';
+import SelectConstructions from './components/select-constructions/select-constructions';
 import SelectAction from './components/select-action';
 import {
 	ActionTypes,
@@ -14,6 +14,7 @@ import {
 	WholeConstructionTypes,
 } from './assets/interfaces/interfaces';
 import CardsSection from './components/cards';
+import ConstructionsPresenter from './presenter/constructions/constructions';
 
 const AppWrapper = styled.div`
 	height: 100vh;
@@ -38,23 +39,18 @@ const Result = styled.div`
 	text-align: center;
 `;
 
-function App() {
+type AppProps = {
+	constructionsPresenter: ConstructionsPresenter;
+};
+
+function App({ constructionsPresenter }: AppProps) {
 	const [result, setResult] = useState(0);
 
 	const [selectedCard, setSelectedCard] = useState<Card | null>(null);
 
 	const [selectedConstructions, setSelectedConstructions] = useState<
 		ExecutingStates<WholeConstructionTypes>
-	>({
-		land: false,
-		villa: false,
-		building: false,
-		hotel: false,
-		landmark: false,
-		flag: false,
-		parasol: false,
-		bangalore: false,
-	});
+	>(constructionsPresenter.getAll());
 
 	const [selectedActions, setSelectedActions] = useState<
 		ExecutingStates<ActionTypes>
@@ -65,15 +61,6 @@ function App() {
 		sell: false,
 	});
 
-	const updateSelectedActions = (state: ActionTypes) => {
-		setSelectedActions(current => {
-			return {
-				...current,
-				[state]: !current[state],
-			};
-		});
-	};
-
 	function statesDisabler<T extends ActionTypes | WholeConstructionTypes>(
 		parent: ExecutingStates<T>,
 		setState: React.Dispatch<SetStateAction<ExecutingStates<T>>>,
@@ -81,7 +68,6 @@ function App() {
 	): void {
 		states.forEach(state => {
 			if (parent[state]) {
-				console.log(parent[state]);
 				setState(current => {
 					return {
 						...current,
@@ -108,18 +94,20 @@ function App() {
 	};
 
 	useEffect(() => {
-		console.log(selectedCard?.name);
+		// console.log(selectedCard?.name);
+		selectedCard &&
+			console.log(`${selectedCard.name}이(가) 선택되었습니다`);
 	}, [selectedCard]);
 
 	useEffect(() => {
+		const selected = constructionsPresenter.getTrues();
+		console.log(`선택된 건설옵션은 ${selected}입니다`);
+	}, [selectedConstructions]);
+
+	useEffect(() => {
 		setResult(0);
-		setSelectedConstructions(current => {
-			const states = { ...current };
-			Object.keys(states).forEach(item => {
-				states[item as keyof typeof states] = false;
-			});
-			return states;
-		});
+		constructionsPresenter.resetAll(setSelectedConstructions);
+
 		setSelectedActions(current => {
 			const states = { ...current };
 			Object.keys(states).forEach(item => {
@@ -135,10 +123,7 @@ function App() {
 		const constructions = selectedConstructions;
 
 		// actives in constructions
-		const isConstructing = Object.keys(constructions).filter(
-			construction =>
-				constructions[construction as WholeConstructionTypes] === true,
-		) as WholeConstructionTypes[];
+		const isConstructing = constructionsPresenter.getTrues();
 		if (isConstructing.length == 0) {
 			setResult(0);
 			console.log('empty constructions:', isConstructing);
@@ -219,15 +204,11 @@ function App() {
 			<Header />
 			<Main>
 				<CardsSection updateCard={updateSelectedCard} />
-				<SelectConstruction
+				<SelectConstructions
 					card={selectedCard}
-					actions={selectedActions}
 					constructions={selectedConstructions}
 					setConstruction={setSelectedConstructions}
-					setAction={setSelectedActions}
-					stateSwitch={statesSwitch}
-					constructionsDisabler={statesDisabler}
-					actionsDisabler={statesDisabler}
+					constructionsPresenter={constructionsPresenter}
 				/>
 				<SelectAction
 					actions={selectedActions}

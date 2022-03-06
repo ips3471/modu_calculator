@@ -12,10 +12,10 @@ const Container = styled.ul`
 	align-items: center;
 	flex-grow: 1 0 5rem;
 	justify-content: space-between;
-	.on {
+	.true {
 		opacity: 1;
 	}
-	.off {
+	.false {
 		opacity: 0.6;
 	}
 	.hide {
@@ -78,7 +78,7 @@ function SelectAction({
 				<>
 					{actions['buy'] ? (
 						<ButtonComponent
-							className={'on'}
+							className={'true'}
 							icon={<i className='fas fa-circle-play'></i>}
 							name='구매'
 							callback={() => {
@@ -87,7 +87,7 @@ function SelectAction({
 						></ButtonComponent>
 					) : (
 						<ButtonComponent
-							className={'off'}
+							className={'false'}
 							icon={<i className='fas fa-circle-play'></i>}
 							name='구매'
 							callback={() => {
@@ -107,7 +107,7 @@ function SelectAction({
 
 			{actions['pay'] ? (
 				<ButtonComponent
-					className={'on'}
+					className={'true'}
 					icon={<i className='fas fa-circle-pause'></i>}
 					name='지불'
 					callback={() => {
@@ -116,7 +116,7 @@ function SelectAction({
 				></ButtonComponent>
 			) : (
 				<ButtonComponent
-					className={'off'}
+					className={'false'}
 					icon={<i className='fas fa-circle-pause'></i>}
 					name='지불'
 					callback={() => {
@@ -137,7 +137,7 @@ function SelectAction({
 				<>
 					{actions['takeOver'] ? (
 						<ButtonComponent
-							className={'on'}
+							className={'true'}
 							icon={<i className='fas fa-circle-dot'></i>}
 							name='인수'
 							callback={() => {
@@ -146,7 +146,7 @@ function SelectAction({
 						></ButtonComponent>
 					) : (
 						<ButtonComponent
-							className={'off'}
+							className={'false'}
 							icon={<i className='fas fa-circle-dot'></i>}
 							name='인수'
 							callback={() => {
@@ -165,7 +165,7 @@ function SelectAction({
 
 			{actions['sell'] ? (
 				<ButtonComponent
-					className={'on'}
+					className={'true'}
 					icon={<i className='fas fa-circle-stop'></i>}
 					name='매각'
 					callback={() => {
@@ -174,7 +174,7 @@ function SelectAction({
 				></ButtonComponent>
 			) : (
 				<ButtonComponent
-					className={'off'}
+					className={'false'}
 					icon={<i className='fas fa-circle-stop'></i>}
 					name='매각'
 					callback={() => {
