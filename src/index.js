@@ -7,6 +7,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from './assets/styles/theme';
 import GlobalStyle from './assets/styles/global-styles';
 import ConstructionsPresenter from './presenter/constructions/constructions';
+import ActionsPresenter from './presenter/actions/actions';
 
 const constructionsPresenter = new ConstructionsPresenter({
 	land: false,
@@ -19,11 +20,21 @@ const constructionsPresenter = new ConstructionsPresenter({
 	bangalore: false,
 });
 
+const actionsPresenter = new ActionsPresenter({
+	buy: false,
+	pay: false,
+	takeOver: false,
+	sell: false,
+});
+
 ReactDOM.render(
 	<React.StrictMode>
 		<ThemeProvider theme={theme}>
 			<GlobalStyle />
-			<App constructionsPresenter={constructionsPresenter} />
+			<App
+				constructionsPresenter={constructionsPresenter}
+				actionsPresenter={actionsPresenter}
+			/>
 		</ThemeProvider>
 	</React.StrictMode>,
 	document.getElementById('root'),

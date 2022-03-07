@@ -5,6 +5,8 @@ import {
 	ExecutingStates,
 	WholeConstructionTypes,
 } from '../assets/interfaces/interfaces';
+import ActionsPresenter from '../presenter/actions/actions';
+import ConstructionsPresenter from '../presenter/constructions/constructions';
 import ButtonComponent from './button';
 
 const Container = styled.ul`
@@ -36,14 +38,18 @@ type ActionProps = {
 		setState: React.Dispatch<SetStateAction<ExecutingStates<ActionTypes>>>,
 		state: ActionTypes,
 	) => void;
+	actionsPresenter: ActionsPresenter;
+	constructionsPresenter: ConstructionsPresenter;
 };
 
+type ActionIcon = 'circle-play' | 'circle-pause' | 'circle-dot' | 'circle-stop';
+type ActionName = '구매' | '지불' | '인수' | '매각';
+
 function SelectAction({
-	actionsDisabler,
 	actions,
 	constructions,
 	setAction,
-	statesSwitch,
+	actionsPresenter,
 }: ActionProps) {
 	function prohibitBuy(): boolean {
 		return isActionWithLandmark() || prohibitAction('parasol', 'bangalore');
@@ -65,130 +71,57 @@ function SelectAction({
 		return items.some(item => constructions[item] === true);
 	}
 
+	function renderButtonComponent(
+		iconId: ActionIcon,
+		dataName: ActionTypes,
+		displayName: ActionName,
+		isHide?: boolean,
+	) {
+		const isSelectedToString = isHide
+			? 'hide'
+			: (actions[dataName].toString() as 'true' | 'false');
+
+		function callbackSelector() {
+			if (
+				(!actions[dataName] && dataName === 'buy') ||
+				dataName === 'sell'
+			) {
+				return actionsPresenter.disableStatesExcept(
+					dataName,
+					setAction,
+				);
+			} else if (
+				(!actions[dataName] && dataName === 'pay') ||
+				dataName === 'takeOver'
+			) {
+				return actionsPresenter.disableStatesExcept(
+					dataName,
+					setAction,
+					'buy',
+					'sell',
+				);
+			}
+		}
+		return (
+			<ButtonComponent
+				className={isSelectedToString}
+				icon={<i className={'fas fa-' + iconId}></i>}
+				name={displayName}
+				callback={() => callbackSelector()}
+			/>
+		);
+	}
+
 	return (
 		<Container>
-			{prohibitBuy() ? (
-				<ButtonComponent
-					className={'hide'}
-					icon={<i className='fas fa-circle-play'></i>}
-					name='구매'
-					callback={() => {}}
-				></ButtonComponent>
-			) : (
-				<>
-					{actions['buy'] ? (
-						<ButtonComponent
-							className={'true'}
-							icon={<i className='fas fa-circle-play'></i>}
-							name='구매'
-							callback={() => {
-								statesSwitch(setAction, 'buy');
-							}}
-						></ButtonComponent>
-					) : (
-						<ButtonComponent
-							className={'false'}
-							icon={<i className='fas fa-circle-play'></i>}
-							name='구매'
-							callback={() => {
-								actionsDisabler(
-									actions,
-									setAction,
-									'pay',
-									'sell',
-									'takeOver',
-								);
-								statesSwitch(setAction, 'buy');
-							}}
-						></ButtonComponent>
-					)}
-				</>
-			)}
-
-			{actions['pay'] ? (
-				<ButtonComponent
-					className={'true'}
-					icon={<i className='fas fa-circle-pause'></i>}
-					name='지불'
-					callback={() => {
-						statesSwitch(setAction, 'pay');
-					}}
-				></ButtonComponent>
-			) : (
-				<ButtonComponent
-					className={'false'}
-					icon={<i className='fas fa-circle-pause'></i>}
-					name='지불'
-					callback={() => {
-						actionsDisabler(actions, setAction, 'buy', 'sell');
-						statesSwitch(setAction, 'pay');
-					}}
-				></ButtonComponent>
-			)}
-
-			{prohibitTakeOver() ? (
-				<ButtonComponent
-					className={'hide'}
-					icon={<i className='fas fa-circle-dot'></i>}
-					name='인수'
-					callback={() => {}}
-				></ButtonComponent>
-			) : (
-				<>
-					{actions['takeOver'] ? (
-						<ButtonComponent
-							className={'true'}
-							icon={<i className='fas fa-circle-dot'></i>}
-							name='인수'
-							callback={() => {
-								statesSwitch(setAction, 'takeOver');
-							}}
-						></ButtonComponent>
-					) : (
-						<ButtonComponent
-							className={'false'}
-							icon={<i className='fas fa-circle-dot'></i>}
-							name='인수'
-							callback={() => {
-								actionsDisabler(
-									actions,
-									setAction,
-									'buy',
-									'sell',
-								);
-								statesSwitch(setAction, 'takeOver');
-							}}
-						></ButtonComponent>
-					)}
-				</>
-			)}
-
-			{actions['sell'] ? (
-				<ButtonComponent
-					className={'true'}
-					icon={<i className='fas fa-circle-stop'></i>}
-					name='매각'
-					callback={() => {
-						statesSwitch(setAction, 'sell');
-					}}
-				></ButtonComponent>
-			) : (
-				<ButtonComponent
-					className={'false'}
-					icon={<i className='fas fa-circle-stop'></i>}
-					name='매각'
-					callback={() => {
-						actionsDisabler(
-							actions,
-							setAction,
-							'buy',
-							'takeOver',
-							'pay',
-						);
-						statesSwitch(setAction, 'sell');
-					}}
-				></ButtonComponent>
-			)}
+			{prohibitBuy()
+				? renderButtonComponent('circle-play', 'buy', '구매', true)
+				: renderButtonComponent('circle-play', 'buy', '구매')}
+			{renderButtonComponent('circle-pause', 'pay', '지불')}
+			{prohibitTakeOver()
+				? renderButtonComponent('circle-dot', 'takeOver', '인수', true)
+				: renderButtonComponent('circle-dot', 'takeOver', '인수')}
+			{renderButtonComponent('circle-stop', 'sell', '매각')}
 		</Container>
 	);
 }

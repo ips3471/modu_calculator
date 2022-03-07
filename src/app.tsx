@@ -7,14 +7,12 @@ import SelectAction from './components/select-action';
 import {
 	ActionTypes,
 	Card,
-	CostTable,
 	ExecutingStates,
-	NormalCityLevel,
-	VacationSpotLevel,
 	WholeConstructionTypes,
 } from './assets/interfaces/interfaces';
 import CardsSection from './components/cards';
 import ConstructionsPresenter from './presenter/constructions/constructions';
+import ActionsPresenter from './presenter/actions/actions';
 
 const AppWrapper = styled.div`
 	height: 100vh;
@@ -41,9 +39,10 @@ const Result = styled.div`
 
 type AppProps = {
 	constructionsPresenter: ConstructionsPresenter;
+	actionsPresenter: ActionsPresenter;
 };
 
-function App({ constructionsPresenter }: AppProps) {
+function App({ constructionsPresenter, actionsPresenter }: AppProps) {
 	const [result, setResult] = useState(0);
 
 	const [selectedCard, setSelectedCard] = useState<Card | null>(null);
@@ -54,12 +53,7 @@ function App({ constructionsPresenter }: AppProps) {
 
 	const [selectedActions, setSelectedActions] = useState<
 		ExecutingStates<ActionTypes>
-	>({
-		buy: false,
-		pay: false,
-		takeOver: false,
-		sell: false,
-	});
+	>(actionsPresenter.getAll());
 
 	function statesDisabler<T extends ActionTypes | WholeConstructionTypes>(
 		parent: ExecutingStates<T>,
@@ -79,8 +73,8 @@ function App({ constructionsPresenter }: AppProps) {
 	}
 
 	function statesSwitch<T extends ActionTypes | WholeConstructionTypes>(
-		setState: React.Dispatch<SetStateAction<ExecutingStates<T>>>, // {} => {}
-		state: T, // 'buy'
+		setState: React.Dispatch<SetStateAction<ExecutingStates<T>>>,
+		state: T,
 	): void {
 		setState(current => {
 			const states = { ...current };
@@ -94,7 +88,6 @@ function App({ constructionsPresenter }: AppProps) {
 	};
 
 	useEffect(() => {
-		// console.log(selectedCard?.name);
 		selectedCard &&
 			console.log(`${selectedCard.name}이(가) 선택되었습니다`);
 	}, [selectedCard]);
@@ -105,97 +98,50 @@ function App({ constructionsPresenter }: AppProps) {
 	}, [selectedConstructions]);
 
 	useEffect(() => {
-		setResult(0);
 		constructionsPresenter.resetAll(setSelectedConstructions);
-
-		setSelectedActions(current => {
-			const states = { ...current };
-			Object.keys(states).forEach(item => {
-				states[item as keyof typeof states] = false;
-			});
-			return states;
-		});
+		actionsPresenter.resetAll(setSelectedActions);
 	}, [selectedCard]);
 
 	useEffect(() => {
-		const card = selectedCard;
-		const actions = selectedActions;
-		const constructions = selectedConstructions;
-
-		// actives in constructions
-		const isConstructing = constructionsPresenter.getTrues();
-		if (isConstructing.length == 0) {
-			setResult(0);
-			console.log('empty constructions:', isConstructing);
-			return;
-		}
-
-		// actives in actions
-		const isExecuting = Object.keys(actions).filter(
-			action => actions[action as ActionTypes] === true,
-		) as ActionTypes[];
-		if (isExecuting.length == 0) {
-			setResult(0);
-			console.log('empty constructions:', isExecuting);
-			return;
-		}
-		// make result
-		if (selectedCard == null) {
-			setResult(0);
-			alert('카드가 선택되지 않았습니다');
-			return;
-		}
 		let total: number = 0;
+		const isConstructing = constructionsPresenter.getTrues();
+		const isExecuting = actionsPresenter.getTrues();
 
-		switch (card?.isVacationSpot) {
-			case true:
-				{
-					isExecuting.forEach(action => {
-						isConstructing.forEach(construction => {
-							const costTable =
-								card.cost as CostTable<VacationSpotLevel>;
-							let value =
-								costTable[construction as VacationSpotLevel][
-									action
-								];
-							if (!value) {
-								console.info(
-									`value not matchs to cost table ${value}`,
-								);
-								value = 0;
-								setSelectedActions(actions => {
-									const states = { ...actions };
-									states[action] = false;
-									return states;
-								});
-							}
-							total += value;
-						});
-					});
-				}
-				break;
-			case false:
-				{
-					isExecuting.forEach(action => {
-						isConstructing.forEach(construction => {
-							const costTable =
-								card.cost as CostTable<NormalCityLevel>;
-							let value =
-								costTable[construction as NormalCityLevel][
-									action
-								];
-							if (!value) {
-								console.info(
-									`value not matchs to cost table ${value}`,
-								);
-								value = 0;
-							}
-							total += value;
-						});
-					});
-				}
-				break;
+		if (
+			isConstructing.length === 0 ||
+			isExecuting.length === 0 ||
+			selectedCard === null
+		) {
+			setResult(0);
+			return;
 		}
+
+		let value = 0;
+		isExecuting.forEach(action => {
+			isConstructing.forEach(construction => {
+				try {
+					value =
+						selectedCard.cost[
+							construction as keyof typeof selectedCard.cost
+						][action];
+				} catch {
+					console.error(
+						`card:${selectedCard}, construction:${construction}, action:${action}`,
+					);
+					actionsPresenter.resetAll(setSelectedActions);
+					constructionsPresenter.resetAll(setSelectedConstructions);
+					alert('알 수 없는 이유로 모든 옵션이 초기화되었습니다');
+				} finally {
+					console.log(value);
+					if (value == undefined) {
+						value = 0;
+						actionsPresenter.resetAll(setSelectedActions);
+					}
+					total += value;
+				}
+			});
+		});
+
 		setResult(total);
 	}, [selectedConstructions, selectedActions]);
 
@@ -216,6 +162,8 @@ function App({ constructionsPresenter }: AppProps) {
 					actionsDisabler={statesDisabler}
 					setAction={setSelectedActions}
 					statesSwitch={statesSwitch}
+					actionsPresenter={actionsPresenter}
+					constructionsPresenter={constructionsPresenter}
 				/>
 				<Result>{result}</Result>
 			</Main>

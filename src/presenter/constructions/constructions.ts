@@ -54,7 +54,6 @@ class ConstructionsPresenter {
 		>,
 	) {
 		const updated = { ...this.constructions };
-		// updated[construction] = true;
 		Object.keys(updated).forEach(key => {
 			if (
 				key !== construction &&
