@@ -1,12 +1,11 @@
 import React, { SetStateAction } from 'react';
 import styled from 'styled-components';
 import {
-	ActionTypes,
+	ActionOptions,
 	ExecutingStates,
-	WholeConstructionTypes,
+	BuildOptions,
 } from '../assets/interfaces/interfaces';
 import ActionsPresenter from '../presenter/actions/actions';
-import ConstructionsPresenter from '../presenter/constructions/constructions';
 import ButtonComponent from './button';
 
 const Container = styled.ul`
@@ -26,20 +25,10 @@ const Container = styled.ul`
 `;
 
 type ActionProps = {
-	actionsDisabler: (
-		parent: ExecutingStates<ActionTypes>,
-		setState: React.Dispatch<SetStateAction<ExecutingStates<ActionTypes>>>,
-		...states: ActionTypes[]
-	) => void;
-	constructions: ExecutingStates<WholeConstructionTypes>;
-	actions: ExecutingStates<ActionTypes>;
-	setAction: React.Dispatch<SetStateAction<ExecutingStates<ActionTypes>>>;
-	statesSwitch: (
-		setState: React.Dispatch<SetStateAction<ExecutingStates<ActionTypes>>>,
-		state: ActionTypes,
-	) => void;
+	constructions: ExecutingStates<BuildOptions>;
+	actions: ExecutingStates<ActionOptions>;
+	setAction: React.Dispatch<SetStateAction<ExecutingStates<ActionOptions>>>;
 	actionsPresenter: ActionsPresenter;
-	constructionsPresenter: ConstructionsPresenter;
 };
 
 type ActionIcon = 'circle-play' | 'circle-pause' | 'circle-dot' | 'circle-stop';
@@ -56,24 +45,22 @@ function SelectAction({
 	}
 	function prohibitTakeOver(): boolean {
 		return (
-			constructions['landmark'] ||
-			prohibitAction('parasol', 'bangalore', 'flag')
+			constructions['landmark'] || prohibitAction('parasol', 'bangalore', 'flag')
 		);
 	}
 	function isActionWithLandmark() {
 		return (
 			constructions['landmark'] &&
-			Object.values(constructions).filter(value => value === true)
-				.length > 1
+			Object.values(constructions).filter(value => value === true).length > 1
 		);
 	}
-	function prohibitAction(...items: WholeConstructionTypes[]) {
+	function prohibitAction(...items: BuildOptions[]) {
 		return items.some(item => constructions[item] === true);
 	}
 
 	function renderButtonComponent(
 		iconId: ActionIcon,
-		dataName: ActionTypes,
+		dataName: ActionOptions,
 		displayName: ActionName,
 		isHide?: boolean,
 	) {
@@ -82,14 +69,8 @@ function SelectAction({
 			: (actions[dataName].toString() as 'true' | 'false');
 
 		function callbackSelector() {
-			if (
-				(!actions[dataName] && dataName === 'buy') ||
-				dataName === 'sell'
-			) {
-				return actionsPresenter.disableStatesExcept(
-					dataName,
-					setAction,
-				);
+			if ((!actions[dataName] && dataName === 'buy') || dataName === 'sell') {
+				return actionsPresenter.disableStatesExcept(dataName, setAction);
 			} else if (
 				(!actions[dataName] && dataName === 'pay') ||
 				dataName === 'takeOver'

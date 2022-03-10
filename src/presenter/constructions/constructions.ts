@@ -1,12 +1,14 @@
 import {
 	ExecutingStates,
-	WholeConstructionTypes,
+	NormalCityBuildOptions,
+	VacationSpotBuildOptions,
+	BuildOptions,
 } from './../../assets/interfaces/interfaces';
 import { SetStateAction } from 'react';
 
 class ConstructionsPresenter {
 	constructions;
-	constructor(constructions: ExecutingStates<WholeConstructionTypes>) {
+	constructor(constructions: ExecutingStates<BuildOptions>) {
 		this.constructions = constructions;
 	}
 
@@ -14,11 +16,7 @@ class ConstructionsPresenter {
 		return this.constructions;
 	}
 
-	resetAll(
-		update: React.Dispatch<
-			SetStateAction<ExecutingStates<WholeConstructionTypes>>
-		>,
-	) {
+	resetAll(update: React.Dispatch<SetStateAction<ExecutingStates<BuildOptions>>>) {
 		const updated = { ...this.constructions };
 		Object.keys(updated).forEach(item => {
 			updated[item as keyof typeof updated] = false;
@@ -31,15 +29,15 @@ class ConstructionsPresenter {
 		const updated = { ...this.constructions };
 		return Object.keys(updated).filter(
 			construction =>
-				updated[construction as keyof typeof updated] === true,
-		);
+				updated[
+					construction as NormalCityBuildOptions | VacationSpotBuildOptions
+				] === true,
+		) as NormalCityBuildOptions[] | VacationSpotBuildOptions[];
 	}
 
 	toggleState(
-		construction: WholeConstructionTypes,
-		update: React.Dispatch<
-			SetStateAction<ExecutingStates<WholeConstructionTypes>>
-		>,
+		construction: BuildOptions,
+		update: React.Dispatch<SetStateAction<ExecutingStates<BuildOptions>>>,
 	) {
 		const updated = { ...this.constructions };
 		updated[construction] = !updated[construction];
@@ -48,17 +46,12 @@ class ConstructionsPresenter {
 	}
 
 	disableStatesExcept(
-		construction: WholeConstructionTypes,
-		update: React.Dispatch<
-			SetStateAction<ExecutingStates<WholeConstructionTypes>>
-		>,
+		construction: BuildOptions,
+		update: React.Dispatch<SetStateAction<ExecutingStates<BuildOptions>>>,
 	) {
 		const updated = { ...this.constructions };
 		Object.keys(updated).forEach(key => {
-			if (
-				key !== construction &&
-				updated[key as keyof typeof updated] === true
-			) {
+			if (key !== construction && updated[key as keyof typeof updated] === true) {
 				updated[key as keyof typeof updated] = false;
 			} else {
 				updated[construction] = true;
@@ -69,10 +62,8 @@ class ConstructionsPresenter {
 	}
 
 	disableStatesOf(
-		update: React.Dispatch<
-			SetStateAction<ExecutingStates<WholeConstructionTypes>>
-		>,
-		...states: WholeConstructionTypes[]
+		update: React.Dispatch<SetStateAction<ExecutingStates<BuildOptions>>>,
+		...states: BuildOptions[]
 	) {
 		const updated = { ...this.constructions };
 		states.forEach(state => {

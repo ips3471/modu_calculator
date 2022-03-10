@@ -1,9 +1,13 @@
 import React, { SetStateAction } from 'react';
 import styled from 'styled-components';
 import {
-	Card,
-	WholeConstructionTypes,
+	CardInfo,
+	BuildOptions,
 	ExecutingStates,
+	NormalCityNames,
+	VacationSpotNames,
+	ConstructionIcon,
+	ConstructionName,
 } from '../../assets/interfaces/interfaces';
 import ConstructionsPresenter from '../../presenter/constructions/constructions';
 import ButtonComponent from '../button';
@@ -22,30 +26,12 @@ const Container = styled.ul`
 `;
 
 type ConstructionProps = {
-	card: Card | null;
-	constructions: ExecutingStates<WholeConstructionTypes>;
-	setConstruction: React.Dispatch<
-		SetStateAction<ExecutingStates<WholeConstructionTypes>>
-	>;
+	card: CardInfo<NormalCityNames> | CardInfo<VacationSpotNames> | null;
+	constructions: ExecutingStates<BuildOptions>;
+	setConstruction: React.Dispatch<SetStateAction<ExecutingStates<BuildOptions>>>;
 	constructionsPresenter: ConstructionsPresenter;
 };
 
-type ConstructionIcon =
-	| 'flag'
-	| 'archway'
-	| 'landmark'
-	| 'store'
-	| 'building'
-	| 'hotel'
-	| 'mosque';
-type ConstructionName =
-	| '땅'
-	| '파라솔'
-	| '방갈로'
-	| '별장'
-	| '빌딩'
-	| '호텔'
-	| '랜드마크';
 function SelectConstructions({
 	card,
 	constructions,
@@ -54,12 +40,10 @@ function SelectConstructions({
 }: ConstructionProps) {
 	function renderButtonComponent(
 		iconId: ConstructionIcon,
-		dataName: WholeConstructionTypes,
+		dataName: BuildOptions,
 		displayName: ConstructionName,
 	) {
-		const isSelectedToString = constructions[dataName].toString() as
-			| 'true'
-			| 'false';
+		const isSelectedToString = constructions[dataName].toString() as 'true' | 'false';
 
 		function callbackSelector() {
 			if (
@@ -72,10 +56,7 @@ function SelectConstructions({
 					setConstruction,
 				);
 			} else {
-				return constructionsPresenter.toggleState(
-					dataName,
-					setConstruction,
-				);
+				return constructionsPresenter.toggleState(dataName, setConstruction);
 			}
 		}
 		return (

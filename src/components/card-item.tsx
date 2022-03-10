@@ -1,8 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Card, UpdatingState } from '../assets/interfaces/interfaces';
+import {
+	CardInfo,
+	NormalCityNames,
+	UpdatingState,
+	VacationSpotNames,
+} from '../assets/interfaces/interfaces';
 
-// background: url(${props => props.defaultValue}) center/cover no-repeat;
 const CardSection = styled.button.attrs(props => ({
 	title: props.title || 'undefined',
 }))`
@@ -33,8 +37,8 @@ const Image = styled.img.attrs(props => ({
 `;
 
 type CardItemProps = {
-	card: Card;
-	updateCard: UpdatingState<Card>;
+	card: CardInfo<NormalCityNames> | CardInfo<VacationSpotNames>;
+	updateCard: UpdatingState<CardInfo<NormalCityNames> | CardInfo<VacationSpotNames>>;
 };
 
 function CardItem({ card, updateCard }: CardItemProps) {

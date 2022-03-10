@@ -1,12 +1,9 @@
-import {
-	ExecutingStates,
-	ActionTypes,
-} from './../../assets/interfaces/interfaces';
+import { ExecutingStates, ActionOptions } from './../../assets/interfaces/interfaces';
 import { SetStateAction } from 'react';
 
 class ActionsPresenter {
 	actions;
-	constructor(actions: ExecutingStates<ActionTypes>) {
+	constructor(actions: ExecutingStates<ActionOptions>) {
 		this.actions = actions;
 	}
 
@@ -14,9 +11,7 @@ class ActionsPresenter {
 		return this.actions;
 	}
 
-	resetAll(
-		update: React.Dispatch<SetStateAction<ExecutingStates<ActionTypes>>>,
-	) {
+	resetAll(update: React.Dispatch<SetStateAction<ExecutingStates<ActionOptions>>>) {
 		const updated = { ...this.actions };
 		Object.keys(updated).forEach(item => {
 			if (updated[item as keyof typeof updated]) {
@@ -28,15 +23,15 @@ class ActionsPresenter {
 	}
 
 	getTrues() {
-		const updated = { ...this.actions };
+		const updated: ExecutingStates<ActionOptions> = { ...this.actions };
 		return Object.keys(updated).filter(
-			actions => updated[actions as keyof typeof updated] === true,
-		);
+			actions => updated[actions as ActionOptions] === true,
+		) as ActionOptions[];
 	}
 
 	toggleState(
-		actions: ActionTypes,
-		update: React.Dispatch<SetStateAction<ExecutingStates<ActionTypes>>>,
+		actions: ActionOptions,
+		update: React.Dispatch<SetStateAction<ExecutingStates<ActionOptions>>>,
 	) {
 		const updated = { ...this.actions };
 		updated[actions] = !updated[actions];
@@ -45,9 +40,9 @@ class ActionsPresenter {
 	}
 
 	disableStatesExcept(
-		actions: ActionTypes,
-		update: React.Dispatch<SetStateAction<ExecutingStates<ActionTypes>>>,
-		...toDisables: ActionTypes[]
+		actions: ActionOptions,
+		update: React.Dispatch<SetStateAction<ExecutingStates<ActionOptions>>>,
+		...toDisables: ActionOptions[]
 	) {
 		const updated = { ...this.actions };
 		if (toDisables.length > 0) {
@@ -58,10 +53,7 @@ class ActionsPresenter {
 			});
 		} else {
 			Object.keys(updated).forEach(key => {
-				if (
-					key !== actions &&
-					updated[key as keyof typeof updated] === true
-				) {
+				if (key !== actions && updated[key as keyof typeof updated] === true) {
 					updated[key as keyof typeof updated] = false;
 				}
 			});
@@ -72,8 +64,8 @@ class ActionsPresenter {
 	}
 
 	disableStatesOf(
-		update: React.Dispatch<SetStateAction<ExecutingStates<ActionTypes>>>,
-		...states: ActionTypes[]
+		update: React.Dispatch<SetStateAction<ExecutingStates<ActionOptions>>>,
+		...states: ActionOptions[]
 	) {
 		const updated = { ...this.actions };
 		states.forEach(state => {

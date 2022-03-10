@@ -1,18 +1,21 @@
-import React, { useEffect, SetStateAction } from 'react';
+import React, { useEffect } from 'react';
 import Header from './components/header';
 import styled from 'styled-components';
 import { useState } from 'react';
 import SelectConstructions from './components/select-constructions/select-constructions';
 import SelectAction from './components/select-action';
 import {
-	ActionTypes,
-	Card,
+	ActionOptions,
+	CardInfo,
 	ExecutingStates,
-	WholeConstructionTypes,
+	NormalCityNames,
+	VacationSpotNames,
+	BuildOptions,
 } from './assets/interfaces/interfaces';
 import CardsSection from './components/cards';
 import ConstructionsPresenter from './presenter/constructions/constructions';
 import ActionsPresenter from './presenter/actions/actions';
+import CardsPresenter from './presenter/cards/cards';
 
 const AppWrapper = styled.div`
 	height: 100vh;
@@ -40,62 +43,29 @@ const Result = styled.div`
 type AppProps = {
 	constructionsPresenter: ConstructionsPresenter;
 	actionsPresenter: ActionsPresenter;
+	cardsPresenter: CardsPresenter;
 };
 
-function App({ constructionsPresenter, actionsPresenter }: AppProps) {
+function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppProps) {
 	const [result, setResult] = useState(0);
 
-	const [selectedCard, setSelectedCard] = useState<Card | null>(null);
+	const [selectedCard, setSelectedCard] = useState<
+		CardInfo<NormalCityNames> | CardInfo<VacationSpotNames> | null
+	>(cardsPresenter.getCard());
 
 	const [selectedConstructions, setSelectedConstructions] = useState<
-		ExecutingStates<WholeConstructionTypes>
+		ExecutingStates<BuildOptions>
 	>(constructionsPresenter.getAll());
 
 	const [selectedActions, setSelectedActions] = useState<
-		ExecutingStates<ActionTypes>
+		ExecutingStates<ActionOptions>
 	>(actionsPresenter.getAll());
 
-	function statesDisabler<T extends ActionTypes | WholeConstructionTypes>(
-		parent: ExecutingStates<T>,
-		setState: React.Dispatch<SetStateAction<ExecutingStates<T>>>,
-		...states: T[]
-	): void {
-		states.forEach(state => {
-			if (parent[state]) {
-				setState(current => {
-					return {
-						...current,
-						[state]: !current[state],
-					};
-				});
-			}
-		});
-	}
-
-	function statesSwitch<T extends ActionTypes | WholeConstructionTypes>(
-		setState: React.Dispatch<SetStateAction<ExecutingStates<T>>>,
-		state: T,
-	): void {
-		setState(current => {
-			const states = { ...current };
-			states[state] = !current[state];
-			return states;
-		});
-	}
-
-	const updateSelectedCard = (card: Card) => {
-		setSelectedCard(card);
+	const updateSelectedCard = (
+		card: CardInfo<NormalCityNames> | CardInfo<VacationSpotNames>,
+	) => {
+		cardsPresenter.updateCard(card, setSelectedCard);
 	};
-
-	useEffect(() => {
-		selectedCard &&
-			console.log(`${selectedCard.name}이(가) 선택되었습니다`);
-	}, [selectedCard]);
-
-	useEffect(() => {
-		const selected = constructionsPresenter.getTrues();
-		console.log(`선택된 건설옵션은 ${selected}입니다`);
-	}, [selectedConstructions]);
 
 	useEffect(() => {
 		constructionsPresenter.resetAll(setSelectedConstructions);
@@ -116,14 +86,12 @@ function App({ constructionsPresenter, actionsPresenter }: AppProps) {
 			return;
 		}
 
+		const costTable = cardsPresenter.getCostTable(selectedCard);
 		let value = 0;
 		isExecuting.forEach(action => {
 			isConstructing.forEach(construction => {
 				try {
-					value =
-						selectedCard.cost[
-							construction as keyof typeof selectedCard.cost
-						][action];
+					value = costTable[construction as keyof typeof costTable][action];
 				} catch {
 					console.error(
 						`card:${selectedCard}, construction:${construction}, action:${action}`,
@@ -132,7 +100,6 @@ function App({ constructionsPresenter, actionsPresenter }: AppProps) {
 					constructionsPresenter.resetAll(setSelectedConstructions);
 					alert('알 수 없는 이유로 모든 옵션이 초기화되었습니다');
 				} finally {
-					console.log(value);
 					if (value == undefined) {
 						value = 0;
 						actionsPresenter.resetAll(setSelectedActions);
@@ -141,7 +108,6 @@ function App({ constructionsPresenter, actionsPresenter }: AppProps) {
 				}
 			});
 		});
-
 		setResult(total);
 	}, [selectedConstructions, selectedActions]);
 
@@ -149,7 +115,10 @@ function App({ constructionsPresenter, actionsPresenter }: AppProps) {
 		<AppWrapper>
 			<Header />
 			<Main>
-				<CardsSection updateCard={updateSelectedCard} />
+				<CardsSection
+					updateCard={updateSelectedCard}
+					cardsPresenter={cardsPresenter}
+				/>
 				<SelectConstructions
 					card={selectedCard}
 					constructions={selectedConstructions}
@@ -159,11 +128,8 @@ function App({ constructionsPresenter, actionsPresenter }: AppProps) {
 				<SelectAction
 					actions={selectedActions}
 					constructions={selectedConstructions}
-					actionsDisabler={statesDisabler}
 					setAction={setSelectedActions}
-					statesSwitch={statesSwitch}
 					actionsPresenter={actionsPresenter}
-					constructionsPresenter={constructionsPresenter}
 				/>
 				<Result>{result}</Result>
 			</Main>

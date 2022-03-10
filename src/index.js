@@ -8,7 +8,8 @@ import { theme } from './assets/styles/theme';
 import GlobalStyle from './assets/styles/global-styles';
 import ConstructionsPresenter from './presenter/constructions/constructions';
 import ActionsPresenter from './presenter/actions/actions';
-
+import CardsPresenter from './presenter/cards/cards';
+import CardsDB from './model/db/cards/cards';
 const constructionsPresenter = new ConstructionsPresenter({
 	land: false,
 	villa: false,
@@ -27,6 +28,8 @@ const actionsPresenter = new ActionsPresenter({
 	sell: false,
 });
 
+const cardsPresenter = new CardsPresenter(new CardsDB());
+
 ReactDOM.render(
 	<React.StrictMode>
 		<ThemeProvider theme={theme}>
@@ -34,6 +37,7 @@ ReactDOM.render(
 			<App
 				constructionsPresenter={constructionsPresenter}
 				actionsPresenter={actionsPresenter}
+				cardsPresenter={cardsPresenter}
 			/>
 		</ThemeProvider>
 	</React.StrictMode>,
