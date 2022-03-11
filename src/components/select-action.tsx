@@ -40,19 +40,14 @@ function SelectAction({
 	actionsPresenter,
 }: ActionProps) {
 	function prohibitBuy(): boolean {
-		return isActionWithLandmark() || prohibitAction('parasol', 'bangalore');
+		return prohibitAction('parasol', 'bangalore');
 	}
 	function prohibitTakeOver(): boolean {
 		return (
 			constructions['landmark'] || prohibitAction('parasol', 'bangalore', 'flag')
 		);
 	}
-	function isActionWithLandmark() {
-		return (
-			constructions['landmark'] &&
-			Object.values(constructions).filter(value => value === true).length > 1
-		);
-	}
+
 	function prohibitAction(...items: BuildOptions[]) {
 		return items.some(item => constructions[item] === true);
 	}
