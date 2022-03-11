@@ -48,15 +48,26 @@ class ConstructionsPresenter {
 	disableStatesExcept(
 		construction: BuildOptions,
 		update: React.Dispatch<SetStateAction<ExecutingStates<BuildOptions>>>,
+		...toDisables: BuildOptions[]
 	) {
 		const updated = { ...this.constructions };
-		Object.keys(updated).forEach(key => {
-			if (key !== construction && updated[key as keyof typeof updated] === true) {
-				updated[key as keyof typeof updated] = false;
-			} else {
-				updated[construction] = true;
-			}
-		});
+		if (toDisables.length > 0) {
+			toDisables.forEach(toDisable => {
+				if (updated[toDisable]) {
+					updated[toDisable] = false;
+				}
+			});
+		} else {
+			Object.keys(updated).forEach(key => {
+				if (
+					key !== construction &&
+					updated[key as keyof typeof updated] === true
+				) {
+					updated[key as keyof typeof updated] = false;
+				}
+			});
+		}
+		updated[construction] = true;
 		this.constructions = updated;
 		update(this.constructions);
 	}

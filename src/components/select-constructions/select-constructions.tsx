@@ -47,16 +47,19 @@ function SelectConstructions({
 
 		function callbackSelector() {
 			if (
-				(!constructions[dataName] && dataName === 'flag') ||
-				dataName === 'parasol' ||
-				dataName === 'bangalore'
+				!constructions[dataName] &&
+				(card?.isVacationSpot === true || dataName === 'landmark')
 			) {
 				return constructionsPresenter.disableStatesExcept(
 					dataName,
 					setConstruction,
 				);
 			} else {
-				return constructionsPresenter.toggleState(dataName, setConstruction);
+				return constructionsPresenter.disableStatesExcept(
+					dataName,
+					setConstruction,
+					'landmark',
+				);
 			}
 		}
 		return (
