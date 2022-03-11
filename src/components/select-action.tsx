@@ -23,6 +23,8 @@ const Container = styled.ul`
 		visibility: hidden;
 	}
 `;
+type ActionIcon = 'circle-play' | 'circle-pause' | 'circle-dot' | 'circle-stop';
+type ActionName = '구매' | '지불' | '인수' | '매각';
 
 type ActionProps = {
 	constructions: ExecutingStates<BuildOptions>;
@@ -30,9 +32,6 @@ type ActionProps = {
 	setAction: React.Dispatch<SetStateAction<ExecutingStates<ActionOptions>>>;
 	actionsPresenter: ActionsPresenter;
 };
-
-type ActionIcon = 'circle-play' | 'circle-pause' | 'circle-dot' | 'circle-stop';
-type ActionName = '구매' | '지불' | '인수' | '매각';
 
 function SelectAction({
 	actions,
@@ -69,12 +68,11 @@ function SelectAction({
 			: (actions[dataName].toString() as 'true' | 'false');
 
 		function callbackSelector() {
-			if ((!actions[dataName] && dataName === 'buy') || dataName === 'sell') {
+			if (actions[dataName]) {
+				return actionsPresenter.toggleState(dataName, setAction);
+			} else if (dataName === 'buy' || dataName === 'sell') {
 				return actionsPresenter.disableStatesExcept(dataName, setAction);
-			} else if (
-				(!actions[dataName] && dataName === 'pay') ||
-				dataName === 'takeOver'
-			) {
+			} else if (dataName === 'pay' || dataName === 'takeOver') {
 				return actionsPresenter.disableStatesExcept(
 					dataName,
 					setAction,
