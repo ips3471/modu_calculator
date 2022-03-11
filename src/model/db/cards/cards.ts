@@ -258,11 +258,11 @@ class CardsDB {
 			src: this.BASE_SRC + '2.jpg',
 		},
 		타이페이: {
-			id: 3,
+			id: 4,
 			line: '1',
 			isVacationSpot: false,
 			name: '방콕',
-			src: this.BASE_SRC + '3.jpg',
+			src: this.BASE_SRC + '4.jpg',
 		},
 		두바이: {
 			id: 5,
@@ -372,11 +372,11 @@ class CardsDB {
 	};
 	readonly vacationSpotInfos: Infos<VacationSpotNames> = {
 		독도: {
-			id: 4,
+			id: 3,
 			line: '1',
 			isVacationSpot: true,
 			name: '독도',
-			src: this.BASE_SRC + '4.jpg',
+			src: this.BASE_SRC + '3.jpg',
 		},
 		발리: {
 			id: 7,
