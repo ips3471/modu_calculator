@@ -46,10 +46,9 @@ function SelectConstructions({
 		const isSelectedToString = constructions[dataName].toString() as 'true' | 'false';
 
 		function callbackSelector() {
-			if (
-				!constructions[dataName] &&
-				(card?.isVacationSpot === true || dataName === 'landmark')
-			) {
+			if (constructions[dataName]) {
+				return constructionsPresenter.toggleState(dataName, setConstruction);
+			} else if (card?.isVacationSpot === true || dataName === 'landmark') {
 				return constructionsPresenter.disableStatesExcept(
 					dataName,
 					setConstruction,
