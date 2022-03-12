@@ -13,7 +13,7 @@ import CardsPresenter from '../presenter/cards/cards';
 
 const Container = styled.ul`
 	display: grid;
-	flex: 1 0 30rem;
+	flex: 1 1 30rem;
 	grid-template-columns: repeat(6, 1fr);
 	gap: 3px;
 	grid-auto-rows: 8em;

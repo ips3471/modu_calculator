@@ -9,13 +9,13 @@ import {
 
 const bubble = keyframes`
 	0% {
-		transform: scale(1);
+		transform: scale(0.95);
 	}
 	50% {
-		transform: scale(1.1);
+		transform: scale(1.05);
 	}
 	100% {
-		transform: scale(1);
+		transform: scale(0.95);
 	}
 `;
 
@@ -26,6 +26,7 @@ const Card = styled.button.attrs(props => ({
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+
 	overflow: hidden;
 	position: relative;
 	&:before {
@@ -45,14 +46,16 @@ const Card = styled.button.attrs(props => ({
 const Image = styled.img.attrs(props => ({
 	title: props.title || 'undefined',
 }))`
-	width: 130%;
-	height: 130%;
+	min-width: 120%;
+	min-height: 120%;
+	transform: scale(90%);
 `;
 const SelectedCard = styled(Card)`
 	opacity: 1;
 `;
 const SelectedImage = styled(Image)`
 	animation: ${bubble} 2s linear infinite;
+	border: 1px solid ${props => props.theme.color.background};
 `;
 
 type CardItemProps = {
