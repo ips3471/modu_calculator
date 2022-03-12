@@ -70,12 +70,7 @@ function CardItem({ card, updateCard, selectedCard }: CardItemProps) {
 	return (
 		<>
 			{isSelected ? (
-				<SelectedCard
-					title={name}
-					onClick={() => {
-						updateCard(card);
-					}}
-				>
+				<SelectedCard title={name}>
 					<SelectedImage src={src} alt={name} />
 				</SelectedCard>
 			) : (

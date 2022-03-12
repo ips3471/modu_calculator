@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import CardItem from './card-item';
 import styled from 'styled-components';
 import {
 	UpdatingState,
 	NormalCityNames,
 	VacationSpotNames,
-	Infos,
 	CardInfo,
 	CardNames,
 } from '../assets/interfaces/interfaces';
