@@ -26,9 +26,7 @@ type CardsProps = {
 };
 
 function CardsSection({ updateCard, cardsPresenter }: CardsProps) {
-	const [cards, setCards] = useState<Infos<NormalCityNames> & Infos<VacationSpotNames>>(
-		cardsPresenter.getInfos(),
-	);
+	const cards = cardsPresenter.getInfos();
 	const ascendedCardNames = Object.keys(cards).sort(
 		(a, b) => cards[a as keyof typeof cards].id - cards[b as keyof typeof cards].id,
 	) as CardNames[];

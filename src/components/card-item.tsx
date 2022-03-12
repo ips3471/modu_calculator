@@ -7,7 +7,7 @@ import {
 	VacationSpotNames,
 } from '../assets/interfaces/interfaces';
 
-const bubble = keyframes`
+const bubbling = keyframes`
 	0% {
 		transform: scale(0.95);
 	}
@@ -26,7 +26,6 @@ const Card = styled.button.attrs(props => ({
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-
 	overflow: hidden;
 	position: relative;
 	&:before {
@@ -54,7 +53,7 @@ const SelectedCard = styled(Card)`
 	opacity: 1;
 `;
 const SelectedImage = styled(Image)`
-	animation: ${bubble} 2s linear infinite;
+	animation: ${bubbling} 2s linear infinite;
 	border: 1px solid ${props => props.theme.color.background};
 `;
 
