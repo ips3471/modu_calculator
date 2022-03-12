@@ -36,7 +36,15 @@ function CardsSection({ updateCard, cardsPresenter }: CardsProps) {
 		<Container>
 			{ascendedCardNames.map(key => {
 				const card = cards[key];
-				return <CardItem updateCard={updateCard} key={card.id} card={card} />;
+				const selectedCard = cardsPresenter.getCard();
+				return (
+					<CardItem
+						selectedCard={selectedCard}
+						updateCard={updateCard}
+						key={card.id}
+						card={card}
+					/>
+				);
 			})}
 		</Container>
 	);
