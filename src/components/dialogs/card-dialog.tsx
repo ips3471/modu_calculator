@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { UpdatingState } from '../../assets/interfaces/interfaces';
+import {
+	NormalCityNames,
+	UpdatingState,
+	VacationSpotNames,
+} from '../../assets/interfaces/interfaces';
 
 const Container = styled.div`
 	padding: 1rem 1.5rem;
@@ -55,13 +59,14 @@ interface IbuttonIconProps {
 
 type CardDialogProps = {
 	displayDialog: UpdatingState<boolean>;
+	title: NormalCityNames | VacationSpotNames | undefined;
 };
 
-function CardDialog({ displayDialog }: CardDialogProps) {
+function CardDialog({ displayDialog, title }: CardDialogProps) {
 	return (
 		<Container>
 			<Title>
-				<h2>푸켓</h2>
+				<h2>{title}</h2>
 			</Title>
 			<Main>
 				<button>
