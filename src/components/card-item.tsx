@@ -47,33 +47,27 @@ const Card = styled.button<ICardItemStyleProps>`
 		content: 'check';
 		background-color: #009624;
 		position: absolute;
-		transform: ${props => (props.isBelonged ? 'translateY(-20px)' : '')};
-		bottom: -20px;
+		transform: ${props => (props.isBelonged ? 'translateY(-2rem)' : '')};
+		bottom: -2rem;
 		transition: transform 250ms ease-out;
 		color: ${props => props.theme.color.main};
 		opacity: 1;
 	}
-	opacity: 0.6;
-`;
-
-const Image = styled.img.attrs(props => ({
-	title: props.title || 'undefined',
-}))`
-	min-width: 120%;
-	min-height: 120%;
-	transform: scale(90%);
-`;
-const SelectedCard = styled(Card)`
-	opacity: 1;
-`;
-const SelectedImage = styled(Image)`
-	animation: ${bubbling} 2s linear infinite;
-	border: 1px solid ${props => props.theme.color.background};
+	& > img {
+		min-width: 120%;
+		min-height: 120%;
+		transform: scale(90%);
+	}
+	& > img.active {
+		animation: ${bubbling} 2s linear infinite;
+	}
+	opacity: ${props => (props.isSelected ? '1' : '0.6')};
 `;
 
 interface ICardItemStyleProps {
 	name: string;
 	isBelonged: boolean;
+	isSelected: boolean;
 }
 
 type CardItemProps = {
@@ -89,34 +83,20 @@ function CardItem({ card, updateCard, selectedCard, displayDialog }: CardItemPro
 	const touchEvent = new TouchEvent(300);
 
 	return (
-		<>
-			{isSelected ? (
-				<SelectedCard
-					isBelonged={belonged}
-					name={name}
-					onTouchStart={() => {
-						touchEvent.touchStart(displayDialog);
-					}}
-					onTouchEnd={() => touchEvent.touchEnd()}
-				>
-					<SelectedImage src={src} alt={name} />
-				</SelectedCard>
-			) : (
-				<Card
-					isBelonged={belonged}
-					name={name}
-					onTouchStart={() => {
-						touchEvent.touchStart(displayDialog);
-					}}
-					onTouchEnd={() => {
-						touchEvent.touchEnd();
-						updateCard(card);
-					}}
-				>
-					<Image src={src} alt={name} />
-				</Card>
-			)}
-		</>
+		<Card
+			isBelonged={belonged}
+			isSelected={isSelected}
+			name={name}
+			onTouchStart={() => {
+				touchEvent.touchStart(displayDialog);
+			}}
+			onTouchEnd={() => {
+				touchEvent.touchEnd();
+				!isSelected && updateCard(card);
+			}}
+		>
+			<img className={isSelected ? 'active' : ''} src={src} alt={name} />
+		</Card>
 	);
 }
 
