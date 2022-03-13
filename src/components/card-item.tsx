@@ -73,7 +73,12 @@ function CardItem({ card, updateCard, selectedCard, displayDialog }: CardItemPro
 	return (
 		<>
 			{isSelected ? (
-				<SelectedCard title={name}>
+				<SelectedCard
+					title={name}
+					onTouchStart={() => {
+						touchEvent.touchStart(displayDialog);
+					}}
+				>
 					<SelectedImage src={src} alt={name} />
 				</SelectedCard>
 			) : (
