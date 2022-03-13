@@ -1,12 +1,14 @@
 import { UpdatingState } from './../assets/interfaces/interfaces';
 class TouchEvent {
-	private tick: number;
+	private readonly longEnough: number;
+	private tick: number = 300;
 	private timer: ReturnType<typeof setInterval> | undefined;
 	constructor(longEnough: number = 300) {
-		this.tick = longEnough;
+		this.longEnough = longEnough;
 	}
 
 	touchStart(callback: UpdatingState<boolean>) {
+		this.tick = this.longEnough;
 		this.timer = setInterval(() => {
 			if (this.tick <= 0) {
 				this.timer && clearInterval(this.timer);

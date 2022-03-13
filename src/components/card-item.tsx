@@ -78,6 +78,7 @@ function CardItem({ card, updateCard, selectedCard, displayDialog }: CardItemPro
 					onTouchStart={() => {
 						touchEvent.touchStart(displayDialog);
 					}}
+					onTouchEnd={() => touchEvent.touchEnd()}
 				>
 					<SelectedImage src={src} alt={name} />
 				</SelectedCard>
@@ -86,9 +87,11 @@ function CardItem({ card, updateCard, selectedCard, displayDialog }: CardItemPro
 					title={name}
 					onTouchStart={() => {
 						touchEvent.touchStart(displayDialog);
+					}}
+					onTouchEnd={() => {
+						touchEvent.touchEnd();
 						updateCard(card);
 					}}
-					onTouchEnd={() => touchEvent.touchEnd()}
 				>
 					<Image src={src} alt={name} />
 				</Card>
