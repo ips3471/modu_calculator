@@ -62,9 +62,10 @@ type CardItemProps = {
 	card: CardInfo<NormalCityNames> | CardInfo<VacationSpotNames>;
 	updateCard: UpdatingState<CardInfo<NormalCityNames> | CardInfo<VacationSpotNames>>;
 	selectedCard: CardInfo<NormalCityNames | VacationSpotNames> | null;
+	displayDialog: UpdatingState<boolean>;
 };
 
-function CardItem({ card, updateCard, selectedCard }: CardItemProps) {
+function CardItem({ card, updateCard, selectedCard, displayDialog }: CardItemProps) {
 	const { name, src, id } = card;
 	const isSelected: boolean = id === selectedCard?.id;
 	const touchEvent = new TouchEvent(300);
@@ -81,7 +82,7 @@ function CardItem({ card, updateCard, selectedCard }: CardItemProps) {
 					onClick={() => {
 						updateCard(card);
 					}}
-					onTouchStart={() => touchEvent.touchStart()}
+					onTouchStart={() => touchEvent.touchStart(displayDialog)}
 					onTouchEnd={() => touchEvent.touchEnd()}
 				>
 					<Image src={src} alt={name} />

@@ -1,3 +1,4 @@
+import { UpdatingState } from './../assets/interfaces/interfaces';
 class TouchEvent {
 	private tick: number;
 	private timer: ReturnType<typeof setInterval> | undefined;
@@ -5,11 +6,11 @@ class TouchEvent {
 		this.tick = longEnough;
 	}
 
-	touchStart() {
+	touchStart(callback: UpdatingState<boolean>) {
 		this.timer = setInterval(() => {
 			if (this.tick <= 0) {
 				this.timer && clearInterval(this.timer);
-				console.log('you can execute next');
+				callback(true);
 			} else {
 				this.tick -= 100;
 			}

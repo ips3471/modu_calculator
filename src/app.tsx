@@ -16,19 +16,24 @@ import CardsSection from './components/cards';
 import ConstructionsPresenter from './presenter/constructions/constructions';
 import ActionsPresenter from './presenter/actions/actions';
 import CardsPresenter from './presenter/cards/cards';
+import CardDialog from './components/dialogs/card-dialog';
 
 const AppWrapper = styled.div`
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
+	position: relative;
 `;
 
-const Main = styled.main`
+const Main = styled.main<AppStyleProps>`
 	margin: ${props => props.theme.side_padding};
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	flex: 1;
+	opacity: ${props => (props.dialog ? 0.7 : 1)};
+	filter: ${props => (props.dialog ? 'blur(2px)' : null)};
+	pointer-events: ${props => (props.dialog ? 'none' : 'all')};
 `;
 
 const Result = styled.div`
@@ -39,6 +44,10 @@ const Result = styled.div`
 	line-height: 4rem;
 	text-align: center;
 `;
+
+type AppStyleProps = {
+	dialog: boolean;
+};
 
 type AppProps = {
 	constructionsPresenter: ConstructionsPresenter;
@@ -60,6 +69,8 @@ function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppPr
 	const [selectedActions, setSelectedActions] = useState<
 		ExecutingStates<ActionOptions>
 	>(actionsPresenter.getAll());
+
+	const [dialog, setDialog] = useState(false);
 
 	const updateSelectedCard = (
 		card: CardInfo<NormalCityNames> | CardInfo<VacationSpotNames>,
@@ -114,10 +125,11 @@ function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppPr
 	return (
 		<AppWrapper>
 			<Header />
-			<Main>
+			<Main dialog={dialog}>
 				<CardsSection
 					updateCard={updateSelectedCard}
 					cardsPresenter={cardsPresenter}
+					displayDialog={setDialog}
 				/>
 				<SelectConstructions
 					card={selectedCard}
@@ -133,6 +145,7 @@ function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppPr
 				/>
 				<Result>{result}</Result>
 			</Main>
+			{dialog && <CardDialog displayDialog={setDialog} />}
 		</AppWrapper>
 	);
 }

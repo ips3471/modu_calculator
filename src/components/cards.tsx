@@ -22,9 +22,10 @@ const Container = styled.ul`
 type CardsProps = {
 	updateCard: UpdatingState<CardInfo<NormalCityNames> | CardInfo<VacationSpotNames>>;
 	cardsPresenter: CardsPresenter;
+	displayDialog: UpdatingState<boolean>;
 };
 
-function CardsSection({ updateCard, cardsPresenter }: CardsProps) {
+function CardsSection({ updateCard, cardsPresenter, displayDialog }: CardsProps) {
 	const cards = cardsPresenter.getInfos();
 	const ascendedCardNames = Object.keys(cards).sort(
 		(a, b) => cards[a as keyof typeof cards].id - cards[b as keyof typeof cards].id,
@@ -40,6 +41,7 @@ function CardsSection({ updateCard, cardsPresenter }: CardsProps) {
 						updateCard={updateCard}
 						key={card.id}
 						card={card}
+						displayDialog={displayDialog}
 					/>
 				);
 			})}
