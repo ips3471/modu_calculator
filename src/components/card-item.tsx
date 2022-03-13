@@ -79,10 +79,10 @@ function CardItem({ card, updateCard, selectedCard, displayDialog }: CardItemPro
 			) : (
 				<Card
 					title={name}
-					onClick={() => {
+					onTouchStart={() => {
+						touchEvent.touchStart(displayDialog);
 						updateCard(card);
 					}}
-					onTouchStart={() => touchEvent.touchStart(displayDialog)}
 					onTouchEnd={() => touchEvent.touchEnd()}
 				>
 					<Image src={src} alt={name} />
