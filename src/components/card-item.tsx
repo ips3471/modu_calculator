@@ -6,6 +6,7 @@ import {
 	UpdatingState,
 	VacationSpotNames,
 } from '../assets/interfaces/interfaces';
+import TouchEvent from '../utill/touch-event';
 
 const bubbling = keyframes`
 	0% {
@@ -66,6 +67,7 @@ type CardItemProps = {
 function CardItem({ card, updateCard, selectedCard }: CardItemProps) {
 	const { name, src, id } = card;
 	const isSelected: boolean = id === selectedCard?.id;
+	const touchEvent = new TouchEvent(300);
 
 	return (
 		<>
@@ -79,6 +81,8 @@ function CardItem({ card, updateCard, selectedCard }: CardItemProps) {
 					onClick={() => {
 						updateCard(card);
 					}}
+					onTouchStart={() => touchEvent.touchStart()}
+					onTouchEnd={() => touchEvent.touchEnd()}
 				>
 					<Image src={src} alt={name} />
 				</Card>
