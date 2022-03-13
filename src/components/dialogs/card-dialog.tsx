@@ -26,12 +26,12 @@ const Main = styled.div<ICardDialogButtonProps>`
 	font-size: 2.2rem;
 	white-space: nowrap;
 	padding: 1rem 0;
-	/* border: 1px solid yellow; */
 	& > button {
 		padding: 0.5em;
 		background-color: transparent;
 		padding: 0 2rem;
 		font-size: 1.2em;
+		opacity: 0.2;
 	}
 	& > button.allow {
 		opacity: ${props => (props.isBelonged ? '0.2' : '1')};
