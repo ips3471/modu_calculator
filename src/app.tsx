@@ -149,6 +149,7 @@ function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppPr
 				<CardDialog
 					displayDialog={setDialog}
 					title={cardsPresenter.getCard()?.name}
+					cardsPresenter={cardsPresenter}
 				/>
 			)}
 		</AppWrapper>

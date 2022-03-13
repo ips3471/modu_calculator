@@ -5,6 +5,7 @@ import {
 	UpdatingState,
 	VacationSpotNames,
 } from '../../assets/interfaces/interfaces';
+import CardsPresenter from '../../presenter/cards/cards';
 
 const Container = styled.div`
 	padding: 1rem 1.5rem;
@@ -21,7 +22,7 @@ const Container = styled.div`
 	background-color: rgba(0, 0, 0, 0.5);
 `;
 
-const Main = styled.div`
+const Main = styled.div<ICardDialogButtonProps>`
 	font-size: 2.2rem;
 	white-space: nowrap;
 	padding: 1rem 0;
@@ -31,6 +32,14 @@ const Main = styled.div`
 		background-color: transparent;
 		padding: 0 2rem;
 		font-size: 1.2em;
+	}
+	& > button.allow {
+		opacity: ${props => (props.isBelonged ? '0.2' : '1')};
+		pointer-events: ${props => (props.isBelonged ? 'none' : 'all')};
+	}
+	& > button.discard {
+		opacity: ${props => (props.isBelonged ? '1' : '0.2')};
+		pointer-events: ${props => (props.isBelonged ? 'all' : 'none')};
 	}
 `;
 
@@ -57,22 +66,33 @@ interface IbuttonIconProps {
 	allowed?: boolean;
 }
 
+interface ICardDialogButtonProps {
+	isBelonged?: boolean;
+}
+
 type CardDialogProps = {
 	displayDialog: UpdatingState<boolean>;
 	title: NormalCityNames | VacationSpotNames | undefined;
+	cardsPresenter: CardsPresenter;
 };
 
-function CardDialog({ displayDialog, title }: CardDialogProps) {
+function CardDialog({ displayDialog, title, cardsPresenter }: CardDialogProps) {
+	const card = cardsPresenter.getCard();
+	const onClick = () => {
+		card && cardsPresenter.updateCard(card, undefined, 'belonged');
+		displayDialog(false);
+	};
+
 	return (
 		<Container>
 			<Title>
 				<h2>{title}</h2>
 			</Title>
-			<Main>
-				<button>
+			<Main isBelonged={card?.belonged}>
+				<button className='allow' onClick={onClick}>
 					<CheckIcon allowed className='fas fa-square-check'></CheckIcon>
 				</button>
-				<button>
+				<button className='discard' onClick={onClick}>
 					<CheckIcon className='fas fa-rectangle-xmark'></CheckIcon>
 				</button>
 			</Main>

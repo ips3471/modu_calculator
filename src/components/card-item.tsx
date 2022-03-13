@@ -20,9 +20,7 @@ const bubbling = keyframes`
 	}
 `;
 
-const Card = styled.button.attrs(props => ({
-	title: props.title || 'undefined',
-}))`
+const Card = styled.button<ICardItemStyleProps>`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -31,7 +29,7 @@ const Card = styled.button.attrs(props => ({
 	position: relative;
 	&:before {
 		width: 100%;
-		content: '${props => props.title}';
+		content: '${props => props.name}';
 		display: inline-block;
 		position: absolute;
 		top: 0;
@@ -41,8 +39,18 @@ const Card = styled.button.attrs(props => ({
 		background-color: #00000050;
 		z-index: 5;
 	}
+	&:after {
+		display: ${props => (props.isBelonged ? 'visible' : 'none')};
+		width: 100%;
+		content: 'check';
+		background-color: greenyellow;
+		position: absolute;
+		bottom: 0;
+		color: ${props => props.theme.color.main};
+	}
 	opacity: 0.6;
 `;
+
 const Image = styled.img.attrs(props => ({
 	title: props.title || 'undefined',
 }))`
@@ -58,6 +66,11 @@ const SelectedImage = styled(Image)`
 	border: 1px solid ${props => props.theme.color.background};
 `;
 
+interface ICardItemStyleProps {
+	name: string;
+	isBelonged: boolean;
+}
+
 type CardItemProps = {
 	card: CardInfo<NormalCityNames> | CardInfo<VacationSpotNames>;
 	updateCard: UpdatingState<CardInfo<NormalCityNames> | CardInfo<VacationSpotNames>>;
@@ -66,7 +79,7 @@ type CardItemProps = {
 };
 
 function CardItem({ card, updateCard, selectedCard, displayDialog }: CardItemProps) {
-	const { name, src, id } = card;
+	const { name, src, id, belonged } = card;
 	const isSelected: boolean = id === selectedCard?.id;
 	const touchEvent = new TouchEvent(300);
 
@@ -74,7 +87,8 @@ function CardItem({ card, updateCard, selectedCard, displayDialog }: CardItemPro
 		<>
 			{isSelected ? (
 				<SelectedCard
-					title={name}
+					isBelonged={belonged}
+					name={name}
 					onTouchStart={() => {
 						touchEvent.touchStart(displayDialog);
 					}}
@@ -84,7 +98,8 @@ function CardItem({ card, updateCard, selectedCard, displayDialog }: CardItemPro
 				</SelectedCard>
 			) : (
 				<Card
-					title={name}
+					isBelonged={belonged}
+					name={name}
 					onTouchStart={() => {
 						touchEvent.touchStart(displayDialog);
 					}}

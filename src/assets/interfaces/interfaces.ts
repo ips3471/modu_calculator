@@ -1,19 +1,3 @@
-/** Cards */
-// export type NormalCityLevel = 'land' | 'villa' | 'building' | 'hotel' | 'landmark';
-// export type VacationSpotLevel = 'flag' | 'parasol' | 'bangalore';
-// export type ActionTypes = 'buy' | 'pay' | 'takeOver' | 'sell';
-// export type Card = {
-// 	id: string | number;
-// 	line: '1' | '2' | '3' | '4';
-// 	isVacationSpot: boolean;
-// 	name: string;
-// 	src: string;
-// 	cost: CostTable<NormalCityLevel> | CostTable<VacationSpotLevel>;
-// };
-// export type Cards = {
-// 	[key: string]: Card;
-// };
-
 //Cards-----------------------------------------------------------
 export type NormalCityNames =
 	| '방콕'
@@ -59,6 +43,7 @@ export type CardInfo<T extends NormalCityNames | VacationSpotNames> = {
 		: null;
 	name: T;
 	src: string;
+	belonged: boolean;
 };
 export type CostTable<T extends BuildOptions> = Record<T, CostByAction>;
 

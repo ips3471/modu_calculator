@@ -49,11 +49,17 @@ class CardsPresenter {
 
 	updateCard(
 		card: CardInfo<NormalCityNames> | CardInfo<VacationSpotNames>,
-		update: React.Dispatch<CardInfo<NormalCityNames> | CardInfo<VacationSpotNames>>,
+		update?: React.Dispatch<CardInfo<NormalCityNames> | CardInfo<VacationSpotNames>>,
+		option?: keyof CardInfo<NormalCityNames | VacationSpotNames>,
 	) {
-		this.selectedCard = card;
-		update(this.selectedCard);
+		if (!option && update) {
+			this.selectedCard = card;
+			update(this.selectedCard);
+		} else if (option === 'belonged') {
+			card.belonged = !card.belonged;
+		}
 	}
 }
+// set belonged state
 
 export default CardsPresenter;
