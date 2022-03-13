@@ -40,13 +40,18 @@ const Card = styled.button<ICardItemStyleProps>`
 		z-index: 5;
 	}
 	&:after {
-		display: ${props => (props.isBelonged ? 'visible' : 'none')};
+		display: block;
 		width: 100%;
+		border-top-left-radius: 8px;
+		border-top-right-radius: 8px;
 		content: 'check';
-		background-color: greenyellow;
+		background-color: #009624;
 		position: absolute;
-		bottom: 0;
+		transform: ${props => (props.isBelonged ? 'translateY(-20px)' : '')};
+		bottom: -20px;
+		transition: transform 250ms ease-out;
 		color: ${props => props.theme.color.main};
+		opacity: 1;
 	}
 	opacity: 0.6;
 `;
