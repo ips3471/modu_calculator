@@ -83,6 +83,22 @@ const Card = styled.button<ICardItemStyleProps>`
 	& > img.active {
 		animation: ${bubbling} 2s linear infinite;
 	}
+	& > ul {
+		text-align: right;
+		position: absolute;
+		top: 1.5rem;
+		right: 0;
+		z-index: 10;
+		font-size: 1em;
+	}
+	& > ul > li {
+		opacity: 0.8;
+	}
+	& > ul > li.olympic {
+		letter-spacing: -0.9rem;
+		margin-right: 0.9rem;
+	}
+
 	opacity: ${props => (props.isSelected ? '1' : '0.6')};
 `;
 
@@ -119,6 +135,10 @@ function CardItem({ card, updateCard, selectedCard, displayDialog }: CardItemPro
 				!isSelected && updateCard(card);
 			}}
 		>
+			<ul>
+				<li className='olympic'>🏆🏆🏆🏆🏆</li>
+				<li>🎀</li>
+			</ul>
 			<img className={isSelected ? 'active' : ''} src={src} alt={name} />
 		</Card>
 	);
