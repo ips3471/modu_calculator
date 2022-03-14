@@ -26,18 +26,21 @@ const Main = styled.div<ICardDialogButtonProps>`
 	font-size: 2.2rem;
 	white-space: nowrap;
 	padding: 1rem 0;
-	& > button {
+	& > div {
+		text-align: center;
+		padding: 0.5rem 0;
+	}
+	& > * > button {
 		padding: 0.5em;
 		background-color: transparent;
 		padding: 0 2rem;
 		font-size: 1.2em;
-		opacity: 0.2;
 	}
-	& > button.allow {
+	& > .card > button.card__allow {
 		opacity: ${props => (props.isBelonged ? '0.2' : '1')};
 		pointer-events: ${props => (props.isBelonged ? 'none' : 'all')};
 	}
-	& > button.discard {
+	& > .card > button.card__discard {
 		opacity: ${props => (props.isBelonged ? '1' : '0.2')};
 		pointer-events: ${props => (props.isBelonged ? 'all' : 'none')};
 	}
@@ -89,12 +92,20 @@ function CardDialog({ displayDialog, title, cardsPresenter }: CardDialogProps) {
 				<h2>{title}</h2>
 			</Title>
 			<Main isBelonged={card?.belonged}>
-				<button className='allow' onClick={onClick}>
-					<CheckIcon allowed className='fas fa-square-check'></CheckIcon>
-				</button>
-				<button className='discard' onClick={onClick}>
-					<CheckIcon className='fas fa-rectangle-xmark'></CheckIcon>
-				</button>
+				<div className='add_olympic'>
+					<button className='olympic'>🏆</button>
+				</div>
+				<div className='add_festival'>
+					<button className='festival'>🎀</button>
+				</div>
+				<div className='card'>
+					<button className='card__allow' onClick={onClick}>
+						<CheckIcon allowed className='fas fa-square-check'></CheckIcon>
+					</button>
+					<button className='card__discard' onClick={onClick}>
+						<CheckIcon className='fas fa-rectangle-xmark'></CheckIcon>
+					</button>
+				</div>
 			</Main>
 			<Cancel>
 				<button onClick={() => displayDialog(false)}>
