@@ -44,8 +44,30 @@ const Card = styled.button<ICardItemStyleProps>`
 		width: 100%;
 		border-top-left-radius: 8px;
 		border-top-right-radius: 8px;
-		content: 'check';
-		background-color: #009624;
+		content: '';
+		height: 1rem;
+		background-color: ${props =>
+			props.color === 'green'
+				? props.theme.color.card_label.line1_first
+				: props.color === 'dark-green'
+				? props.theme.color.card_label.line1_second
+				: props.color === 'blue'
+				? props.theme.color.card_label.line2_first
+				: props.color === 'dark-blue'
+				? props.theme.color.card_label.line2_second
+				: props.color === 'pink'
+				? props.theme.color.card_label.line3_first
+				: props.color === 'purple'
+				? props.theme.color.card_label.line3_second
+				: props.color === 'orange'
+				? props.theme.color.card_label.line4_first
+				: props.color === 'red'
+				? props.theme.color.card_label.line4_second
+				: props.color === 'light-blue'
+				? props.theme.color.card_label.island1
+				: props.color === 'light-pink'
+				? props.theme.color.card_label.island2
+				: ''};
 		position: absolute;
 		transform: ${props => (props.isBelonged ? 'translateY(-2rem)' : '')};
 		bottom: -2rem;
@@ -68,6 +90,7 @@ interface ICardItemStyleProps {
 	name: string;
 	isBelonged: boolean;
 	isSelected: boolean;
+	color: string;
 }
 
 type CardItemProps = {
@@ -78,12 +101,13 @@ type CardItemProps = {
 };
 
 function CardItem({ card, updateCard, selectedCard, displayDialog }: CardItemProps) {
-	const { name, src, id, belonged } = card;
+	const { name, src, id, belonged, color } = card;
 	const isSelected: boolean = id === selectedCard?.id;
 	const touchEvent = new TouchEvent(300);
 
 	return (
 		<Card
+			color={color}
 			isBelonged={belonged}
 			isSelected={isSelected}
 			name={name}

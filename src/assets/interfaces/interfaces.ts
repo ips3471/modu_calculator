@@ -36,6 +36,17 @@ export type Infos<T extends NormalCityNames | VacationSpotNames> = {
 export type CardInfo<T extends NormalCityNames | VacationSpotNames> = {
 	id: number;
 	line: '1' | '2' | '3' | '4';
+	color:
+		| 'green'
+		| 'dark-green'
+		| 'blue'
+		| 'dark-blue'
+		| 'pink'
+		| 'purple'
+		| 'orange'
+		| 'red'
+		| 'light-pink'
+		| 'light-blue';
 	isVacationSpot: T extends NormalCityNames
 		? false
 		: T extends VacationSpotNames

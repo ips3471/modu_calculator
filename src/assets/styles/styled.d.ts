@@ -10,6 +10,18 @@ declare module 'styled-components' {
 			main: string;
 			sub: string;
 			background: string;
+			card_label: {
+				line1_first: string;
+				line1_second: string;
+				line2_first: string;
+				line2_second: string;
+				line3_first: string;
+				line3_second: string;
+				line4_first: string;
+				line4_second: string;
+				island1: string;
+				island2: string;
+			};
 		};
 	}
 }

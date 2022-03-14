@@ -246,6 +246,7 @@ class CardsDB {
 		방콕: {
 			id: 1,
 			line: '1',
+			color: 'green',
 			isVacationSpot: false,
 			name: '방콕',
 			src: this.BASE_SRC + '1.jpg',
@@ -254,6 +255,7 @@ class CardsDB {
 		베이징: {
 			id: 2,
 			line: '1',
+			color: 'green',
 			isVacationSpot: false,
 			name: '베이징',
 			src: this.BASE_SRC + '2.jpg',
@@ -262,6 +264,7 @@ class CardsDB {
 		타이페이: {
 			id: 4,
 			line: '1',
+			color: 'dark-green',
 			isVacationSpot: false,
 			name: '방콕',
 			src: this.BASE_SRC + '4.jpg',
@@ -270,6 +273,7 @@ class CardsDB {
 		두바이: {
 			id: 5,
 			line: '1',
+			color: 'dark-green',
 			isVacationSpot: false,
 			name: '두바이',
 			src: this.BASE_SRC + '5.jpg',
@@ -278,6 +282,7 @@ class CardsDB {
 		카이로: {
 			id: 6,
 			line: '1',
+			color: 'dark-green',
 			isVacationSpot: false,
 			name: '카이로',
 			src: this.BASE_SRC + '6.jpg',
@@ -286,6 +291,7 @@ class CardsDB {
 		도쿄: {
 			id: 8,
 			line: '2',
+			color: 'blue',
 			isVacationSpot: false,
 			name: '도쿄',
 			src: this.BASE_SRC + '8.jpg',
@@ -294,6 +300,7 @@ class CardsDB {
 		시드니: {
 			id: 9,
 			line: '2',
+			color: 'blue',
 			isVacationSpot: false,
 			name: '시드니',
 			src: this.BASE_SRC + '9.jpg',
@@ -302,6 +309,7 @@ class CardsDB {
 		퀘백: {
 			id: 10,
 			line: '2',
+			color: 'dark-blue',
 			isVacationSpot: false,
 			name: '퀘백',
 			src: this.BASE_SRC + '10.jpg',
@@ -310,6 +318,7 @@ class CardsDB {
 		상파울로: {
 			id: 12,
 			line: '2',
+			color: 'dark-blue',
 			isVacationSpot: false,
 			name: '상파울로',
 			src: this.BASE_SRC + '12.jpg',
@@ -318,6 +327,7 @@ class CardsDB {
 		프라하: {
 			id: 13,
 			line: '3',
+			color: 'pink',
 			isVacationSpot: false,
 			name: '프라하',
 			src: this.BASE_SRC + '13.jpg',
@@ -326,6 +336,7 @@ class CardsDB {
 		베를린: {
 			id: 15,
 			line: '3',
+			color: 'pink',
 			isVacationSpot: false,
 			name: '베를린',
 			src: this.BASE_SRC + '15.jpg',
@@ -334,6 +345,7 @@ class CardsDB {
 		모스크바: {
 			id: 16,
 			line: '3',
+			color: 'purple',
 			isVacationSpot: false,
 			name: '모스크바',
 			src: this.BASE_SRC + '16.jpg',
@@ -342,6 +354,7 @@ class CardsDB {
 		제네바: {
 			id: 17,
 			line: '3',
+			color: 'purple',
 			isVacationSpot: false,
 			name: '제네바',
 			src: this.BASE_SRC + '17.jpg',
@@ -350,6 +363,7 @@ class CardsDB {
 		로마: {
 			id: 18,
 			line: '3',
+			color: 'purple',
 			isVacationSpot: false,
 			name: '로마',
 			src: this.BASE_SRC + '18.jpg',
@@ -358,6 +372,7 @@ class CardsDB {
 		런던: {
 			id: 20,
 			line: '4',
+			color: 'orange',
 			isVacationSpot: false,
 			name: '런던',
 			src: this.BASE_SRC + '20.jpg',
@@ -366,6 +381,7 @@ class CardsDB {
 		파리: {
 			id: 21,
 			line: '4',
+			color: 'orange',
 			isVacationSpot: false,
 			name: '파리',
 			src: this.BASE_SRC + '21.jpg',
@@ -374,6 +390,7 @@ class CardsDB {
 		뉴욕: {
 			id: 22,
 			line: '4',
+			color: 'red',
 			isVacationSpot: false,
 			name: '뉴욕',
 			src: this.BASE_SRC + '22.jpg',
@@ -382,6 +399,7 @@ class CardsDB {
 		서울: {
 			id: 23,
 			line: '4',
+			color: 'red',
 			isVacationSpot: false,
 			name: '서울',
 			src: this.BASE_SRC + '23.jpg',
@@ -392,6 +410,7 @@ class CardsDB {
 		독도: {
 			id: 3,
 			line: '1',
+			color: 'light-blue',
 			isVacationSpot: true,
 			name: '독도',
 			src: this.BASE_SRC + '3.jpg',
@@ -400,6 +419,7 @@ class CardsDB {
 		발리: {
 			id: 7,
 			line: '2',
+			color: 'light-pink',
 			isVacationSpot: true,
 			name: '발리',
 			src: this.BASE_SRC + '7.jpg',
@@ -408,6 +428,7 @@ class CardsDB {
 		하와이: {
 			id: 11,
 			line: '2',
+			color: 'light-blue',
 			isVacationSpot: true,
 			name: '하와이',
 			src: this.BASE_SRC + '11.jpg',
@@ -417,6 +438,7 @@ class CardsDB {
 		푸켓: {
 			id: 14,
 			line: '3',
+			color: 'light-blue',
 			isVacationSpot: true,
 			name: '푸켓',
 			src: this.BASE_SRC + '14.jpg',
@@ -426,6 +448,7 @@ class CardsDB {
 		타히티: {
 			id: 19,
 			line: '4',
+			color: 'light-pink',
 			isVacationSpot: true,
 			name: '타히티',
 			src: this.BASE_SRC + '19.jpg',
