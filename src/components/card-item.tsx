@@ -117,7 +117,7 @@ type CardItemProps = {
 };
 
 function CardItem({ card, updateCard, selectedCard, displayDialog }: CardItemProps) {
-	const { name, src, id, belonged, color } = card;
+	const { name, src, id, belonged, color, isFestival, olympicPhase } = card;
 	const isSelected: boolean = id === selectedCard?.id;
 	const touchEvent = new TouchEvent(300);
 
@@ -136,8 +136,8 @@ function CardItem({ card, updateCard, selectedCard, displayDialog }: CardItemPro
 			}}
 		>
 			<ul>
-				<li className='olympic'>🏆🏆🏆🏆🏆</li>
-				<li>🎀</li>
+				<li className='olympic'>{'🏆'.repeat(olympicPhase)}</li>
+				<li>{isFestival ? '🎀' : ''}</li>
 			</ul>
 			<img className={isSelected ? 'active' : ''} src={src} alt={name} />
 		</Card>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 import {
 	NormalCityNames,
@@ -6,13 +6,13 @@ import {
 	VacationSpotNames,
 } from '../../assets/interfaces/interfaces';
 import CardsPresenter from '../../presenter/cards/cards';
+import UserConfirmDialog from './user-confirm';
 
-const Container = styled.div`
+const Container = styled.div<IContainerStyleProps>`
 	padding: 1rem 1.5rem;
-	display: flex;
+	display: ${props => (props.userConfirmDialog ? 'none' : 'flex')};
 	flex-direction: column;
 	align-items: center;
-	/* border: 1px solid red; */
 	position: absolute;
 	border-radius: 20px;
 	top: 50%;
@@ -69,6 +69,10 @@ interface IbuttonIconProps {
 	allowed?: boolean;
 }
 
+interface IContainerStyleProps {
+	userConfirmDialog?: boolean;
+}
+
 interface ICardDialogButtonProps {
 	isBelonged?: boolean;
 }
@@ -77,42 +81,77 @@ type CardDialogProps = {
 	displayDialog: UpdatingState<boolean>;
 	title: NormalCityNames | VacationSpotNames | undefined;
 	cardsPresenter: CardsPresenter;
+	setDialog: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-function CardDialog({ displayDialog, title, cardsPresenter }: CardDialogProps) {
+function CardDialog({
+	displayDialog,
+	title,
+	cardsPresenter,
+	setDialog,
+}: CardDialogProps) {
+	const [userConfirmDialog, setUserConfirmDialog] = useState(false);
+	const [bonusState, setBonusState] = useState<'축제' | '올림픽'>();
 	const card = cardsPresenter.getCard();
-	const onClick = () => {
-		card && cardsPresenter.updateCard(card, undefined, 'belonged');
+	const onUpdateBelongedClick = () => {
+		card && cardsPresenter.changeBelongedState(card);
 		displayDialog(false);
+	};
+	const onOlympicBonusClick = () => {
+		setBonusState('올림픽');
+		setUserConfirmDialog(true);
+	};
+	const onFestivalBonusClick = () => {
+		setBonusState('축제');
+		setUserConfirmDialog(true);
 	};
 
 	return (
-		<Container>
-			<Title>
-				<h2>{title}</h2>
-			</Title>
-			<Main isBelonged={card?.belonged}>
-				<div className='add_olympic'>
-					<button className='olympic'>🏆</button>
-				</div>
-				<div className='add_festival'>
-					<button className='festival'>🎀</button>
-				</div>
-				<div className='card'>
-					<button className='card__allow' onClick={onClick}>
-						<CheckIcon allowed className='fas fa-square-check'></CheckIcon>
+		<>
+			<Container userConfirmDialog={userConfirmDialog}>
+				<Title>
+					<h2>{title}</h2>
+				</Title>
+				<Main isBelonged={card?.belonged}>
+					<div className='add_olympic'>
+						<button onClick={onOlympicBonusClick} className='olympic'>
+							🏆
+						</button>
+					</div>
+					<div className='add_festival'>
+						<button onClick={onFestivalBonusClick} className='festival'>
+							🎀
+						</button>
+					</div>
+					<div className='card'>
+						<button className='card__allow' onClick={onUpdateBelongedClick}>
+							<CheckIcon
+								allowed
+								className='fas fa-square-check'
+							></CheckIcon>
+						</button>
+						<button className='card__discard' onClick={onUpdateBelongedClick}>
+							<CheckIcon className='fas fa-rectangle-xmark'></CheckIcon>
+						</button>
+					</div>
+				</Main>
+				<Cancel>
+					<button onClick={() => displayDialog(false)}>
+						<i className='fas fa-arrow-rotate-left'></i> 이전으로
 					</button>
-					<button className='card__discard' onClick={onClick}>
-						<CheckIcon className='fas fa-rectangle-xmark'></CheckIcon>
-					</button>
-				</div>
-			</Main>
-			<Cancel>
-				<button onClick={() => displayDialog(false)}>
-					<i className='fas fa-arrow-rotate-left'></i> 이전으로
-				</button>
-			</Cancel>
-		</Container>
+				</Cancel>
+			</Container>
+			{userConfirmDialog && (
+				<UserConfirmDialog
+					setDialog={setDialog}
+					card={card}
+					cardsPresenter={cardsPresenter}
+					displayingUserConfirmDialog={setUserConfirmDialog}
+					title={title}
+					bonusType={bonusState && bonusState}
+				/>
+			)}
+		</>
 	);
 }
 

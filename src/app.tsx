@@ -70,7 +70,7 @@ function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppPr
 		ExecutingStates<ActionOptions>
 	>(actionsPresenter.getAll());
 
-	const [dialog, setDialog] = useState(false);
+	const [dialog, setDialog] = useState<boolean>(false);
 
 	const updateSelectedCard = (
 		card: CardInfo<NormalCityNames> | CardInfo<VacationSpotNames>,
@@ -147,6 +147,7 @@ function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppPr
 			</Main>
 			{dialog && (
 				<CardDialog
+					setDialog={setDialog}
 					displayDialog={setDialog}
 					title={cardsPresenter.getCard()?.name}
 					cardsPresenter={cardsPresenter}

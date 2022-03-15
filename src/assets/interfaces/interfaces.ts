@@ -33,6 +33,9 @@ export type Cost<T extends BuildOptions> = Record<
 export type Infos<T extends NormalCityNames | VacationSpotNames> = {
 	[key in T]: CardInfo<T>;
 };
+export type OlympicState = {
+	state: boolean;
+};
 export type CardInfo<T extends NormalCityNames | VacationSpotNames> = {
 	id: number;
 	line: '1' | '2' | '3' | '4';
@@ -52,6 +55,8 @@ export type CardInfo<T extends NormalCityNames | VacationSpotNames> = {
 		: T extends VacationSpotNames
 		? true
 		: null;
+	isFestival: boolean;
+	olympicPhase: number;
 	name: T;
 	src: string;
 	belonged: boolean;
