@@ -11,7 +11,7 @@ class TouchEvent {
 		this.tick = this.longEnough;
 		this.timer = setInterval(() => {
 			if (this.tick <= 0) {
-				this.timer && clearInterval(this.timer);
+				this.touchEnd();
 				callback(true);
 			} else {
 				this.tick -= 100;
