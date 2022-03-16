@@ -117,7 +117,7 @@ class CardsDB {
 			landmark: { buy: 30.5, pay: 100, takeOver: undefined, sell: 51.5 },
 		},
 		파리: {
-			land: { buy: 11, pay: 1, takeOver: 22, sell: 5.5 },
+			land: { buy: 11, pay: 10, takeOver: 22, sell: 5.5 },
 			villa: { buy: 12.5, pay: 22.5, takeOver: 25, sell: 6.5 },
 			building: { buy: 18.5, pay: 33.5, takeOver: 37, sell: 9 },
 			hotel: { buy: 31, pay: 46.5, takeOver: 62, sell: 15.5 },

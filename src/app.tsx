@@ -153,7 +153,7 @@ function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppPr
 				<Result>
 					{result}
 					{selectedCard?.isFestival && '🎀'}
-					{selectedCard?.olympicPhase && '🏆'}
+					{selectedCard?.olympicPhase ? '🏆' : ''}
 				</Result>
 			</Main>
 			{dialog && (
