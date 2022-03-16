@@ -119,7 +119,7 @@ type CardItemProps = {
 function CardItem({ card, updateCard, selectedCard, displayDialog }: CardItemProps) {
 	const { name, src, id, belonged, color, isFestival, olympicPhase } = card;
 	const isSelected: boolean = id === selectedCard?.id;
-	const touchEvent = new TouchEvent(300);
+	const touchEvent = new TouchEvent();
 
 	return (
 		<Card
