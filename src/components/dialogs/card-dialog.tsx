@@ -20,6 +20,7 @@ const Container = styled.div<IContainerStyleProps>`
 	transform: translate(-50%, -50%);
 	gap: 1rem;
 	background-color: rgba(0, 0, 0, 0.5);
+	user-select: none;
 `;
 
 const Main = styled.div<ICardDialogButtonProps>`
