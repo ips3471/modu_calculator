@@ -69,7 +69,7 @@ class CardsPresenter {
 		const cards = { ...this.cardInfos };
 		const selected = cards[card.name];
 
-		if (selected.olympicPhase >= 5) {
+		if (selected.olympicPhase >= 4) {
 			return;
 		}
 		Object.keys(cards).forEach(cardName => {

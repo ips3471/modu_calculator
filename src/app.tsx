@@ -103,12 +103,6 @@ function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppPr
 			isConstructing.forEach(construction => {
 				try {
 					value = costTable[construction as keyof typeof costTable][action];
-					if (selectedCard.isFestival && action === 'pay') {
-						value *= 2;
-					}
-					if (selectedCard.olympicPhase >= 1) {
-						value *= selectedCard.olympicPhase + 1;
-					}
 				} catch {
 					console.error(
 						`card:${selectedCard}, construction:${construction}, action:${action}`,
@@ -124,10 +118,16 @@ function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppPr
 					total += value;
 				}
 			});
+			if (action === 'pay' && selectedCard.isFestival === true) {
+				total *= 2;
+			}
+			if (action === 'pay' && selectedCard.olympicPhase >= 1) {
+				total *= selectedCard.olympicPhase + 1;
+			}
 		});
 
 		setResult(total);
-	}, [selectedConstructions, selectedActions]);
+	}, [selectedConstructions, selectedActions, cardsPresenter.changeOlympicPhase]);
 
 	return (
 		<AppWrapper>
