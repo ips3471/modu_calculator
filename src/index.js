@@ -10,6 +10,8 @@ import ConstructionsPresenter from './presenter/constructions/constructions';
 import ActionsPresenter from './presenter/actions/actions';
 import CardsPresenter from './presenter/cards/cards';
 import CardsDB from './model/db/cards/cards';
+import swDev from './swDev';
+
 const constructionsPresenter = new ConstructionsPresenter({
 	land: false,
 	villa: false,
@@ -43,3 +45,4 @@ ReactDOM.render(
 	</React.StrictMode>,
 	document.getElementById('root'),
 );
+swDev();

@@ -4,37 +4,37 @@
 	"categories": ["entertainment", "games", "kids"],
 	"icons": [
 		{
-			"src": "icons/maskable_icon_x48.png",
+			"src": "./icons/maskable_icon_x48.png",
 			"sizes": "48x48",
 			"type": "image/png",
 			"purpose": "any maskable"
 		},
 		{
-			"src": "icons/maskable_icon_x72.png",
+			"src": "./icons/maskable_icon_x72.png",
 			"sizes": "72x72",
 			"type": "image/png",
 			"purpose": "any maskable"
 		},
 		{
-			"src": "icons/maskable_icon_x128.png",
+			"src": "./icons/maskable_icon_x128.png",
 			"sizes": "128x128",
 			"type": "image/png",
 			"purpose": "any maskable"
 		},
 		{
-			"src": "icons/maskable_icon_x192.png",
+			"src": "./icons/maskable_icon_x192.png",
 			"sizes": "192x192",
 			"type": "image/png",
 			"purpose": "any maskable"
 		},
 		{
-			"src": "icons/maskable_icon_x512.png",
+			"src": "./icons/maskable_icon_x512.png",
 			"sizes": "512x512",
 			"type": "image/png",
 			"purpose": "any maskable"
 		}
 	],
-	"start_url": "/",
+	"start_url": "./index.html",
 	"scope": "/",
 	"display": "fullscreen",
 	"display_override": ["fullscreen", "standalone"],
@@ -43,35 +43,35 @@
 	"description": "모두의마블 메가디럭스 오프라인 보드게임을 위한 전용계산기",
 	"screenshots": [
 		{
-			"src": "screenshots/select_card.png",
+			"src": "./screenshots/select_card.png",
 			"size": "1170x2532",
 			"type": "image/png",
 			"platform": "narrow",
 			"label": "원하는 도시를 선택하고 어떤 건물을 짓거나 통행료를 지불할지 결정하세요"
 		},
 		{
-			"src": "screenshots/select_event.png",
+			"src": "./screenshots/select_event.png",
 			"size": "1170x2532",
 			"type": "image/png",
 			"platform": "narrow",
 			"label": "특정한 도시에 올림픽 또는 축제를 개최할 수 있습니다"
 		},
 		{
-			"src": "screenshots/select_event_2.png",
+			"src": "./screenshots/select_event_2.png",
 			"size": "1170x2532",
 			"type": "image/png",
 			"platform": "narrow",
 			"label": "특정한 도시에 올림픽 또는 축제를 개최할 수 있습니다"
 		},
 		{
-			"src": "screenshots/event_result.png",
+			"src": "./screenshots/event_result.png",
 			"size": "1170x2532",
 			"type": "image/png",
 			"platform": "narrow",
 			"label": "올림픽 또는 축제가 개최된 도시에서는 통행료가 증가합니다"
 		},
 		{
-			"src": "screenshots/card_user_customize.png",
+			"src": "./screenshots/card_user_customize.png",
 			"size": "1170x2532",
 			"type": "image/png",
 			"platform": "narrow",
