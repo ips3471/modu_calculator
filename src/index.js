@@ -11,24 +11,12 @@ import ActionsPresenter from './presenter/actions/actions';
 import CardsPresenter from './presenter/cards/cards';
 import CardsDB from './model/db/cards/cards';
 import swDev from './swDev';
+import { constructionsData } from './model/db/constructions/constructions';
+import { actionsData } from './model/db/actions/actions';
 
-const constructionsPresenter = new ConstructionsPresenter({
-	land: false,
-	villa: false,
-	building: false,
-	hotel: false,
-	landmark: false,
-	flag: false,
-	parasol: false,
-	bangalore: false,
-});
+const constructionsPresenter = new ConstructionsPresenter(constructionsData);
 
-const actionsPresenter = new ActionsPresenter({
-	buy: false,
-	pay: false,
-	takeOver: false,
-	sell: false,
-});
+const actionsPresenter = new ActionsPresenter(actionsData);
 
 const cardsPresenter = new CardsPresenter(new CardsDB());
 
