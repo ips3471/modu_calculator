@@ -2,15 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.header`
+	/* height: 2em; */
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	font-size: 0.6em;
 	background-color: #ffffff20;
-	gap: 0.6rem;
-	flex-grow: 0;
-	height: ${props => props.theme.navbar__height};
-	padding-left: ${props => props.theme.side_padding};
+	height: 4em;
+	padding: 0.6em;
 
 	> .title {
 		color: ${props => props.theme.color.main};

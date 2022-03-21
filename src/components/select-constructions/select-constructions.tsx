@@ -14,9 +14,10 @@ import ButtonComponent from '../button';
 
 const Container = styled.ul`
 	display: flex;
-	flex: 1 0 5rem;
 	align-items: center;
 	justify-content: space-between;
+	height: 7em;
+	padding: 1.4em;
 	.true {
 		opacity: 1;
 	}

@@ -12,10 +12,9 @@ import CardsPresenter from '../presenter/cards/cards';
 
 const Container = styled.ul`
 	display: grid;
-	flex: 1 1 30rem;
 	grid-template-columns: repeat(6, 1fr);
+	grid-auto-rows: calc((100vh - 15em) / 4);
 	gap: 3px;
-	grid-auto-rows: 8em;
 	padding: 0;
 `;
 

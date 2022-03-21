@@ -18,19 +18,12 @@ import ActionsPresenter from './presenter/actions/actions';
 import CardsPresenter from './presenter/cards/cards';
 import CardDialog from './components/dialogs/card-dialog';
 
-const AppWrapper = styled.div`
+const AppWrapper = styled.div<AppStyleProps>`
 	height: 100%;
-	display: flex;
-	flex-direction: column;
+	display: flex; //
+	flex-direction: column; //
 	position: relative;
-`;
-
-const Main = styled.main<AppStyleProps>`
-	margin: ${props => props.theme.side_padding};
-	display: flex;
-	flex-direction: column;
 	justify-content: space-between;
-	flex: 1;
 	opacity: ${props => (props.dialog ? 0.7 : 1)};
 	filter: ${props => (props.dialog ? 'blur(2px)' : null)};
 	pointer-events: ${props => (props.dialog ? 'none' : 'all')};
@@ -39,9 +32,9 @@ const Main = styled.main<AppStyleProps>`
 const Result = styled.div`
 	color: ${props => props.theme.color.main};
 	width: 100%;
-	height: 4rem;
+	height: 2em;
+	line-height: 2em;
 	font-size: 1.5em;
-	line-height: 4rem;
 	text-align: center;
 `;
 
@@ -130,9 +123,9 @@ function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppPr
 	}, [selectedConstructions, selectedActions, cardsPresenter.changeOlympicPhase]);
 
 	return (
-		<AppWrapper>
-			<Header />
-			<Main dialog={dialog}>
+		<>
+			<AppWrapper dialog={dialog}>
+				<Header />
 				<CardsSection
 					updateCard={updateSelectedCard}
 					cardsPresenter={cardsPresenter}
@@ -155,7 +148,7 @@ function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppPr
 					{selectedCard?.isFestival && '🎀'}
 					{selectedCard?.olympicPhase ? '🏆' : ''}
 				</Result>
-			</Main>
+			</AppWrapper>
 			{dialog && (
 				<CardDialog
 					setDialog={setDialog}
@@ -164,7 +157,7 @@ function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppPr
 					cardsPresenter={cardsPresenter}
 				/>
 			)}
-		</AppWrapper>
+		</>
 	);
 }
 
