@@ -19,7 +19,7 @@ import CardsPresenter from './presenter/cards/cards';
 import CardDialog from './components/dialogs/card-dialog';
 
 const AppWrapper = styled.div`
-	height: 100vh;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	position: relative;

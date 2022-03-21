@@ -18,23 +18,24 @@ button {
 ul {
     list-style: none;
 }
-    html {
-        font-family: sans-serif;
-        -ms-text-size-adjust: 100%;
-        -webkit-text-size-adjust: 100%;
-        height: 100vh;
-    }
-    body {
-        overflow: hidden;
-        margin: 0;
-        padding: 0;
-        background-color: #000000;
-        width: 100%;
-        height: 100%;
-        font-size: 1.1rem;
-    }
-
-
+html {
+    font-family: sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    height: 100vh;
+}
+body {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    width: 100%;
+    height: 100%;
+    font-size: 1.1rem;
+}
+div#root {
+    height:100%;
+}
 `;
 
 export default GlobalStyle;
