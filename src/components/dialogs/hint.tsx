@@ -90,20 +90,21 @@ function Hint({ setHintDialog }: HintDialogProps) {
 		{
 			id: 1,
 			question: '주요기능이 궁금합니다',
-			answer: '도시카드를 길게 터치하면 도시의 소유여부를 변경하거나 도시에 축제나 올림픽 여부를 표시할 수 있습니다.',
+			answer: `계산을 원하는 도시를 선택한 후 하단의 건물옵션과 구매, 지불 등의 커맨드를 순서대로 터치하면 정확한 정산가격이 표시됩니다.
+            도시카드를 길게 터치하면 도시의 소유여부를 변경하거나 도시에 축제나 올림픽 여부를 표시할 수 있습니다.`,
 			isVisible: false,
 		},
 		{
 			id: 2,
 			question: '도시의 가격들이 제품의 내용과 달라요',
-			answer: '개발자가 직접 사용하려고 만든 앱입니다. 개발자가 임의로 밸런스 조정을 한 부분에 대해 양해를 구합니다.',
+			answer: '개발자가 직접 사용하려고 만든 앱이며 밸런스 조정상 가격 등이 보드게임 메뉴얼과 다를 수 있습니다. 개발자가 임의로 수치조정을 한 부분에 대해서는 양해를 구합니다.',
 			isVisible: false,
 		},
 		{
 			id: 3,
 			question:
 				'랜드마크를 땅, 별장, 빌딩, 호텔과 동시에 선택할 수 없어요',
-			answer: '여기에 답변을 입력하세요',
+			answer: '랜드마크는 인수가 불가능하며 별장부터 호텔까지 모든 건물이 올려진 상태에서 구매가 가능한 특수한 건물입니다. 따라서 이런 제약은 이용자가 게임 룰에 어긋난 행위를 하는것을 미리 방지합니다. 이 외에도 관광지 등의 특수한 경우에도 동일한 로직이 적용되어 있습니다.',
 			isVisible: false,
 		},
 	]);
@@ -145,7 +146,8 @@ function Hint({ setHintDialog }: HintDialogProps) {
 									</span>
 									{qna.isVisible && (
 										<span className='answer'>
-											↪ {qna.answer}
+											↪ {qna.answer.split('.')[0]}. <br />
+											{qna.answer.split('.')[1]}.
 										</span>
 									)}
 								</FaqBtn>
