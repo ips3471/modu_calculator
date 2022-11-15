@@ -25,9 +25,11 @@ const AppWrapper = styled.div<AppStyleProps>`
 	flex-direction: column; //
 	position: relative;
 	justify-content: space-between;
-	opacity: ${props => (props.dialog ? 0.7 : 1)};
-	filter: ${props => (props.dialog ? 'blur(2px)' : null)};
-	pointer-events: ${props => (props.dialog ? 'none' : 'all')};
+	opacity: ${props => (props.card_dialog || props.hint_dialog ? 0.7 : 1)};
+	filter: ${props =>
+		props.card_dialog || props.hint_dialog ? 'blur(2px)' : null};
+	pointer-events: ${props =>
+		props.card_dialog || props.hint_dialog ? 'none' : 'all'};
 `;
 
 const Result = styled.div`
@@ -40,7 +42,8 @@ const Result = styled.div`
 `;
 
 type AppStyleProps = {
-	dialog: boolean;
+	card_dialog: boolean;
+	hint_dialog: boolean;
 };
 
 type AppProps = {
@@ -68,7 +71,7 @@ function App({
 		ExecutingStates<ActionOptions>
 	>(actionsPresenter.getAll());
 
-	const [dialog, setDialog] = useState<boolean>(false);
+	const [displayCardDialog, setDisplayCardDialog] = useState<boolean>(false);
 	const [displayHintDialog, setDisplayHintDialog] = useState<boolean>(false);
 
 	const updateSelectedCard = (
@@ -137,12 +140,15 @@ function App({
 
 	return (
 		<>
-			<AppWrapper dialog={dialog}>
+			<AppWrapper
+				card_dialog={displayCardDialog}
+				hint_dialog={displayHintDialog}
+			>
 				<Header setHintDialog={setDisplayHintDialog} />
 				<CardsSection
 					updateCard={updateSelectedCard}
 					cardsPresenter={cardsPresenter}
-					displayDialog={setDialog}
+					displayDialog={setDisplayCardDialog}
 				/>
 				<SelectConstructions
 					card={selectedCard}
@@ -162,10 +168,10 @@ function App({
 					{selectedCard?.olympicPhase ? '🏆' : ''}
 				</Result>
 			</AppWrapper>
-			{dialog && (
+			{displayCardDialog && (
 				<CardDialog
-					setDialog={setDialog}
-					displayDialog={setDialog}
+					setDialog={setDisplayCardDialog}
+					displayDialog={setDisplayCardDialog}
 					title={cardsPresenter.getCard()?.name}
 					cardsPresenter={cardsPresenter}
 				/>
