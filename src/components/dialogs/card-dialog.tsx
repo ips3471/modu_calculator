@@ -1,4 +1,4 @@
-import React, { SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import {
 	NormalCityNames,
@@ -115,23 +115,35 @@ function CardDialog({
 				</Title>
 				<Main isBelonged={card?.belonged}>
 					<div className='add_olympic'>
-						<button onClick={onOlympicBonusClick} className='olympic'>
+						<button
+							onClick={onOlympicBonusClick}
+							className='olympic'
+						>
 							🏆
 						</button>
 					</div>
 					<div className='add_festival'>
-						<button onClick={onFestivalBonusClick} className='festival'>
+						<button
+							onClick={onFestivalBonusClick}
+							className='festival'
+						>
 							🎀
 						</button>
 					</div>
 					<div className='card'>
-						<button className='card__allow' onClick={onUpdateBelongedClick}>
+						<button
+							className='card__allow'
+							onClick={onUpdateBelongedClick}
+						>
 							<CheckIcon
 								allowed
 								className='fas fa-square-check'
 							></CheckIcon>
 						</button>
-						<button className='card__discard' onClick={onUpdateBelongedClick}>
+						<button
+							className='card__discard'
+							onClick={onUpdateBelongedClick}
+						>
 							<CheckIcon className='fas fa-rectangle-xmark'></CheckIcon>
 						</button>
 					</div>

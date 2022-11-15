@@ -17,6 +17,7 @@ import ConstructionsPresenter from './presenter/constructions/constructions';
 import ActionsPresenter from './presenter/actions/actions';
 import CardsPresenter from './presenter/cards/cards';
 import CardDialog from './components/dialogs/card-dialog';
+import Hint from './components/dialogs/hint';
 
 const AppWrapper = styled.div<AppStyleProps>`
 	height: 100%;
@@ -48,7 +49,11 @@ type AppProps = {
 	cardsPresenter: CardsPresenter;
 };
 
-function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppProps) {
+function App({
+	constructionsPresenter,
+	actionsPresenter,
+	cardsPresenter,
+}: AppProps) {
 	const [result, setResult] = useState(0);
 
 	const [selectedCard, setSelectedCard] = useState<
@@ -64,6 +69,7 @@ function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppPr
 	>(actionsPresenter.getAll());
 
 	const [dialog, setDialog] = useState<boolean>(false);
+	const [displayHintDialog, setDisplayHintDialog] = useState<boolean>(false);
 
 	const updateSelectedCard = (
 		card: CardInfo<NormalCityNames> | CardInfo<VacationSpotNames>,
@@ -95,7 +101,10 @@ function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppPr
 		isExecuting.forEach(action => {
 			isConstructing.forEach(construction => {
 				try {
-					value = costTable[construction as keyof typeof costTable][action];
+					value =
+						costTable[construction as keyof typeof costTable][
+							action
+						];
 				} catch {
 					console.error(
 						`card:${selectedCard}, construction:${construction}, action:${action}`,
@@ -120,12 +129,16 @@ function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppPr
 		});
 
 		setResult(total);
-	}, [selectedConstructions, selectedActions, cardsPresenter.changeOlympicPhase]);
+	}, [
+		selectedConstructions,
+		selectedActions,
+		cardsPresenter.changeOlympicPhase,
+	]);
 
 	return (
 		<>
 			<AppWrapper dialog={dialog}>
-				<Header />
+				<Header setHintDialog={setDisplayHintDialog} />
 				<CardsSection
 					updateCard={updateSelectedCard}
 					cardsPresenter={cardsPresenter}
@@ -157,6 +170,7 @@ function App({ constructionsPresenter, actionsPresenter, cardsPresenter }: AppPr
 					cardsPresenter={cardsPresenter}
 				/>
 			)}
+			{displayHintDialog && <Hint setHintDialog={setDisplayHintDialog} />}
 		</>
 	);
 }

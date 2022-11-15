@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.header`
@@ -29,15 +29,17 @@ const Container = styled.header`
 	}
 `;
 
-type HeaderProps = {};
+type HeaderProps = {
+	setHintDialog: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-function Header({}: HeaderProps) {
+function Header({ setHintDialog }: HeaderProps) {
 	return (
 		<Container>
 			<h1 className='title'>Modu Calculator</h1>
-			<span className='hint'>
+			<button className='hint' onClick={() => setHintDialog(true)}>
 				<i className='fas fa-question'></i>
-			</span>
+			</button>
 		</Container>
 	);
 }
